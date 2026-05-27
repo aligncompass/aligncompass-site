@@ -1,0 +1,349 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const examples = [
+  {
+    name: 'Hamanda',
+    type: 'Psychology practice',
+    city: 'Brazil',
+    href: 'https://hamanda.aligncompass.com',
+  },
+  {
+    name: 'Walkthrough Shield',
+    type: 'Property walkthroughs',
+    city: 'United States',
+    href: 'https://walkthroughshield.aligncompass.com',
+  },
+  {
+    name: 'Sozo Behavioral Health',
+    type: 'Child & teen evaluations',
+    city: 'Florida',
+    href: 'https://sozo.aligncompass.com',
+  },
+  {
+    name: 'Filippo en tu Fiesta',
+    type: 'Venezuelan hot dog catering',
+    city: 'Caracas · Miami',
+    href: 'https://filippo-en-tu-fiesta.aligncompass.com',
+  },
+];
+
+const benefits = [
+  {
+    title: 'One solid page',
+    body: 'Everything a new customer needs in one scroll — who you are, what you do, where you are, how to reach you. No menus to click through. No half-finished pages.',
+  },
+  {
+    title: 'Live in a day',
+    body: 'Send us your business name and city. We send back a live website on its own URL, usually within 24 hours. You don’t lift a finger.',
+  },
+  {
+    title: 'Hosted for you',
+    body: 'Domain, hosting, SSL, mobile-friendly design — all included. You don’t need accounts on five different platforms or a developer on retainer.',
+  },
+  {
+    title: '$35/month, cancel anytime',
+    body: 'No setup fees. No annual contracts. Cancel by sending one message — no forms, no upsell call.',
+  },
+];
+
+const steps = [
+  {
+    n: '1',
+    title: 'Tell us about your business',
+    body: 'A text message is enough. Business name, city, what you do. If you have photos or a logo, send those too — we’ll work with whatever you’ve got.',
+  },
+  {
+    n: '2',
+    title: 'We build and publish your site',
+    body: 'Usually within 24 hours. You’ll get a link to review and tell us what to tweak. No accounts to create, no software to learn.',
+  },
+  {
+    n: '3',
+    title: 'Start sending customers there',
+    body: 'Put it on your business card, your Instagram bio, the door of your shop. We keep it live for $35/month. Need a change? Just text us.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Why just one page?',
+    a: 'Because most small businesses don’t need more than that. A new customer needs to learn three things: who you are, what you do, and how to reach you. A focused one-pager does that better than a five-page site full of stale content.',
+  },
+  {
+    q: 'Can I add a booking system, a menu, or more pages later?',
+    a: 'Yes. We add things as the business grows. We start with a one-pager because that’s what gets you live this week — the rest is easier once something is already on the internet with your name on it.',
+  },
+  {
+    q: 'Can I use my own domain?',
+    a: 'Yes. Bring your own, or use ours (yourbusiness.aligncompass.com) until you’re ready. Switching is one message.',
+  },
+  {
+    q: 'Who owns the website?',
+    a: 'You do. If you cancel, we’ll send you the site files and you can host them anywhere you want.',
+  },
+  {
+    q: 'How do I cancel?',
+    a: 'Send one message. No questions, no retention call, no clawback fee.',
+  },
+];
+
+const contactEmail = 'hello@aligncompass.com';
+const demoMailto = `mailto:${contactEmail}?subject=I%27d%20like%20a%20demo&body=Business%20name%3A%0ACity%3A%0AWhat%20you%20do%3A%0A`;
+---
+
+<Layout>
+  <nav class="px-6 py-5 sm:py-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 text-stone-900 font-semibold tracking-tight">
+        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"></circle>
+          <path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" fill="currentColor"></path>
+        </svg>
+        <span>AlignCompass</span>
+      </a>
+      <div class="flex items-center gap-2 sm:gap-4 text-sm">
+        <a href="#examples" class="hidden sm:inline text-stone-600 hover:text-stone-900">Examples</a>
+        <a href="#pricing" class="hidden sm:inline text-stone-600 hover:text-stone-900">Pricing</a>
+        <a
+          href={demoMailto}
+          class="inline-flex items-center rounded-full bg-stone-900 px-4 py-2 text-white font-medium hover:bg-stone-800 transition"
+        >
+          Get my free demo
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="px-6 pt-12 pb-20 sm:pt-20 sm:pb-28">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium text-stone-600">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+        Now serving local businesses
+      </span>
+      <h1 class="mt-6 text-4xl sm:text-6xl font-semibold tracking-tight text-stone-900 leading-[1.05]">
+        A website for your business.
+        <span class="block text-stone-500">Live in a day. $35 a month.</span>
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed">
+        We design, build, and host a simple one-page website for your local business —
+        so customers who Google you find something worth finding. No contracts,
+        no setup fees, cancel anytime.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href={demoMailto}
+          class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-stone-900 px-6 py-3 text-white font-medium hover:bg-stone-800 transition"
+        >
+          Get my free demo
+        </a>
+        <a
+          href="#examples"
+          class="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-stone-300 bg-white px-6 py-3 text-stone-800 font-medium hover:border-stone-400 transition"
+        >
+          See sites we&rsquo;ve built
+        </a>
+      </div>
+      <p class="mt-5 text-sm text-stone-500">
+        Reply within 24 hours. No call required.
+      </p>
+    </div>
+  </header>
+
+  <section class="px-6 py-20 sm:py-24 bg-stone-900 text-stone-100">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-400">
+        The problem
+      </p>
+      <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight leading-tight">
+        You shouldn&rsquo;t have to choose between
+        &ldquo;no website&rdquo; and &ldquo;spend $5,000.&rdquo;
+      </h2>
+      <div class="mt-6 space-y-4 text-stone-300 text-lg leading-relaxed">
+        <p>
+          Most of your customers Google you before they pick up the phone. If they
+          find nothing — or a Facebook page that hasn&rsquo;t been touched since 2019 —
+          they call someone else.
+        </p>
+        <p>
+          The web has been telling small business owners &ldquo;just learn it yourself&rdquo;
+          or &ldquo;hire an agency&rdquo; for fifteen years. Neither answer fits a
+          one-person business with real work to do.
+        </p>
+        <p class="text-stone-100 font-medium">
+          AlignCompass is the third answer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:py-24">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-2xl">
+        <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
+          What you get
+        </p>
+        <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
+          What $35 a month actually gets you.
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2">
+        {benefits.map((b) => (
+          <div class="rounded-2xl border border-stone-200 bg-white p-7 hover:border-stone-300 transition">
+            <h3 class="text-lg font-semibold text-stone-900">{b.title}</h3>
+            <p class="mt-3 text-stone-600 leading-relaxed">{b.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:py-24 bg-white border-y border-stone-200">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-2xl">
+        <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
+          How it works
+        </p>
+        <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
+          Three steps. Five minutes of your time.
+        </h2>
+      </div>
+      <ol class="mt-12 grid gap-8 md:grid-cols-3">
+        {steps.map((s) => (
+          <li class="relative">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-stone-900 text-white text-sm font-semibold">
+                {s.n}
+              </span>
+              <h3 class="text-lg font-semibold text-stone-900">{s.title}</h3>
+            </div>
+            <p class="mt-3 text-stone-600 leading-relaxed">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="examples" class="px-6 py-20 sm:py-24">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-2xl">
+        <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
+          Proof
+        </p>
+        <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
+          Real businesses. Real sites.
+        </h2>
+        <p class="mt-4 text-stone-600 text-lg">
+          A few of the businesses we&rsquo;ve put online recently. Each was live within a day.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {examples.map((e) => (
+          <a
+            href={e.href}
+            target="_blank"
+            rel="noopener"
+            class="group rounded-2xl border border-stone-200 bg-white p-6 hover:border-stone-400 hover:-translate-y-0.5 transition"
+          >
+            <p class="text-xs uppercase tracking-wider text-stone-400">{e.city}</p>
+            <h3 class="mt-2 text-lg font-semibold text-stone-900">{e.name}</h3>
+            <p class="mt-1 text-stone-600 text-sm">{e.type}</p>
+            <p class="mt-6 text-sm font-medium text-stone-900 inline-flex items-center gap-1">
+              Visit site
+              <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="px-6 py-20 sm:py-24 bg-white border-y border-stone-200">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
+        Pricing
+      </p>
+      <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
+        $35 a month. That&rsquo;s the whole price.
+      </h2>
+      <div class="mt-10 rounded-3xl border border-stone-200 bg-stone-50 p-10 text-left">
+        <div class="flex items-baseline gap-2">
+          <span class="text-6xl font-semibold tracking-tight text-stone-900">$35</span>
+          <span class="text-stone-500">/ month</span>
+        </div>
+        <p class="mt-2 text-stone-600">No setup fees. No annual contracts.</p>
+        <ul class="mt-8 space-y-3 text-stone-700">
+          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Custom one-page website, written for your business</li>
+          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Domain and hosting included</li>
+          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> SSL, mobile-friendly, fast</li>
+          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Edits whenever you need them — just text us</li>
+          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Cancel anytime, keep the files</li>
+        </ul>
+        <a
+          href={demoMailto}
+          class="mt-10 inline-flex w-full items-center justify-center rounded-full bg-stone-900 px-6 py-3 text-white font-medium hover:bg-stone-800 transition"
+        >
+          Get my free demo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:py-24">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
+        Honest answers
+      </p>
+      <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
+        Questions you&rsquo;re probably already asking.
+      </h2>
+      <div class="mt-10 divide-y divide-stone-200 border-y border-stone-200">
+        {faqs.map((f) => (
+          <details class="group py-5">
+            <summary class="flex items-center justify-between text-left text-stone-900 font-medium text-lg">
+              <span>{f.q}</span>
+              <span class="ml-4 text-stone-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+            </summary>
+            <p class="mt-3 text-stone-600 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:py-28 bg-stone-900 text-stone-100">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-5xl font-semibold tracking-tight leading-tight">
+        Ready when you are.
+      </h2>
+      <p class="mt-5 text-lg sm:text-xl text-stone-300 max-w-xl mx-auto">
+        Tell us your business name and city. We&rsquo;ll send back a live website.
+      </p>
+      <a
+        href={demoMailto}
+        class="mt-10 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-stone-900 font-medium hover:bg-stone-100 transition"
+      >
+        Get my free demo
+      </a>
+      <p class="mt-4 text-sm text-stone-400">
+        Or email <a href={`mailto:${contactEmail}`} class="underline hover:text-stone-200">{contactEmail}</a>
+      </p>
+    </div>
+  </section>
+
+  <footer class="px-6 py-10 border-t border-stone-200">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone-500">
+      <div class="flex items-center gap-2">
+        <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-stone-700" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"></circle>
+          <path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" fill="currentColor"></path>
+        </svg>
+        <span class="text-stone-700 font-medium">AlignCompass</span>
+        <span>© {new Date().getFullYear()}</span>
+      </div>
+      <div class="flex items-center gap-5">
+        <a href={`mailto:${contactEmail}`} class="hover:text-stone-800">{contactEmail}</a>
+      </div>
+    </div>
+  </footer>
+</Layout>
