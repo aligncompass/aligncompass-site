@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    { "source": "/marlen-fajo", "destination": "/marlen-fajo/", "permanent": true },
+    { "source": "/sozo", "destination": "/sozo/", "permanent": true },
+    { "source": "/walkthroughshield", "destination": "/walkthroughshield/", "permanent": true },
+    { "source": "/filippoentufiesta", "destination": "/filippoentufiesta/", "permanent": true },
+    { "source": "/digital-nomad", "destination": "/digital-nomad/", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/marlen-fajo/:path*", "destination": "https://marlen-fajo.aligncompass.com/:path*" },
+    { "source": "/sozo/:path*", "destination": "https://sozo.aligncompass.com/:path*" },
+    { "source": "/walkthroughshield/:path*", "destination": "https://walkthroughshield.aligncompass.com/:path*" },
+    { "source": "/filippoentufiesta/:path*", "destination": "https://filippo.aligncompass.com/:path*" },
+    { "source": "/digital-nomad/:path*", "destination": "https://aligncompass.github.io/Digital-Nomad/:path*" }
+  ]
+}
