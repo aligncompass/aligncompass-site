@@ -1,113 +1,306 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const examples = [
+const audiencePortraits = [
   {
-    name: 'Hamanda',
-    type: 'Psychology practice',
-    city: 'Brazil',
-    href: 'https://hamandatherapy.com',
+    label: 'Contractors & trades',
+    image: 'https://images.pexels.com/photos/6471913/pexels-photo-6471913.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+    alt: 'A technician working on an HVAC unit',
+    back: '“AC repair near me” decides who gets the call. We put you at the top of the Map Pack — so the next emergency rings your phone.',
   },
   {
-    name: 'Walkthrough Shield',
-    type: 'Property walkthroughs',
-    city: 'United States',
-    href: 'https://walkthroughshield.aligncompass.com',
+    label: 'Service businesses',
+    image: 'https://images.pexels.com/photos/36729739/pexels-photo-36729739.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+    alt: 'A confident café owner standing in their shop',
+    back: 'Customers Google you before they walk in. A fast, modern site decides whether they pick you — or the next name on the list.',
   },
   {
-    name: 'Sozo Behavioral Health',
-    type: 'Child & teen evaluations',
-    city: 'Florida',
-    href: 'https://sozo.aligncompass.com',
+    label: 'Solo practices',
+    image: 'https://images.pexels.com/photos/5410081/pexels-photo-5410081.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+    alt: 'A florist using a tablet in her shop',
+    back: 'Even referrals Google you before they book. A polished site turns warm leads into paying appointments — automatically.',
   },
   {
-    name: 'Filippo en tu Fiesta',
-    type: 'Venezuelan hot dog catering',
-    city: 'Caracas · Miami',
-    href: 'https://filippo-en-tu-fiesta.aligncompass.com',
+    label: 'Health & wellness',
+    image: 'https://images.pexels.com/photos/6455895/pexels-photo-6455895.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+    alt: 'A trainer coaching a client through a movement',
+    back: 'People hire who they trust. A clean, professional site signals safety and expertise before they ever set foot in your space.',
+  },
+  {
+    label: 'Storefronts & shops',
+    image: 'https://images.pexels.com/photos/8422729/pexels-photo-8422729.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+    alt: 'A small-shop owner standing in their store',
+    back: 'Foot traffic alone won&rsquo;t grow you. A site + Google Business turns your shop into a magnet for every “near me” search nearby.',
+  },
+  {
+    label: 'Skilled makers',
+    image: 'https://images.pexels.com/photos/5934226/pexels-photo-5934226.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop',
+    alt: 'A maker smiling at her workspace',
+    back: 'Your craft speaks for itself — once the right people see it. A fast site puts your work in front of buyers searching for what you make.',
+  },
+];
+
+const externalProblems = [
+  {
+    stat: '80%',
+    body: 'of new customers Google a local business before they pick up the phone. If you don’t show up, you don’t exist to them — and they’re calling someone else right now.',
+  },
+  {
+    stat: '3 sec',
+    body: 'is all you get on mobile. Past that, more than half of visitors leave. Every second your site lags is another customer walking past your door into a competitor’s shop.',
+  },
+  {
+    stat: '$70K+',
+    body: 'is what the average solo business loses every year to competitors with a better online presence. That’s $5,800 a month — silently leaving your bank account and showing up in theirs.',
   },
 ];
 
 const benefits = [
   {
-    title: 'One solid page',
-    body: 'Everything a new customer needs in one scroll — who you are, what you do, where you are, how to reach you. No menus to click through. No half-finished pages.',
+    title: 'A 24/7 silent salesperson',
+    body: 'Social media gets you noticed. Google Business gets you found. Neither one closes the sale. Your site sells while you work, eat, sleep, take Sundays off — telling your full story, building real trust, and turning strangers into customers without you saying a word.',
   },
   {
-    title: 'Live in a day',
-    body: 'Send us your business name and city. We send back a live website on its own URL, usually within 24 hours. You don’t lift a finger.',
+    title: 'Instant trust in under a second',
+    body: 'Loads faster than your customer can second-guess clicking. Looks like brands they already respect. By the time they finish scrolling, they’re ready to call.',
   },
   {
-    title: 'Hosted for you',
-    body: 'Domain, hosting, SSL, mobile-friendly design — all included. You don’t need accounts on five different platforms or a developer on retainer.',
+    title: 'Yours to keep — forever',
+    body: 'We email you the complete files once you commit. No platform lock-in. No “what if they disappear” worry. If you ever leave, the site goes with you.',
   },
   {
-    title: '$35/month, cancel anytime',
-    body: 'No setup fees. No annual contracts. Cancel by sending one message — no forms, no upsell call.',
+    title: 'Zero tech headaches',
+    body: 'No logins, plugins, updates, hacks, or hosting bills to chase. You text us when you want a change. We push it live. You go back to running your business.',
   },
 ];
 
-const steps = [
+const plan = [
   {
     n: '1',
-    title: 'Tell us about your business',
-    body: 'A text message is enough. Business name, city, what you do. If you have photos or a logo, send those too — we’ll work with whatever you’ve got.',
+    title: 'Send us 5 minutes of info',
+    body: 'Text or email your business name, city, what you do, and who you serve. Photos and a logo if you have them. We work with whatever you’ve got.',
   },
   {
     n: '2',
-    title: 'We build and publish your site',
-    body: 'Usually within 24 hours. You’ll get a link to review and tell us what to tweak. No accounts to create, no software to learn.',
+    title: 'We build it. Within 7 days.',
+    body: 'Custom copy, custom design, your domain, hosting, SSL, Google Business Profile, Apple Maps — the works. You get a live link in your inbox, plus unlimited revisions until you love it.',
   },
   {
     n: '3',
-    title: 'Start sending customers there',
-    body: 'Put it on your business card, your Instagram bio, the door of your shop. We keep it live for $35/month. Need a change? Just text us.',
+    title: 'New customers start finding you',
+    body: 'Your site does the selling 24/7. Want to change a photo, add a phone number, swap your hours? Text us. Usually live the same day.',
   },
+];
+
+const coreStack = [
+  {
+    item: 'Google Business Profile + Apple Maps — set up, optimized, and connected to your new site so you show up in the local Map Pack when customers search nearby',
+    anchor: 'Local SEO setup: $1,200',
+  },
+  {
+    item: 'Custom website built exactly for your business — never a template',
+    anchor: 'Agency build: $3,000–$5,000',
+  },
+  {
+    item: 'Start simple — add unlimited pages, features, and integrations as you grow',
+    anchor: 'Most agencies: rebuild fees',
+  },
+  {
+    item: 'Loads in under a second on any device, anywhere in the world',
+    anchor: 'Pro dev: $1,500',
+  },
+  {
+    item: 'Mobile-first design that looks the part — clean, modern, instantly trustworthy',
+    anchor: 'Designer: $800',
+  },
+  {
+    item: 'Domain, hosting, security, SSL — all handled. Nothing for you to set up or renew.',
+    anchor: 'DIY: ~$300/yr + your time',
+  },
+  {
+    item: 'Unlimited revisions — text us anytime, most changes live the same day',
+    anchor: 'Maintenance plan: $100/mo',
+  },
+  {
+    item: 'You own the files. If you ever leave, we email the whole site to you — yours forever.',
+    anchor: 'Most agencies: locked in',
+  },
+];
+
+const bonuses = [
+  {
+    label: 'Bonus 1',
+    title: 'We figure out what to say',
+    body: 'Most owners stall the moment a builder asks for a headline. We write every word — built around your business, your customer, and your offer. You answer five questions; we handle the page.',
+    anchor: 'Copywriter: $1,500',
+  },
+  {
+    label: 'Bonus 2',
+    title: 'On-page SEO done right',
+    body: 'Built so Google can read every word — your services, your city, your specialty. The Map Pack puts you on the map; this gets you ranked in the regular results too.',
+    anchor: 'SEO consultant: $600',
+  },
+  {
+    label: 'Bonus 3',
+    title: '90-day check-in',
+    body: 'Three months in, we look at what’s working and what isn’t — and we fix it. Free. Because if your site isn’t pulling its weight, we’re not doing our job.',
+    anchor: 'Strategy session: $400',
+  },
+];
+
+const launchTiers = [
+  {
+    range: 'Prepay your first month',
+    sub: 'Just $35 — then $35/mo every month for a year',
+    price: '$35',
+    suffix: '/mo',
+    note: 'Locked for your full first year',
+    featured: true,
+    badge: 'Best rate',
+    ctaLabel: 'Claim my $35 rate',
+  },
+  {
+    range: 'Pay within 24 hours of delivery',
+    sub: 'Just $53 — then $53/mo every month for a year',
+    price: '$53',
+    suffix: '/mo',
+    note: 'Locked for your full first year',
+    ctaLabel: 'Reserve my $53 rate',
+  },
+  {
+    range: 'Pay anytime after',
+    sub: 'Standard $67/mo — month-to-month, no rush',
+    price: '$67',
+    suffix: '/mo',
+    note: 'Standard month-to-month rate',
+    ctaLabel: 'Get my free demo',
+  },
+];
+
+const guarantees = [
+  {
+    title: '30-day money-back guarantee',
+    body: 'From the day your site goes live, you have 30 days to decide it’s right for you. Don’t love it? Every dollar comes back — on any plan, including the $35 prepay. No questions, no clawback, no awkward conversation.',
+  },
+  {
+    title: 'Live in 7 days, guaranteed',
+    body: 'We deliver your custom live site — Google Business Profile setup, optimization, and linking, plus Apple Maps — within 7 days of you sending the basics.',
+  },
+  {
+    title: 'We edit until you love it',
+    body: 'Don’t like a photo, a paragraph, the layout? Tell us. We keep refining the site — as many rounds as it takes — until you actually love it. And once it’s live, you get unlimited revisions forever — text us anytime.',
+  },
+  {
+    title: 'It’s yours — guaranteed',
+    body: 'The complete site files are emailed to you the moment you cancel, or automatically after 3 months of payments — whichever comes first. No platform lock-in, ever. The site is yours.',
+  },
+];
+
+const failure = [
+  'Your competitor — the one your customers don’t even like as much — keeps showing up first on Google',
+  'Your business card still says “find us on Facebook”',
+  'Every time a customer says “I tried to look you up,” you feel it',
+  'You spend Sundays worrying about marketing instead of resting',
+  'Word-of-mouth caps your growth at whatever your last 10 customers told their friends',
+  'You miss the launch-rate window — and pay up to $32/month more, every month, for the next 12',
+];
+
+const success = [
+  'New customers show up saying “I found you on Google”',
+  'A site that sells for you while you sleep, eat, work, or take a Sunday off',
+  'A business card that earns calls instead of explanations',
+  'A digital footprint your competitors can’t match without spending $5,000 and six months',
+  'The growth you’ve been chasing for two years, finally compounding',
 ];
 
 const faqs = [
   {
-    q: 'Why just one page?',
-    a: 'Because most small businesses don’t need more than that. A new customer needs to learn three things: who you are, what you do, and how to reach you. A focused one-pager does that better than a five-page site full of stale content.',
+    q: 'What if I don’t like the site after I see it?',
+    a: 'First, we keep editing until you do — unlimited rounds, no extra charge. Photo, copy, layout, services, anything. If you still don’t love it, you walk away: pay nothing, or get a full refund if you prepaid the $35 rate. Plus a 30-day money-back guarantee on every plan — if you change your mind within 30 days of your site going live, every dollar comes back, no questions.',
   },
   {
-    q: 'Can I add a booking system, a menu, or more pages later?',
-    a: 'Yes. We add things as the business grows. We start with a one-pager because that’s what gets you live this week — the rest is easier once something is already on the internet with your name on it.',
+    q: 'Isn’t my Instagram or Facebook page enough?',
+    a: 'Social media is rented land. The algorithm decides who sees you, and one change can wipe out your reach overnight. Instagram and Facebook are great for staying top-of-mind with people who already know you — but they don’t tell your full story, build deep trust, or convert strangers into paying customers the way a real website does. Your site is the foundation; social is the megaphone that points back to it.',
   },
   {
-    q: 'Can I use my own domain?',
-    a: 'Yes. Bring your own, or use ours (yourbusiness.aligncompass.com) until you’re ready. Switching is one message.',
+    q: 'Isn’t my Google Business Profile enough?',
+    a: 'GMB gets you in the Map Pack — and we set that up for you. But it’s a listing, not a brand experience. It can’t tell your story, answer the questions in a customer’s head, or walk them through why you’re different from the next name on the list. A real website does all of that, 24/7, on autopilot. Think of Google Business as the map pin and your site as the storefront the pin points to.',
+  },
+  {
+    q: 'I’m not tech-savvy. Will I have to figure anything out?',
+    a: 'No. You text us what you do and who you serve — that’s the whole job. We handle the writing, the design, the revisions, the hosting, the domain, the SSL, Google Business, Apple Maps. Want to change something later? Send us a message. Most edits go live the same day.',
+  },
+  {
+    q: 'How does the launch rate work?',
+    a: 'Three monthly billing options — no big upfront fee, ever: (1) Prepay your first month ($35) before we start, and you lock in $35/month for the rest of your first year. (2) Pay your first month ($53) within 24 hours of delivery, and lock in $53/month for your first year. (3) Pay anytime after at the standard $67/month rate. Same site, same unlimited revisions, same 30-day money-back guarantee on every plan. The lower rates just reward earlier commitment.',
+  },
+  {
+    q: 'What happens after my first 12 months?',
+    a: 'You roll to the standard $67/month rate — and you can still cancel anytime, just like before. No price-hike surprises. No new contract. Same site, same support.',
+  },
+  {
+    q: 'How do I get my files / cancel?',
+    a: 'Send one message. We email the complete site files to you the moment you cancel — and you walk away clean. If you stay for 3 months, you get the files automatically too, just so you know they’re yours regardless.',
+  },
+  {
+    q: 'Why $35 when I could try to do it myself?',
+    a: 'Because the math doesn’t favor DIY. The average solo business loses $70,000 a year to bad online presence — and most DIY sites never get finished. $35 is less than half your phone bill. Use the hours you’d spend learning Squarespace to do the work you’re actually good at.',
+  },
+  {
+    q: 'Will my site grow with my business?',
+    a: 'Yes. We start with exactly what your business needs today — clear, fast, conversion-focused. As you grow, we add unlimited pages, features, bookings, blog content, e-commerce, member areas — whatever the next stage looks like. No platform rebuild, no agency-style "scope creep" fees. You text us; we build.',
+  },
+  {
+    q: 'How is this different from Wix, Squarespace, or a freelancer?',
+    a: 'It’s faster, it’s written to sell, and you don’t have to touch it. Drag-and-drop builders make sites that look like everyone else’s and load slow. Freelancers come and go. We build a site that loads instantly, says the right things, and stays up forever — and you can text us anytime.',
+  },
+  {
+    q: 'What if I already have a website?',
+    a: 'Probably means it’s not pulling its weight. Send us the link. We’ll tell you honestly whether ours would convert better — and if not, we won’t take your money.',
+  },
+  {
+    q: 'Is it safe? What about viruses or hacks?',
+    a: 'Yes. There’s no admin login to break into, no plugins to go out of date, no shopping cart that can leak credit cards (unless you ask for one). It’s the simplest, safest kind of website there is — built to stay up and stay clean.',
   },
   {
     q: 'Who owns the website?',
-    a: 'You do. If you cancel, we’ll send you the site files and you can host them anywhere you want.',
-  },
-  {
-    q: 'How do I cancel?',
-    a: 'Send one message. No questions, no retention call, no clawback fee.',
+    a: 'You do. The files are emailed to you the moment you cancel — or automatically after 3 months of payments, whichever comes first. No lock-in. No platform you can’t leave.',
   },
 ];
 
 const contactEmail = 'info@aligncompass.com';
-const demoMailto = `mailto:${contactEmail}?subject=I%27d%20like%20a%20demo&body=Business%20name%3A%0ACity%3A%0AWhat%20you%20do%3A%0A`;
+const demoMailto = `mailto:${contactEmail}?subject=I%27d%20like%20a%20demo&body=Business%20name%3A%0ACity%3A%0AWhat%20you%20do%3A%0AWho%20you%20serve%3A%0A`;
+const phone = '305-216-2975';
+const phoneTel = 'tel:+13052162975';
 ---
 
 <Layout>
-  <nav class="px-6 py-5 sm:py-6">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <a href="#top" class="flex items-center gap-2 text-stone-900 font-semibold tracking-tight">
-        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6" aria-hidden="true">
+  <!-- ============================== NAV ============================== -->
+  <nav class="scroll-nav sticky top-0 z-50 backdrop-blur-xl bg-white/75 border-b border-slate-200/60">
+    <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 text-slate-900 font-semibold tracking-tight">
+        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 text-brand-600" aria-hidden="true">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"></circle>
           <path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" fill="currentColor"></path>
         </svg>
         <span>AlignCompass</span>
       </a>
-      <div class="flex items-center gap-2 sm:gap-4 text-sm">
-        <a href="#examples" class="hidden sm:inline text-stone-600 hover:text-stone-900">Examples</a>
-        <a href="#pricing" class="hidden sm:inline text-stone-600 hover:text-stone-900">Pricing</a>
+      <div class="flex items-center gap-2 sm:gap-5 text-sm">
+        <a href="#how" class="hidden md:inline text-slate-600 hover:text-slate-900 transition">How it works</a>
+        <a href="#pricing" class="hidden md:inline text-slate-600 hover:text-slate-900 transition">Pricing</a>
+        <a href="#faq" class="hidden md:inline text-slate-600 hover:text-slate-900 transition">FAQ</a>
+        <a
+          href={phoneTel}
+          class="hidden sm:inline-flex items-center gap-1.5 text-slate-700 hover:text-slate-900 font-medium transition"
+        >
+          <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{phone}</span>
+        </a>
         <a
           href={demoMailto}
-          class="inline-flex items-center rounded-full bg-stone-900 px-4 py-2 text-white font-medium hover:bg-stone-800 transition"
+          class="inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-white font-medium hover:bg-slate-800 transition shadow-sm ring-1 ring-slate-900/10"
         >
           Get my free demo
         </a>
@@ -115,234 +308,803 @@ const demoMailto = `mailto:${contactEmail}?subject=I%27d%20like%20a%20demo&body=
     </div>
   </nav>
 
-  <header id="top" class="px-6 pt-12 pb-20 sm:pt-20 sm:pb-28">
-    <div class="max-w-4xl mx-auto text-center">
-      <span class="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium text-stone-600">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-        Now serving local businesses
+  <!-- ============================== HERO ============================== -->
+  <header id="top" class="relative px-6 pt-14 pb-28 sm:pt-20 sm:pb-32 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-slate-50 via-white to-white"></div>
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_55%_at_50%_-5%,rgba(13,148,136,0.14),transparent_72%)]"></div>
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_50%_45%_at_85%_10%,rgba(15,23,42,0.06),transparent_70%)]"></div>
+
+    <div class="max-w-5xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 backdrop-blur px-4 py-1.5 text-xs font-medium text-slate-600 shadow-sm">
+        <span class="relative inline-flex">
+          <span class="inline-block w-2 h-2 rounded-full bg-brand-500"></span>
+          <span class="absolute inset-0 inline-block w-2 h-2 rounded-full bg-brand-500 animate-ping opacity-75"></span>
+        </span>
+        Booking new local businesses this week
       </span>
-      <h1 class="mt-6 text-4xl sm:text-6xl font-semibold tracking-tight text-stone-900 leading-[1.05]">
-        A website for your business.
-        <span class="block text-stone-500">Live in a day. $35 a month.</span>
+
+      <h1 class="reveal mt-7 text-5xl sm:text-7xl font-semibold tracking-tight text-slate-900 leading-[1.02]" data-delay="100">
+        More local customers.
+        <span class="block bg-gradient-to-br from-brand-600 to-brand-800 bg-clip-text text-transparent">While you sleep.</span>
       </h1>
-      <p class="mt-6 text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed">
-        We design, build, and host a simple one-page website for your local business —
-        so customers who Google you find something worth finding. No contracts,
-        no setup fees, cancel anytime.
+
+      <p class="reveal mt-7 text-lg sm:text-2xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal" data-delay="200">
+        A custom website built exactly for your business — <span class="text-slate-900 font-semibold">free to review</span>
+        before you ever pay a cent. So when somebody Googles what you do, they find <em class="not-italic font-medium text-slate-900">you</em> —
+        not the competitor down the street.
       </p>
-      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+
+      <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-3" data-delay="300">
         <a
           href={demoMailto}
-          class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-stone-900 px-6 py-3 text-white font-medium hover:bg-stone-800 transition"
+          class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-white font-semibold text-base hover:bg-slate-800 transition shadow-lg shadow-slate-900/15 ring-1 ring-slate-900/10 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-slate-900/20"
         >
           Get my free demo
         </a>
         <a
-          href="#examples"
-          class="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-stone-300 bg-white px-6 py-3 text-stone-800 font-medium hover:border-stone-400 transition"
+          href={phoneTel}
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-8 py-4 text-slate-800 font-semibold hover:border-slate-400 transition hover:-translate-y-0.5 hover:shadow-md"
         >
-          See sites we&rsquo;ve built
+          <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Call or text {phone}
         </a>
       </div>
-      <p class="mt-5 text-sm text-stone-500">
-        Reply within 24 hours. No call required.
+
+      <p class="reveal mt-6 text-sm text-slate-500" data-delay="400">
+        Reply within 24 hours.
+        <span class="text-slate-800 font-medium">Live custom site within 7 days. You only pay if you love it.</span>
       </p>
+      <a href="#pricing" class="reveal mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs sm:text-sm font-medium text-amber-800 hover:bg-amber-100 hover:-translate-y-0.5 transition shadow-sm" data-delay="500">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+        <span class="whitespace-nowrap">Lock in <span class="font-bold">$35/mo</span> for year one</span>
+        <span aria-hidden="true" class="text-amber-600">→</span>
+      </a>
+    </div>
+
+    <!-- Phone mockup: Google Maps local pack showing "your business" at #1 -->
+    <div class="reveal mt-20 mx-auto flex justify-center" data-delay="500">
+      <div class="relative float-slow">
+        <!-- Glow behind phone -->
+        <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-[3.5rem] bg-gradient-to-br from-brand-500/30 via-brand-300/20 to-transparent blur-2xl"></div>
+
+        <!-- Phone frame -->
+        <div class="relative w-[280px] sm:w-[320px] rounded-[2.75rem] bg-slate-950 p-2.5 shadow-[0_40px_80px_-20px_rgba(15,23,42,0.55)] ring-1 ring-slate-900/40">
+          <div class="relative rounded-[2.25rem] bg-slate-50 overflow-hidden">
+            <!-- Notch / island -->
+            <div class="absolute left-1/2 -translate-x-1/2 top-2 z-10 h-5 w-24 rounded-full bg-slate-950"></div>
+
+            <!-- Top spacer -->
+            <div class="h-9"></div>
+
+            <!-- Search bar -->
+            <div class="mx-3 mt-2 flex items-center gap-2.5 rounded-full bg-white shadow-sm border border-slate-200 px-4 py-2.5">
+              <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4 text-slate-500" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <span class="text-sm text-slate-700">plumber near me</span>
+            </div>
+
+            <!-- Map preview -->
+            <div class="mx-3 mt-3 h-24 rounded-2xl relative overflow-hidden bg-gradient-to-br from-brand-50 via-slate-100 to-slate-200">
+              <svg class="absolute inset-0 w-full h-full opacity-50" viewBox="0 0 200 96" fill="none" aria-hidden="true">
+                <path d="M0 60 Q40 30 80 50 T160 40 T200 55" stroke="rgb(148,163,184)" stroke-width="0.8" fill="none"/>
+                <path d="M0 20 Q60 50 100 30 T200 25" stroke="rgb(148,163,184)" stroke-width="0.6" fill="none"/>
+                <path d="M30 0 L30 96" stroke="rgb(203,213,225)" stroke-width="0.5"/>
+                <path d="M120 0 L120 96" stroke="rgb(203,213,225)" stroke-width="0.5"/>
+                <path d="M170 0 L170 96" stroke="rgb(203,213,225)" stroke-width="0.5"/>
+              </svg>
+              <!-- Pin -->
+              <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div class="relative">
+                  <div class="w-3 h-3 rounded-full bg-brand-600 ring-4 ring-brand-600/25"></div>
+                  <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-brand-600"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Map Pack header -->
+            <div class="mx-3 mt-3 flex items-center justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+              <span>3 places near you</span>
+              <span class="text-brand-700">See all</span>
+            </div>
+
+            <!-- Result 1: YOUR BUSINESS, featured -->
+            <div class="mx-3 mt-2 rounded-2xl bg-white ring-2 ring-brand-500/50 p-3 shadow-md">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shrink-0">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs font-bold text-slate-900 truncate">Your Business</div>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <span class="text-[10px] text-amber-600 font-semibold">★ 4.9</span>
+                    <span class="text-[10px] text-slate-400">·</span>
+                    <span class="text-[10px] text-brand-700 font-semibold">Open now</span>
+                  </div>
+                  <div class="text-[10px] text-slate-500 mt-0.5">2.3 mi · Miami, FL</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Result 2: competitor, faded -->
+            <div class="mx-3 mt-2 rounded-xl bg-white border border-slate-200 p-2.5 opacity-55">
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-full bg-slate-300 shrink-0"></div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-[11px] font-medium text-slate-700 truncate">Acme Plumbing</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">★ 4.2 · 3.1 mi</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Result 3: competitor, faded -->
+            <div class="mx-3 mt-2 mb-4 rounded-xl bg-white border border-slate-200 p-2.5 opacity-55">
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-full bg-slate-300 shrink-0"></div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-[11px] font-medium text-slate-700 truncate">Pro Plumb Co.</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">★ 4.0 · 4.5 mi</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- #1 badge -->
+        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-slate-900 text-white text-xs font-semibold px-4 py-1.5 shadow-lg ring-1 ring-slate-900/30">
+          #1 in your city
+        </div>
+
+        <!-- Floating accent: 5-star review (top-left, desktop only) -->
+        <div class="hidden lg:flex absolute -left-32 top-12 items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-xl ring-1 ring-slate-200 float-slow" style="animation-delay: -2s; animation-duration: 8s;">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-semibold text-xs shrink-0">JL</div>
+          <div>
+            <div class="flex items-center gap-0.5 text-amber-500 text-xs">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="mt-0.5 text-xs text-slate-700 font-medium">&ldquo;Found them on Google.&rdquo;</p>
+          </div>
+        </div>
+
+        <!-- Floating accent: new lead notification (bottom-right, mobile+desktop) -->
+        <div class="absolute -right-4 sm:-right-16 bottom-24 sm:bottom-32 flex items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 shadow-xl ring-1 ring-slate-200 float-slow" style="animation-delay: -4s; animation-duration: 9s;">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white shrink-0">
+            <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <p class="text-[10px] uppercase tracking-wider text-brand-700 font-semibold">New lead</p>
+            <p class="text-xs text-slate-800 font-medium">Booked from your site</p>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <section class="px-6 py-20 sm:py-24 bg-stone-900 text-stone-100">
-    <div class="max-w-3xl mx-auto">
-      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-400">
-        The problem
-      </p>
-      <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight leading-tight">
-        You shouldn&rsquo;t have to choose between
-        &ldquo;no website&rdquo; and &ldquo;spend $5,000.&rdquo;
+  <!-- ============================== PROBLEM ============================== -->
+  <section class="relative grain px-6 py-24 sm:py-28 bg-gradient-to-b from-slate-900 to-slate-950 text-slate-100 overflow-hidden">
+    <div class="absolute inset-0 -z-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(20,184,166,0.10),transparent_70%)]"></div>
+    <div class="max-w-5xl mx-auto relative">
+      <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-brand-400">The problem</p>
+      <h2 class="reveal mt-5 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05] max-w-3xl" data-delay="100">
+        You&rsquo;re losing customers every day —
+        <span class="block text-slate-400">and it&rsquo;s not your fault.</span>
       </h2>
-      <div class="mt-6 space-y-4 text-stone-300 text-lg leading-relaxed">
-        <p>
-          Most of your customers Google you before they pick up the phone. If they
-          find nothing — or a Facebook page that hasn&rsquo;t been touched since 2019 —
-          they call someone else.
-        </p>
-        <p>
-          The web has been telling small business owners &ldquo;just learn it yourself&rdquo;
-          or &ldquo;hire an agency&rdquo; for fifteen years. Neither answer fits a
-          one-person business with real work to do.
-        </p>
-        <p class="text-stone-100 font-medium">
-          AlignCompass is the third answer.
-        </p>
-      </div>
-    </div>
-  </section>
+      <p class="reveal mt-7 text-lg leading-relaxed text-slate-300 max-w-3xl" data-delay="200">
+        Every day without a real website, your competitors collect customers that should have been yours.
+        The ones who couldn&rsquo;t find you. The ones who clicked away because your page took too long to load.
+        The ones who looked you up, saw nothing serious, and picked the next name on the list.
+      </p>
 
-  <section class="px-6 py-20 sm:py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="max-w-2xl">
-        <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
-          What you get
-        </p>
-        <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
-          What $35 a month actually gets you.
-        </h2>
-      </div>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2">
-        {benefits.map((b) => (
-          <div class="rounded-2xl border border-stone-200 bg-white p-7 hover:border-stone-300 transition">
-            <h3 class="text-lg font-semibold text-stone-900">{b.title}</h3>
-            <p class="mt-3 text-stone-600 leading-relaxed">{b.body}</p>
+      <div class="mt-14 grid gap-5 sm:grid-cols-3">
+        {externalProblems.map((s, i) => (
+          <div class="reveal rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur p-6 hover:bg-white/[0.06] transition" data-delay={`${(i + 1) * 100}`}>
+            <div class="text-5xl font-semibold tracking-tight text-white">{s.stat}</div>
+            <p class="mt-3 text-slate-400 leading-relaxed text-sm">{s.body}</p>
           </div>
         ))}
       </div>
-    </div>
-  </section>
 
-  <section class="px-6 py-20 sm:py-24 bg-white border-y border-stone-200">
-    <div class="max-w-6xl mx-auto">
-      <div class="max-w-2xl">
-        <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
-          How it works
-        </p>
-        <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
-          Three steps. Five minutes of your time.
-        </h2>
-      </div>
-      <ol class="mt-12 grid gap-8 md:grid-cols-3">
-        {steps.map((s) => (
-          <li class="relative">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-stone-900 text-white text-sm font-semibold">
-                {s.n}
-              </span>
-              <h3 class="text-lg font-semibold text-stone-900">{s.title}</h3>
-            </div>
-            <p class="mt-3 text-stone-600 leading-relaxed">{s.body}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section id="examples" class="px-6 py-20 sm:py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="max-w-2xl">
-        <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
-          Proof
-        </p>
-        <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
-          Real businesses. Real sites.
-        </h2>
-        <p class="mt-4 text-stone-600 text-lg">
-          A few of the businesses we&rsquo;ve put online recently. Each was live within a day.
-        </p>
-      </div>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {examples.map((e) => (
-          <a
-            href={e.href}
-            target="_blank"
-            rel="noopener"
-            class="group rounded-2xl border border-stone-200 bg-white p-6 hover:border-stone-400 hover:-translate-y-0.5 transition"
-          >
-            <p class="text-xs uppercase tracking-wider text-stone-400">{e.city}</p>
-            <h3 class="mt-2 text-lg font-semibold text-stone-900">{e.name}</h3>
-            <p class="mt-1 text-stone-600 text-sm">{e.type}</p>
-            <p class="mt-6 text-sm font-medium text-stone-900 inline-flex items-center gap-1">
-              Visit site
-              <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
-            </p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="pricing" class="px-6 py-20 sm:py-24 bg-white border-y border-stone-200">
-    <div class="max-w-3xl mx-auto text-center">
-      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
-        Pricing
+      <p class="reveal mt-12 text-slate-300 text-base sm:text-lg max-w-3xl italic">
+        While you&rsquo;re reading this, somebody in your town just chose a competitor instead of you.
       </p>
-      <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
-        $35 a month. That&rsquo;s the whole price.
-      </h2>
-      <div class="mt-10 rounded-3xl border border-stone-200 bg-stone-50 p-10 text-left">
-        <div class="flex items-baseline gap-2">
-          <span class="text-6xl font-semibold tracking-tight text-stone-900">$35</span>
-          <span class="text-stone-500">/ month</span>
+
+      <!-- Bold statements with optional deep-dive -->
+      <div class="reveal mt-16 max-w-4xl space-y-3" data-delay="200">
+        <details class="group rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.06] transition open:bg-white/[0.06]">
+          <summary class="flex items-start justify-between gap-4 cursor-pointer list-none p-6 sm:p-7">
+            <p class="flex-1 text-white font-semibold text-xl sm:text-2xl leading-tight tracking-tight">
+              It&rsquo;s costing you $5,000 a month — and it never shows up on a bank statement.
+            </p>
+            <span class="shrink-0 mt-1 text-slate-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+          </summary>
+          <div class="px-6 sm:px-7 pb-6 sm:pb-7 -mt-1 text-slate-300 leading-relaxed text-base">
+            Every customer who Googled you and didn&rsquo;t book is invisible revenue — gone, with no
+            record of leaving. You handed them a card, they searched the name, what they found made
+            them hesitate. Multiply that by every prospect who ever asked. Meanwhile the competitor
+            you don&rsquo;t even respect keeps showing up first, and getting those calls. It feels
+            unprofessional. It looks unprofessional. And the worst part: it&rsquo;s costing you money
+            you&rsquo;ll never see.
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.06] transition open:bg-white/[0.06]">
+          <summary class="flex items-start justify-between gap-4 cursor-pointer list-none p-6 sm:p-7">
+            <p class="flex-1 text-white font-semibold text-xl sm:text-2xl leading-tight tracking-tight">
+              DIY eats your weekends. Agencies eat your savings. Neither one is built for you.
+            </p>
+            <span class="shrink-0 mt-1 text-slate-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+          </summary>
+          <div class="px-6 sm:px-7 pb-6 sm:pb-7 -mt-1 text-slate-300 leading-relaxed text-base">
+            For fifteen years, small business owners have been told to either learn web design yourself
+            or write a $5,000 check to an agency that won&rsquo;t return your texts. One eats your weekends
+            and never gets finished. The other eats your savings and traps you on a platform you
+            don&rsquo;t own. You&rsquo;ve been stuck picking between two bad answers.
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.06] transition open:bg-white/[0.06]">
+          <summary class="flex items-start justify-between gap-4 cursor-pointer list-none p-6 sm:p-7">
+            <p class="flex-1 text-white font-semibold text-xl sm:text-2xl leading-tight tracking-tight">
+              Even if you start, you won&rsquo;t know what to write.
+            </p>
+            <span class="shrink-0 mt-1 text-slate-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+          </summary>
+          <div class="px-6 sm:px-7 pb-6 sm:pb-7 -mt-1 text-slate-300 leading-relaxed text-base">
+            Every builder eventually asks you for a headline. Then a value proposition. Then an about
+            section. Most owners freeze on the first one — and either copy a competitor word-for-word
+            or quietly close the tab. Templates exist, but they&rsquo;re why every contractor in your
+            city has the same website. We&rsquo;ve written hundreds of pages for therapists, contractors,
+            salons, makers. We know what goes where — and why it makes people pick up the phone.
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.06] transition open:bg-white/[0.06]">
+          <summary class="flex items-start justify-between gap-4 cursor-pointer list-none p-6 sm:p-7">
+            <p class="flex-1 text-white font-semibold text-xl sm:text-2xl leading-tight tracking-tight">
+              Social media is rented. Google Business is a listing. Your website is the only thing you own.
+            </p>
+            <span class="shrink-0 mt-1 text-slate-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+          </summary>
+          <div class="px-6 sm:px-7 pb-6 sm:pb-7 -mt-1 text-slate-300 leading-relaxed text-base">
+            Instagram and Facebook are rented from companies whose interests aren&rsquo;t yours — one algorithm
+            change and your reach is gone overnight. Google Business Profile is a listing, not a brand: it
+            gets you on the map, but it can&rsquo;t tell your full story, answer the objection in your
+            customer&rsquo;s head, or close the sale. Your website is the one place that does all three —
+            and unlike everything else, nobody can take it from you. Social is the megaphone. GMB is the
+            map pin. The website is the storefront everything points to.
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.06] transition open:bg-white/[0.06]">
+          <summary class="flex items-start justify-between gap-4 cursor-pointer list-none p-6 sm:p-7">
+            <p class="flex-1 text-white font-semibold text-xl sm:text-2xl leading-tight tracking-tight">
+              All of this changes the day your site goes live.
+            </p>
+            <span class="shrink-0 mt-1 text-slate-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+          </summary>
+          <div class="px-6 sm:px-7 pb-6 sm:pb-7 -mt-1 text-slate-300 leading-relaxed text-base">
+            Customers searching what you do find <em class="not-italic text-white font-medium">you</em> — not the
+            competitor down the street. Your business card stops needing an explanation. The Sundays
+            you used to spend worrying about marketing come back. Your competitor&rsquo;s growth slows
+            because the calls they were getting start ringing your phone instead. None of that needs
+            you to learn anything new. It needs the site fixed.
+          </div>
+        </details>
+      </div>
+
+      <!-- Inline CTA strip -->
+      <div class="reveal mt-16 rounded-3xl border border-white/10 bg-gradient-to-br from-brand-500/15 via-white/5 to-transparent backdrop-blur p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        <div>
+          <p class="text-white font-semibold text-lg sm:text-xl">Stop bleeding customers to the competitor down the street.</p>
+          <p class="mt-1 text-slate-300 text-sm">Free demo. Live in 7 days. You only pay if you love it.</p>
         </div>
-        <p class="mt-2 text-stone-600">No setup fees. No annual contracts.</p>
-        <ul class="mt-8 space-y-3 text-stone-700">
-          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Custom one-page website, written for your business</li>
-          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Domain and hosting included</li>
-          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> SSL, mobile-friendly, fast</li>
-          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Edits whenever you need them — just text us</li>
-          <li class="flex gap-3"><span class="text-emerald-600">&#10003;</span> Cancel anytime, keep the files</li>
-        </ul>
+        <div class="flex flex-col sm:flex-row gap-3 shrink-0 w-full sm:w-auto">
+          <a
+            href={demoMailto}
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-slate-900 font-semibold hover:bg-slate-100 transition hover:-translate-y-0.5 shadow-lg"
+          >
+            Get my free demo
+          </a>
+          <a
+            href={phoneTel}
+            class="inline-flex items-center justify-center gap-2 rounded-full border border-slate-600 bg-transparent px-6 py-3 text-slate-100 font-semibold hover:bg-slate-800/50 transition"
+          >
+            <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {phone}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== GUIDE / BENEFITS ============================== -->
+  <section class="px-6 py-24 sm:py-28">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl">
+        <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-brand-700">Why this works</p>
+        <h2 class="reveal mt-5 text-3xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]" data-delay="100">
+          We&rsquo;ve built fast, beautiful sites for solo practices, service businesses, and food brands across three countries.
+        </h2>
+        <p class="reveal mt-6 text-slate-600 text-lg sm:text-xl leading-relaxed" data-delay="200">
+          We know how this works — and we know how it goes wrong. So we do the part you don&rsquo;t have time for,
+          we keep doing it for as long as you keep us, and we make it impossible to lose.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2">
+        {benefits.map((b, i) => (
+          <div class="reveal group rounded-3xl border border-slate-200 bg-white p-7 hover:border-slate-300 hover:shadow-lg hover:-translate-y-0.5 transition shadow-sm" data-delay={`${(i % 2) * 100}`}>
+            <div class="flex items-start gap-4">
+              <div class="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-100 to-brand-50 ring-1 ring-brand-200/60 flex items-center justify-center text-brand-700">
+                {i === 0 && (
+                  <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                )}
+                {i === 1 && (
+                  <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5"><path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                )}
+                {i === 2 && (
+                  <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5"><path d="M19 11V7a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v4M5 11h14a2 2 0 0 1 2 2v7H3v-7a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                )}
+                {i === 3 && (
+                  <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                )}
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-slate-900">{b.title}</h3>
+                <p class="mt-2 text-slate-600 leading-relaxed">{b.body}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================== AUDIENCE BAND ============================== -->
+  <section class="px-6 pb-24 sm:pb-28">
+    <div class="max-w-6xl mx-auto">
+      <div class="reveal max-w-2xl">
+        <p class="text-xs font-semibold tracking-[0.22em] uppercase text-brand-700">Built for solo locals</p>
+        <h3 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 leading-tight">
+          The people we build for.
+        </h3>
+        <p class="mt-3 text-slate-600">
+          Trusted by local service businesses across three countries. Tap any card to see how a business like yours benefits most.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-4 grid-cols-2 lg:grid-cols-3">
+        {audiencePortraits.map((p, i) => (
+          <button
+            type="button"
+            class="reveal flip-card relative aspect-[4/5] rounded-3xl bg-slate-100 shadow-sm hover:shadow-xl transition-shadow"
+            aria-pressed="false"
+            aria-label={`${p.label} — tap to reveal benefit`}
+            data-delay={`${i * 80}`}
+          >
+            <div class="flip-card-inner">
+              <div class="flip-card-front rounded-3xl">
+                <img
+                  src={p.image}
+                  alt={p.alt}
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="1000"
+                  class="absolute inset-0 w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+                  <p class="text-white text-base font-semibold tracking-tight">{p.label}</p>
+                  <span class="shrink-0 w-8 h-8 rounded-full bg-white/15 backdrop-blur ring-1 ring-white/20 flex items-center justify-center text-white">
+                    <svg viewBox="0 0 24 24" fill="none" class="w-3.5 h-3.5" aria-hidden="true">
+                      <path d="M3 12a9 9 0 1 0 9-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="flip-card-back rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 text-slate-100 p-6 flex flex-col">
+                <p class="text-xs font-semibold tracking-[0.22em] uppercase text-brand-400">{p.label}</p>
+                <p class="mt-3 text-slate-100 text-sm sm:text-base leading-relaxed flex-1" set:html={p.back}></p>
+                <span class="mt-4 text-xs text-slate-400 inline-flex items-center gap-1.5">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-3 h-3" aria-hidden="true">
+                    <path d="M3 12a9 9 0 1 0 9-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Tap to flip back
+                </span>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== HOW IT WORKS ============================== -->
+  <section id="how" class="relative px-6 py-24 sm:py-28 bg-slate-50 border-y border-slate-200/70">
+    <div class="absolute inset-0 -z-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_0%,rgba(13,148,136,0.06),transparent_70%)]"></div>
+    <div class="max-w-6xl mx-auto relative">
+      <div class="max-w-3xl">
+        <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-brand-700">The plan</p>
+        <h2 class="reveal mt-5 text-3xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]" data-delay="100">
+          Three steps. Five minutes of your time.
+          <span class="block text-slate-500">Seven days to live.</span>
+        </h2>
+      </div>
+      <ol class="mt-14 grid gap-6 lg:gap-3 md:grid-cols-3 relative">
+        {plan.map((s, i) => {
+          const tints = [
+            { ring: 'ring-brand-100', halo: 'from-brand-100/60 to-brand-50/0', iconBg: 'from-brand-500 to-brand-700' },
+            { ring: 'ring-slate-200', halo: 'from-slate-200/60 to-slate-50/0', iconBg: 'from-slate-700 to-slate-900' },
+            { ring: 'ring-amber-200', halo: 'from-amber-100/60 to-amber-50/0', iconBg: 'from-amber-500 to-amber-700' },
+          ][i];
+          return (
+            <li class="reveal relative" data-delay={`${i * 100}`}>
+              <div class={`relative h-full rounded-3xl bg-white ring-1 ${tints.ring} p-7 sm:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition overflow-hidden`}>
+                <div class={`absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-br ${tints.halo} blur-2xl pointer-events-none`}></div>
+                <div class={`absolute top-7 right-7 text-7xl font-bold tracking-tight bg-gradient-to-br ${tints.iconBg} bg-clip-text text-transparent select-none opacity-90`}>
+                  {s.n}
+                </div>
+                <div class={`relative w-12 h-12 rounded-2xl bg-gradient-to-br ${tints.iconBg} flex items-center justify-center text-white shadow-md`}>
+                  {i === 0 && (
+                    <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5" aria-hidden="true">
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  )}
+                  {i === 1 && (
+                    <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5" aria-hidden="true">
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  )}
+                  {i === 2 && (
+                    <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5" aria-hidden="true">
+                      <path d="M23 6l-9.5 9.5-5-5L1 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M17 6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  )}
+                </div>
+                <h3 class="relative mt-6 text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight leading-tight">{s.title}</h3>
+                <p class="relative mt-3 text-slate-600 leading-relaxed">{s.body}</p>
+              </div>
+              {i < 2 && (
+                <div aria-hidden="true" class="hidden md:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white ring-1 ring-slate-200 items-center justify-center shadow-sm">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-3 h-3 text-slate-500"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      <div class="reveal mt-14 text-center" data-delay="300">
         <a
           href={demoMailto}
-          class="mt-10 inline-flex w-full items-center justify-center rounded-full bg-stone-900 px-6 py-3 text-white font-medium hover:bg-stone-800 transition"
+          class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-white font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/15 hover:-translate-y-0.5 hover:shadow-xl"
         >
-          Get my free demo
+          Start step 1 — get my free demo
         </a>
+        <p class="mt-4 text-sm text-slate-500">
+          Or text us at <a href={phoneTel} class="text-slate-900 font-semibold underline-offset-2 hover:underline">{phone}</a>
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="px-6 py-20 sm:py-24">
-    <div class="max-w-3xl mx-auto">
-      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-stone-500">
-        Honest answers
+  <!-- ============================== PRICING ============================== -->
+  <section id="pricing" class="relative px-6 py-24 sm:py-28 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_50%_at_50%_0%,rgba(217,119,6,0.08),transparent_72%)]"></div>
+
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto">
+        <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-amber-700">Pricing</p>
+        <h2 class="reveal mt-5 text-3xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]" data-delay="100">
+          Three ways in.
+          <span class="block bg-gradient-to-br from-amber-600 to-amber-800 bg-clip-text text-transparent">Same site, same edits, same guarantee — at every price.</span>
+        </h2>
+        <p class="reveal mt-6 text-slate-600 text-lg sm:text-xl leading-relaxed" data-delay="200">
+          The lower rates aren&rsquo;t a smaller package. They&rsquo;re a reward for committing earlier.
+          Every plan is simple month-to-month billing — <span class="text-slate-900 font-semibold">no big upfront fees, ever.</span>
+        </p>
+      </div>
+
+      <!-- Equivalence reassurance -->
+      <div class="reveal mt-10 mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white px-5 py-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-slate-600 shadow-sm">
+        <span class="inline-flex items-center gap-1.5"><span class="text-brand-600">✓</span> Same custom site</span>
+        <span class="hidden sm:inline text-slate-300">·</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-brand-600">✓</span> Unlimited revisions</span>
+        <span class="hidden sm:inline text-slate-300">·</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-brand-600">✓</span> Always monthly billing</span>
+        <span class="hidden sm:inline text-slate-300">·</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-brand-600">✓</span> 30-day money-back</span>
+      </div>
+
+      <!-- Three-card tier comparison -->
+      <div class="reveal mt-8 grid gap-5 md:grid-cols-3 items-stretch" data-delay="100">
+        {launchTiers.map((t, i) => (
+          <div
+            class={`reveal relative rounded-3xl p-7 sm:p-8 transition shadow-sm flex flex-col ${
+              t.featured
+                ? 'border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-amber-50/40 to-white shadow-xl shadow-amber-900/10 md:-translate-y-2'
+                : 'border border-slate-200 bg-white hover:shadow-md hover:-translate-y-0.5'
+            }`}
+            data-delay={`${i * 100}`}
+          >
+            {t.badge && (
+              <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-700 text-white text-xs font-semibold uppercase tracking-wider px-3.5 py-1.5 shadow-lg">
+                <svg viewBox="0 0 24 24" fill="none" class="w-3 h-3" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" fill="currentColor"/></svg>
+                {t.badge}
+              </span>
+            )}
+            <p class={`text-xs font-semibold tracking-[0.22em] uppercase ${t.featured ? 'text-amber-700' : 'text-slate-500'}`}>
+              {t.range}
+            </p>
+            <p class="mt-1.5 text-sm text-slate-500 leading-snug">{t.sub}</p>
+            <div class="mt-6 flex items-baseline gap-1">
+              <span class={`text-6xl font-semibold tracking-tight ${t.featured ? 'text-amber-700' : 'text-slate-900'}`}>
+                {t.price}
+              </span>
+              <span class="text-slate-500 text-lg">{t.suffix}</span>
+            </div>
+            <p class={`mt-2 text-sm ${t.featured ? 'text-amber-800 font-medium' : 'text-slate-500'}`}>
+              {t.note}
+            </p>
+            <a
+              href={demoMailto}
+              class={`mt-7 mt-auto inline-flex w-full items-center justify-center rounded-full px-5 py-3 font-semibold transition ${
+                t.featured
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-700 text-white hover:from-amber-600 hover:to-amber-800 shadow-lg shadow-amber-900/15 hover:-translate-y-0.5'
+                  : 'bg-slate-900 text-white hover:bg-slate-800 hover:-translate-y-0.5'
+              }`}
+            >
+              {t.ctaLabel}
+            </a>
+          </div>
+        ))}
+      </div>
+      <p class="reveal mt-6 text-center text-xs text-slate-500 leading-relaxed max-w-2xl mx-auto">
+        After your first 12 months, you roll to the standard $67/month — and you can cancel anytime.
+        Every plan includes the 30-day money-back guarantee. The $35 prepay is fully refundable if you
+        don&rsquo;t love your site.
       </p>
-      <h2 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 leading-tight">
+
+      <div class="reveal mt-10 text-center">
+        <a
+          href={demoMailto}
+          class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-white font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/15 hover:-translate-y-0.5 hover:shadow-xl"
+        >
+          Get my free demo — lock in $35/mo
+        </a>
+        <p class="mt-4 text-sm text-slate-500">
+          Or call/text <a href={phoneTel} class="text-slate-900 font-semibold underline-offset-2 hover:underline">{phone}</a> to get started
+        </p>
+      </div>
+
+      <!-- What your rate covers -->
+      <div class="mt-24">
+        <div class="text-center">
+          <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">What your rate covers</p>
+          <h3 class="reveal mt-4 text-2xl sm:text-4xl font-semibold tracking-tight text-slate-900 leading-tight" data-delay="100">
+            Everything below — at any tier.
+          </h3>
+        </div>
+
+        <div class="reveal mt-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-2 sm:p-3 shadow-sm">
+          <div class="rounded-[1.5rem] bg-white p-6 sm:p-9">
+            <p class="text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">The core</p>
+            <ul class="mt-5 space-y-4 text-slate-700">
+              {coreStack.map((v) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-brand-50 ring-1 ring-brand-200 flex items-center justify-center text-brand-700">
+                    <svg viewBox="0 0 24 24" fill="none" class="w-3 h-3"><path d="M4 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <div class="flex-1">
+                    <span class="text-slate-800">{v.item}</span>
+                    <span class="block text-xs text-slate-400 mt-0.5">{v.anchor}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <p class="mt-10 text-xs font-semibold tracking-[0.22em] uppercase text-amber-700">
+              And these bonuses — also included
+            </p>
+            <div class="mt-4 space-y-3">
+              {bonuses.map((b) => (
+                <div class="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50/70 to-amber-50/20 p-5">
+                  <div class="flex items-baseline justify-between gap-3 flex-wrap">
+                    <span class="text-xs font-mono font-semibold uppercase tracking-wider text-amber-800">{b.label}</span>
+                    <span class="text-xs text-amber-700">{b.anchor}</span>
+                  </div>
+                  <h4 class="mt-1.5 text-base font-semibold text-slate-900">{b.title}</h4>
+                  <p class="mt-1.5 text-slate-700 text-sm leading-relaxed">{b.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="mt-10 rounded-2xl bg-slate-50 border border-slate-200 p-5 text-sm text-slate-600">
+              <p class="text-slate-500 text-xs uppercase tracking-wider mb-2">The math</p>
+              <p class="text-slate-900 font-semibold">$11,000+ to set up, $1,500+/yr to maintain, anywhere else.</p>
+              <p class="mt-1">You pay <span class="text-slate-900 font-semibold">as little as $35/month, all in.</span> That&rsquo;s the offer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guarantees -->
+      <div class="mt-20">
+        <div class="text-center">
+          <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-brand-700">Our promises</p>
+          <h3 class="reveal mt-4 text-2xl sm:text-4xl font-semibold tracking-tight text-slate-900 leading-tight" data-delay="100">
+            The risk is on us, not you.
+          </h3>
+        </div>
+        <div class="mt-10 grid gap-4 sm:grid-cols-2">
+          {guarantees.map((g, i) => (
+            <div class="reveal rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/60 to-transparent p-6 shadow-sm" data-delay={`${(i % 2) * 100}`}>
+              <div class="flex items-start gap-3">
+                <span class="shrink-0 w-9 h-9 rounded-xl bg-white ring-1 ring-brand-200 flex items-center justify-center text-brand-700">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4"><path d="M12 2l3 6 6 .9-4.5 4.4L18 20l-6-3.2L6 20l1.5-6.7L3 8.9 9 8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </span>
+                <div class="flex-1">
+                  <h4 class="text-base font-semibold text-slate-900">{g.title}</h4>
+                  <p class="mt-2 text-sm text-slate-700 leading-relaxed">{g.body}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TWO PATHS ============================== -->
+  <section class="px-6 py-24 sm:py-28 bg-slate-50 border-y border-slate-200/70">
+    <div class="max-w-5xl mx-auto">
+      <div class="max-w-3xl">
+        <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">Two paths</p>
+        <h2 class="reveal mt-5 text-3xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]" data-delay="100">
+          What happens if you wait.
+          <span class="block text-slate-500">What happens if you don&rsquo;t.</span>
+        </h2>
+      </div>
+      <div class="mt-14 grid gap-5 md:grid-cols-2">
+        <div class="reveal rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <p class="text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">Wait another month</p>
+          <ul class="mt-5 space-y-3.5">
+            {failure.map((f) => (
+              <li class="flex items-start gap-3 text-slate-700">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0"></span>
+                <span class="leading-relaxed">{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="reveal rounded-3xl border border-brand-200 bg-gradient-to-br from-brand-50/80 to-brand-50/20 p-8 shadow-sm" data-delay="100">
+          <p class="text-xs font-semibold tracking-[0.22em] uppercase text-brand-700">Get this live in a week</p>
+          <ul class="mt-5 space-y-3.5">
+            {success.map((s) => (
+              <li class="flex items-start gap-3 text-slate-800">
+                <span class="mt-1 shrink-0 text-brand-600">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4"><path d="M4 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="leading-relaxed">{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FAQ ============================== -->
+  <section id="faq" class="px-6 py-24 sm:py-28">
+    <div class="max-w-3xl mx-auto">
+      <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">Honest answers</p>
+      <h2 class="reveal mt-5 text-3xl sm:text-5xl font-semibold tracking-tight text-slate-900 leading-[1.05]" data-delay="100">
         Questions you&rsquo;re probably already asking.
       </h2>
-      <div class="mt-10 divide-y divide-stone-200 border-y border-stone-200">
+      <div class="reveal mt-12 divide-y divide-slate-200 border-y border-slate-200" data-delay="200">
         {faqs.map((f) => (
-          <details class="group py-5">
-            <summary class="flex items-center justify-between text-left text-stone-900 font-medium text-lg">
+          <details class="group py-6">
+            <summary class="flex items-center justify-between gap-4 text-left text-slate-900 font-medium text-lg cursor-pointer list-none">
               <span>{f.q}</span>
-              <span class="ml-4 text-stone-400 transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+              <span class="ml-4 text-slate-400 transition-transform group-open:rotate-45 text-2xl leading-none shrink-0">+</span>
             </summary>
-            <p class="mt-3 text-stone-600 leading-relaxed">{f.a}</p>
+            <p class="mt-4 text-slate-600 leading-relaxed">{f.a}</p>
           </details>
         ))}
       </div>
+
+      <!-- Mid-page CTA after FAQ -->
+      <div class="reveal mt-16 rounded-3xl border border-brand-200 bg-gradient-to-br from-brand-50 via-brand-50/40 to-white p-8 sm:p-10 text-center shadow-sm" data-delay="100">
+        <p class="text-xs font-semibold tracking-[0.22em] uppercase text-brand-700">Still reading?</p>
+        <h3 class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 leading-tight max-w-xl mx-auto">
+          You&rsquo;ve seen the offer. The next step is one message.
+        </h3>
+        <div class="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={demoMailto}
+            class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-slate-900 px-7 py-3.5 text-white font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/15 hover:-translate-y-0.5"
+          >
+            Get my free demo
+          </a>
+          <a
+            href={phoneTel}
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-7 py-3.5 text-slate-900 font-semibold hover:border-slate-400 transition hover:-translate-y-0.5"
+          >
+            <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Call or text {phone}
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="px-6 py-20 sm:py-28 bg-stone-900 text-stone-100">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl sm:text-5xl font-semibold tracking-tight leading-tight">
-        Ready when you are.
+  <!-- ============================== FINAL CTA ============================== -->
+  <section class="relative grain px-6 py-24 sm:py-32 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 text-slate-100 overflow-hidden">
+    <div class="absolute inset-0 -z-0 bg-[radial-gradient(ellipse_60%_70%_at_50%_50%,rgba(20,184,166,0.18),transparent_70%)]"></div>
+    <div class="absolute inset-0 -z-0 bg-[radial-gradient(ellipse_40%_30%_at_20%_30%,rgba(217,119,6,0.10),transparent_70%)]"></div>
+    <div class="max-w-3xl mx-auto text-center relative">
+      <p class="reveal text-xs font-semibold tracking-[0.22em] uppercase text-brand-400">One last thing</p>
+      <h2 class="reveal mt-5 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.02]" data-delay="100">
+        Every day you wait,
+        <span class="block bg-gradient-to-br from-brand-300 to-brand-500 bg-clip-text text-transparent">somebody else gets the call.</span>
       </h2>
-      <p class="mt-5 text-lg sm:text-xl text-stone-300 max-w-xl mx-auto">
-        Tell us your business name and city. We&rsquo;ll send back a live website.
+      <p class="reveal mt-7 text-lg sm:text-xl text-slate-300 max-w-xl mx-auto leading-relaxed" data-delay="200">
+        Send your business name and city. We send back a live website within the week.
+        Pay the day you see it — lock in <span class="text-white font-semibold">$35/month</span> for the full first year.
       </p>
-      <a
-        href={demoMailto}
-        class="mt-10 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-stone-900 font-medium hover:bg-stone-100 transition"
-      >
-        Get my free demo
-      </a>
-      <p class="mt-4 text-sm text-stone-400">
-        Or email <a href={`mailto:${contactEmail}`} class="underline hover:text-stone-200">{contactEmail}</a>
+      <p class="reveal mt-4 text-sm text-slate-400 max-w-xl mx-auto" data-delay="300">
+        Don&rsquo;t love it? Pay nothing. You only owe us once you say yes.
+      </p>
+      <div class="reveal mt-12 flex flex-col sm:flex-row items-center justify-center gap-3" data-delay="400">
+        <a
+          href={demoMailto}
+          class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-slate-900 font-semibold hover:bg-slate-100 transition shadow-2xl shadow-brand-500/20 hover:-translate-y-0.5"
+        >
+          Get my free demo
+        </a>
+        <a
+          href={phoneTel}
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-transparent px-8 py-4 text-slate-100 font-semibold hover:bg-slate-800/50 transition hover:-translate-y-0.5"
+        >
+          <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Call or text {phone}
+        </a>
+      </div>
+      <p class="reveal mt-6 text-sm text-slate-400" data-delay="500">
+        Or email <a href={`mailto:${contactEmail}`} class="underline hover:text-slate-200">{contactEmail}</a>
       </p>
     </div>
   </section>
 
-  <footer class="px-6 py-10 border-t border-stone-200">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone-500">
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="px-6 py-10 border-t border-slate-200">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
       <div class="flex items-center gap-2">
-        <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-stone-700" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-brand-700" aria-hidden="true">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"></circle>
           <path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" fill="currentColor"></path>
         </svg>
-        <span class="text-stone-700 font-medium">AlignCompass</span>
+        <span class="text-slate-700 font-semibold">AlignCompass</span>
         <span>© {new Date().getFullYear()}</span>
       </div>
-      <div class="flex items-center gap-5">
-        <a href={`mailto:${contactEmail}`} class="hover:text-stone-800">{contactEmail}</a>
+      <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-5">
+        <a href={phoneTel} class="hover:text-slate-800 font-medium text-slate-700">{phone}</a>
+        <a href={`mailto:${contactEmail}`} class="hover:text-slate-800">{contactEmail}</a>
       </div>
     </div>
   </footer>

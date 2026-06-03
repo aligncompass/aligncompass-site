@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'AlignCompass — A clean website for your business. $35/month.',
-  description = 'We design, build, and host a simple one-page website for your local business. Live in a day. No contracts. $35/month, cancel anytime.',
+  title = 'AlignCompass — Be the business they find when they Google you.',
+  description = 'We design and build your custom website — free to review before you ever pay a cent. Live in 7 days, $35–$65/mo for the first year, you own the files. Google Business Profile + Apple Maps included.',
   canonical = 'https://aligncompass.com/',
 } = Astro.props;
 ---
@@ -21,8 +21,16 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.pexels.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#0F172A" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -32,7 +40,84 @@ const {
     <meta name="twitter:description" content={description} />
     <meta name="generator" content={Astro.generator} />
   </head>
-  <body class="bg-stone-50 text-stone-800 font-sans antialiased">
+  <body class="bg-white text-slate-900 font-sans antialiased">
     <slot />
+    <script is:inline>
+      (() => {
+        if (typeof window === "undefined") return;
+        const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // Reveal-on-scroll
+        const revealEls = document.querySelectorAll(".reveal");
+        if (!("IntersectionObserver" in window) || reduceMotion) {
+          revealEls.forEach((el) => el.classList.add("in"));
+        } else {
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const e of entries) {
+                if (e.isIntersecting) {
+                  e.target.classList.add("in");
+                  io.unobserve(e.target);
+                }
+              }
+            },
+            { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+          );
+          revealEls.forEach((el) => io.observe(el));
+        }
+
+        // Hide-on-scroll-down sticky nav
+        const nav = document.querySelector(".scroll-nav");
+        if (nav) {
+          let lastY = window.scrollY;
+          let ticking = false;
+          window.addEventListener(
+            "scroll",
+            () => {
+              if (ticking) return;
+              requestAnimationFrame(() => {
+                const y = window.scrollY;
+                const delta = y - lastY;
+                if (y < 100) {
+                  nav.classList.remove("nav-hidden");
+                } else if (delta > 6) {
+                  nav.classList.add("nav-hidden");
+                } else if (delta < -6) {
+                  nav.classList.remove("nav-hidden");
+                }
+                lastY = y;
+                ticking = false;
+              });
+              ticking = true;
+            },
+            { passive: true }
+          );
+        }
+
+        // Flip cards (audience portraits) — only one open at a time
+        const flipCards = document.querySelectorAll(".flip-card");
+        flipCards.forEach((card) => {
+          card.addEventListener("click", () => {
+            const isOpening = !card.classList.contains("is-flipped");
+            if (isOpening) {
+              flipCards.forEach((other) => {
+                if (other !== card && other.classList.contains("is-flipped")) {
+                  other.classList.remove("is-flipped");
+                  other.setAttribute("aria-pressed", "false");
+                }
+              });
+            }
+            const flipped = card.classList.toggle("is-flipped");
+            card.setAttribute("aria-pressed", String(flipped));
+          });
+          card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              card.click();
+            }
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
