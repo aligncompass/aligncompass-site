@@ -7,14 +7,14 @@
     { "source": "/digital-nomad", "destination": "/digital-nomad/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/marlen-fajo/", "destination": "https://marlen-fajo.aligncompass.com/" },
-    { "source": "/marlen-fajo/:path*", "destination": "https://marlen-fajo.aligncompass.com/:path*" },
-    { "source": "/sozo/", "destination": "https://sozo.aligncompass.com/" },
-    { "source": "/sozo/:path*", "destination": "https://sozo.aligncompass.com/:path*" },
-    { "source": "/walkthroughshield/", "destination": "https://walkthroughshield.aligncompass.com/" },
-    { "source": "/walkthroughshield/:path*", "destination": "https://walkthroughshield.aligncompass.com/:path*" },
-    { "source": "/filippoentufiesta/", "destination": "https://filippo.aligncompass.com/" },
-    { "source": "/filippoentufiesta/:path*", "destination": "https://filippo.aligncompass.com/:path*" },
+    { "source": "/marlen-fajo/", "destination": "https://marlen-fajo.vercel.app/" },
+    { "source": "/marlen-fajo/:path*", "destination": "https://marlen-fajo.vercel.app/:path*" },
+    { "source": "/sozo/", "destination": "https://sozo-teal.vercel.app/" },
+    { "source": "/sozo/:path*", "destination": "https://sozo-teal.vercel.app/:path*" },
+    { "source": "/walkthroughshield/", "destination": "https://walkthroughshield.vercel.app/" },
+    { "source": "/walkthroughshield/:path*", "destination": "https://walkthroughshield.vercel.app/:path*" },
+    { "source": "/filippoentufiesta/", "destination": "https://filippo-en-tu-fiesta.vercel.app/" },
+    { "source": "/filippoentufiesta/:path*", "destination": "https://filippo-en-tu-fiesta.vercel.app/:path*" },
     { "source": "/digital-nomad/", "destination": "https://aligncompass.github.io/Digital-Nomad/" },
     { "source": "/digital-nomad/:path*", "destination": "https://aligncompass.github.io/Digital-Nomad/:path*" }
   ]
