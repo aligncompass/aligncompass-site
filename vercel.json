@@ -15,7 +15,7 @@
     { "source": "/walkthroughshield/:path*", "destination": "https://walkthroughshield.vercel.app/:path*" },
     { "source": "/filippoentufiesta/", "destination": "https://filippo-en-tu-fiesta.vercel.app/" },
     { "source": "/filippoentufiesta/:path*", "destination": "https://filippo-en-tu-fiesta.vercel.app/:path*" },
-    { "source": "/digital-nomad/", "destination": "https://aligncompass.github.io/Digital-Nomad/" },
-    { "source": "/digital-nomad/:path*", "destination": "https://aligncompass.github.io/Digital-Nomad/:path*" }
+    { "source": "/digital-nomad/", "destination": "https://digital-nomad-eight.vercel.app/" },
+    { "source": "/digital-nomad/:path*", "destination": "https://digital-nomad-eight.vercel.app/:path*" }
   ]
 }
