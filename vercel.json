@@ -1,7 +1,6 @@
 {
   "redirects": [
     { "source": "/marlen-fajo", "destination": "/marlen-fajo/", "permanent": true },
-    { "source": "/sozo", "destination": "/sozo/", "permanent": true },
     { "source": "/walkthroughshield", "destination": "/walkthroughshield/", "permanent": true },
     { "source": "/filippoentufiesta", "destination": "/filippoentufiesta/", "permanent": true },
     { "source": "/digital-nomad", "destination": "/digital-nomad/", "permanent": true }
@@ -9,8 +8,6 @@
   "rewrites": [
     { "source": "/marlen-fajo/", "destination": "https://marlen-fajo.vercel.app/" },
     { "source": "/marlen-fajo/:path*", "destination": "https://marlen-fajo.vercel.app/:path*" },
-    { "source": "/sozo/", "destination": "https://sozo-teal.vercel.app/" },
-    { "source": "/sozo/:path*", "destination": "https://sozo-teal.vercel.app/:path*" },
     { "source": "/walkthroughshield/", "destination": "https://walkthroughshield.vercel.app/" },
     { "source": "/walkthroughshield/:path*", "destination": "https://walkthroughshield.vercel.app/:path*" },
     { "source": "/filippoentufiesta/", "destination": "https://filippo-en-tu-fiesta.vercel.app/" },
