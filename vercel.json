@@ -24,6 +24,11 @@
       "source": "/prudence",
       "destination": "/prudence/",
       "permanent": true
+    },
+    {
+      "source": "/autonomia",
+      "destination": "/autonomia/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -66,6 +71,14 @@
     {
       "source": "/prudence/:path*",
       "destination": "https://prudence-delta.vercel.app/prudence/:path*"
+    },
+    {
+      "source": "/autonomia/",
+      "destination": "https://autonomia-pi.vercel.app/autonomia/"
+    },
+    {
+      "source": "/autonomia/:path*",
+      "destination": "https://autonomia-pi.vercel.app/autonomia/:path*"
     }
   ]
 }
