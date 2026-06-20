@@ -1,17 +1,17 @@
 {
   "meta": {
     "businessName": "AlignCompass",
-    "businessType": "lead-capture and reactivation service for local home-service businesses",
+    "businessType": "done-for-you lead capture, reactivation and automation for local home-service businesses",
     "slug": "aligncompass",
     "base": "/",
     "siteUrl": "https://aligncompass.com",
     "lang": "en",
-    "tagline": "We text back every missed call and re-book your past customers, so you fill your schedule without renting another ad. Free website, pay when it works."
+    "tagline": "You do the work you love. We put everything you can't get to on autopilot — missed calls, past customers, reviews, repeat work. Free website, pay when it works."
   },
   "nap": {
     "name": "AlignCompass",
     "email": "aligncompass@gmail.com",
-    "hours": "By appointment, remote",
+    "hours": "By appointment — book a call below",
     "serviceArea": "Local home-service businesses across the United States"
   },
   "cloudinary": {
@@ -29,25 +29,25 @@
   },
   "design": {
     "colors": {
-      "primary": "#16202e",
+      "primary": "#004741",
       "primaryContrast": "#ffffff",
-      "accent": "#0f766e",
+      "accent": "#00695a",
       "accentContrast": "#ffffff",
-      "bg": "#ffffff",
-      "bgMuted": "#f6f7f8",
-      "surface": "#eef1f4",
-      "text": "#16202e",
-      "textMuted": "#52606d",
-      "border": "#dfe3e8"
+      "bg": "#f0ede4",
+      "bgMuted": "#e7e2d6",
+      "surface": "#ffffff",
+      "text": "#13302b",
+      "textMuted": "#586b64",
+      "border": "#d8d2c4"
     },
     "fonts": {
       "heading": "'Archivo', system-ui, sans-serif",
       "body": "'Inter', system-ui, sans-serif",
-      "googleFontsHref": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      "googleFontsHref": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&display=swap"
     },
     "scale": {
       "radius": "0.375rem",
-      "shadow": "0 1px 2px rgba(22,32,46,0.06), 0 10px 28px rgba(22,32,46,0.06)",
+      "shadow": "0 1px 2px rgba(0,71,65,0.06), 0 10px 28px rgba(0,71,65,0.08)",
       "maxWidth": "72rem"
     },
     "motion": {
@@ -58,8 +58,8 @@
   },
   "cta": {
     "primary": {
-      "label": "Book your free setup call",
-      "href": "#book"
+      "label": "Book a free call",
+      "href": "/contact#book"
     },
     "transitional": {
       "label": "Get your free missed-revenue audit",
@@ -97,14 +97,14 @@
       "slug": "index",
       "path": "/",
       "seo": {
-        "title": "Never Miss Another Job Call | AlignCompass",
-        "description": "Local service pros lose ~$1,000/week to missed calls. AlignCompass texts back every missed call and re-books past customers — free website, pay when it works.",
-        "h1": "Stop losing jobs to the calls you can't answer.",
+        "title": "Put What You Can't Get To on Autopilot | AlignCompass",
+        "description": "You're great with customers — you just can't answer with your hands full. AlignCompass texts back missed calls, re-books past customers, and gets you reviews. Pay when it works.",
+        "h1": "Do the work you love. We'll catch everything you can't get to.",
         "keywords": [
           "missed call text back for contractors",
-          "lead capture for home service businesses",
-          "get more booked jobs",
-          "HVAC missed call recovery"
+          "customer reactivation for home service",
+          "automated reviews for local business",
+          "done for you marketing for trades"
         ]
       },
       "schema": {
@@ -113,55 +113,59 @@
       "sections": [
         {
           "type": "hero",
-          "eyebrow": "For local home-service owners",
-          "headline": "Stop losing jobs to the calls you can't answer.",
-          "subhead": "We set up a system that texts back every missed call in seconds and wins back the customers you already earned — so you fill your schedule without renting another ad. Your website's free. You only pay when it pays for itself.",
+          "eyebrow": "For owners who love the work — and the customers",
+          "headline": "Do the work you love. We'll catch everything you can't get to.",
+          "subhead": "You're under a house, mid-contract, elbow-deep in a furnace — you can't answer every call, chase every old customer, or ask for every review. So we put all of it on autopilot: missed calls texted back in seconds, past customers re-booked, reviews handled — landing right in the system you already use. Your website's free. You only pay once it pays for itself.",
           "image": {
             "publicId": "aligncompass-site/hero-owner-on-job",
-            "alt": "HVAC owner working under a unit while a new booking notification lights up the phone in their hand",
+            "alt": "Home-service owner working a job while a new booking notification lights up the phone in their hand",
             "focal": "center-right on the phone screen"
           }
         },
         {
           "type": "stakes",
-          "heading": "Every missed call is a job walking out the door.",
+          "heading": "You can't be two places at once. Right now that's costing you.",
           "items": [
-            "Miss 10 calls a week and that's roughly $1,000 a week gone — straight to the competitor who picked up.",
-            "85% of people who hit your voicemail never call back. They just call the next guy on the list.",
-            "Meanwhile, the customers you already served are being re-won by whoever markets to them first — while you're heads-down on a job."
+            "Miss a handful of calls a week and that's easily a thousand dollars walking to whoever picked up — about 85% of people who hit your voicemail never call back.",
+            "The customers you already wowed forget your name within a year and call a competitor — even though they were yours to keep.",
+            "Every review you didn't get around to asking for is a customer who picks the shop with more stars than you."
           ]
         },
         {
           "type": "value",
-          "heading": "Here's what we do.",
+          "heading": "Everything you can't get to, handled.",
           "items": [
             {
-              "title": "Get found",
-              "body": "Show up first when someone nearby searches for what you do — with a fast website and a dialed-in Google Business Profile. (Free.)"
+              "title": "Answer every call — even the ones you miss",
+              "body": "The second you can't pick up, the caller gets a real text back: \"Sorry we missed you — what do you need?\" Not a robot answering the phone. Nobody replies to those. People reply to a text. The job stays yours instead of going to the next name on the list."
             },
             {
-              "title": "Never lose a lead",
-              "body": "Every missed call gets a text back in seconds, so the job doesn't go to the next guy — plus reminders that cut no-shows."
+              "title": "Wake up the customers you already earned",
+              "body": "They're sitting in your spreadsheet or your Jobber. You should call them — but who has the time? We warm them up first by text and email, so the ones who are ready raise their hand. Then you spend your time only on the customers who actually want to book."
             },
             {
-              "title": "Win back customers",
-              "body": "We wake up the customers you already served — timed \"you're due\" nudges that turn old jobs into new ones."
+              "title": "Get more 5-star reviews — and stop the bad ones cold",
+              "body": "Reviews are how you keep winning. After a good job your customer gets a one-tap ask, so you never leave a five-star on the table. And if someone's unhappy, we catch it privately — before it ever lands in public."
             },
             {
-              "title": "…and we grow with you",
-              "body": "As you scale, we build whatever gets you more booked jobs — easy booking, referrals, and more."
+              "title": "Bring back the work that repeats",
+              "body": "The tune-up they need in six months. The service that comes due every year. We nudge them at the right moment, so repeat work shows up on your calendar without a contract — and without you chasing it."
+            },
+            {
+              "title": "Need something custom? We build it.",
+              "body": "We've built booking apps where customers pick their passengers and bags and the next driver gets pinged to accept the ride — round-robin, automatic. We write blogs that pull homeowners in. If it gets you more booked work, we'll build it. (Social media isn't our thing right now — we'll always tell you straight what we do and don't do.)"
             }
           ]
         },
         {
           "type": "guide",
-          "heading": "You do the work. We catch the business it creates.",
-          "empathy": "You can't answer the phone with your arm in a furnace. And you've been burned before — sold \"4,000 impressions\" by an agency that vanished. You don't need more noise. You need the jobs you're already earning to actually land.",
+          "heading": "We're picky about who we work with — in a good way.",
+          "empathy": "We're not for the owner who hates dealing with people and wants a machine to run the whole thing. We're for you: the one who loves your customers and takes pride in the work — you just can't do it with your hand in a furnace or your name on a contract. Your cousin isn't answering the phone. A front desk is a payroll you don't want yet. So what do you do? You put your business on autopilot. You handle everything you can — and the moment you can't get to something, that's where we come in.",
           "authority": [
-            "Pay-when-it-works — you don't pay until it covers itself (~60 days)",
-            "Results as booked jobs in your own system, not vanity metrics",
+            "Pay-when-it-works — you don't pay until it covers itself (about 60 days)",
+            "Everything shows up as real booked jobs in the system you already use — not impressions",
             "Built and run by a working business analyst, not a template reseller",
-            "We do 100% of the setup — your data stays yours"
+            "We do 100% of the setup, and your customers and data stay yours"
           ],
           "image": {
             "publicId": "aligncompass-site/guide-analyst-attribution",
@@ -172,29 +176,29 @@
         {
           "type": "plan",
           "id": "how-it-works",
-          "heading": "Three steps to a schedule that fills itself.",
+          "heading": "Getting started is the easy part.",
           "steps": [
             {
-              "title": "We build your site and switch on call recovery",
-              "body": "A free, fast website that gets you found — and every missed call gets an instant text back."
+              "title": "We build your free site and switch on call recovery",
+              "body": "A fast website that gets you found on Google — free — and an instant text back on every call you can't grab."
             },
             {
-              "title": "We wake up your past customers",
-              "body": "Timed \"you're due\" resells and \"call me first when it breaks,\" sent to the customers you already earned."
+              "title": "We bring your past customers back to life",
+              "body": "We pull your list for you — most owners can't export it themselves — then warm them up so the ready ones come back first."
             },
             {
-              "title": "The jobs land in your own system",
-              "body": "You see exactly what we recovered, right in the tools you already use. Point at a job and say, \"that one came from the system.\""
+              "title": "The work lands where you already work",
+              "body": "Recovered calls, re-booked customers, new reviews, repeat jobs — all in the tools you already use. Point at a job and say, \"that one came from the system.\""
             }
           ]
         },
         {
           "type": "value",
-          "heading": "Why missed calls and forgotten customers cost you more than any ad ever will",
+          "heading": "Why the work you're already earning is leaking — and how we plug it",
           "items": [
             {
-              "title": "The demand is already yours — you're just leaking it",
-              "body": "Most local service businesses miss somewhere between a fifth and a third of their inbound calls — and solo operators miss far more, because you're on the job, not by the phone. Of the people who reach voicemail, about 85% never call back. That's not a marketing problem you fix by buying more leads; it's a capture problem. On top of that, roughly 43% of a typical customer list has gone quiet — 18+ months with no booking — even though re-booking a past customer converts at 60–70%, versus 5–20% for a cold lead. And since the Google Map Pack drives over half of local-service search traffic, being easy to find and instant to answer is where the booked jobs actually come from. AlignCompass plugs both leaks: missed-call text-back so no caller slips away, and past-customer reactivation so your own list goes back to work — measured in real booked jobs, not impressions."
+              "title": "The demand is already yours. You're just losing it to a gap in your day.",
+              "body": "Most local service businesses miss somewhere between a fifth and a third of their inbound calls — and solo operators miss far more, because you're on the job, not by the phone. Of the people who reach voicemail, about 85% never call back. That's not a problem you fix by buying more leads; it's a capture problem. On top of that, roughly 43% of a typical customer list has gone quiet — 18+ months with no booking — even though re-booking a past customer converts at 60–70%, versus 5–20% for a cold lead. And since the Google Map Pack drives over half of local-service search traffic, being easy to find and instant to answer is where booked jobs actually come from. AlignCompass plugs every leak: missed-call text-back so no caller slips away, reactivation so your own list goes back to work, and review and repeat-work automations that keep the flywheel turning — all measured in real booked jobs, not impressions."
             }
           ]
         },
@@ -203,8 +207,8 @@
           "heading": "The two questions every owner asks",
           "items": [
             {
-              "q": "\"I already get enough leads through Google and Jobber — why pay extra?\"",
-              "a": "You're not buying more leads. You're keeping the ones you already paid for. Most owners are quietly losing a fifth to a third of their calls and letting their past customers go cold. This captures that — and you see it as booked jobs, not a vague promise."
+              "q": "\"I already stay busy enough — why do I need this?\"",
+              "a": "Because busy and full aren't the same. You're still missing calls while you work, still letting past customers go cold, still leaving reviews unasked. This isn't more leads — it's keeping the business you already earn, and you see it as booked jobs, not a vague promise."
             },
             {
               "q": "\"Is this just another recurring fee?\"",
@@ -220,20 +224,22 @@
             "Free SEO website + Google Business Profile — yours to keep",
             "Missed-call text-back + appointment reminders",
             "Past-customer reactivation campaigns",
+            "Automated 5-star review asks (and bad-review interception)",
+            "Repeat-work reminders for tune-ups and recurring service",
             "Booked-job attribution in your own system",
             "We do all the setup — including pulling your customer list for you",
             "Pay-when-it-works guarantee (~60 days)",
             "Founding clients pay near cost for the first few slots in exchange for a testimonial"
           ],
           "cta": {
-            "label": "Book your free setup call",
-            "href": "#book"
+            "label": "Book a free call",
+            "href": "/contact#book"
           }
         },
         {
           "type": "contact",
           "heading": "Want to see what you're leaving on the table?",
-          "body": "Book a free 15-minute setup call, or get a free missed-revenue audit that shows — in your own numbers — what unanswered calls and a cold customer list are costing you.",
+          "body": "Book a free 15-minute call, or get a free missed-revenue audit that shows — in your own numbers — what unanswered calls and a cold customer list are costing you.",
           "form": {
             "enabled": false
           },
@@ -246,14 +252,14 @@
       "slug": "services",
       "path": "/services",
       "seo": {
-        "title": "Lead Capture & Reactivation Services | AlignCompass",
-        "description": "What AlignCompass does for local service businesses: get found on Google, text back every missed call, and re-book past customers — measured in booked jobs.",
+        "title": "What We Do: Capture, Reactivate, Automate | AlignCompass",
+        "description": "AlignCompass handles the work you can't get to: missed-call text-back, past-customer reactivation, automated reviews, repeat-work reminders, and custom builds — measured in booked jobs.",
         "h1": "Everything we do points at one thing: more booked jobs.",
         "keywords": [
           "missed call text back service",
           "past customer reactivation",
-          "lead capture system for contractors",
-          "Google Business Profile optimization"
+          "automated review generation",
+          "custom booking app for service business"
         ]
       },
       "schema": {
@@ -264,7 +270,7 @@
           "type": "hero",
           "eyebrow": "What we do",
           "headline": "Everything we do points at one thing: more booked jobs.",
-          "subhead": "We get you found, make sure you never lose a lead, and keep your customers coming back. The engine is the core — and as you grow, we build whatever wins you more work.",
+          "subhead": "We catch the calls you miss, wake up the customers you already earned, keep the reviews coming, and bring back the work that repeats. The capture engine is the core — and when you need something custom, we build it.",
           "image": {
             "publicId": "aligncompass-site/services-calendar-filling",
             "alt": "A service business calendar filling up with booked jobs over the week",
@@ -277,51 +283,41 @@
           "items": [
             {
               "title": "Get found",
-              "body": "The problem: you're not showing up when neighbors search for what you do. What we do: build you a fast, SEO-strong website and dial in your Google Business Profile. The outcome: you show up first when someone nearby needs you — and the site is free."
+              "body": "The problem: you don't show up when neighbors search for what you do. What we do: build you a fast, SEO-strong website and dial in your Google Business Profile. The outcome: you show up first when someone nearby needs you — and the site is free."
             },
             {
-              "title": "Never lose a lead",
-              "body": "The problem: you're on a job, the phone rings, and the caller is gone before you surface. What we do: every missed call gets a text back in seconds, plus reminders that cut no-shows. The outcome: the job doesn't go to the next guy."
+              "title": "Answer every call — even the ones you miss",
+              "body": "The problem: you're on a job, the phone rings, and the caller is gone before you surface. What we do: every missed call gets a real text back in seconds — not a robot — plus reminders that cut no-shows. The outcome: the job doesn't go to the next guy on the list."
             },
             {
-              "title": "Win back customers",
-              "body": "The problem: the customers you already served drift to whoever markets to them next. What we do: timed \"you're due\" and \"call me first\" campaigns to your existing list. The outcome: old jobs turn into new ones — at far better odds than chasing cold leads."
+              "title": "Wake up your past customers",
+              "body": "The problem: the customers you already served drift to whoever markets to them next. What we do: warm up your list by text and email so the ready ones raise their hand. The outcome: old jobs turn into new ones — and you only call the people who actually want to book."
             },
             {
-              "title": "The free-site capstone",
-              "body": "We're building you the system anyway — so the website it all lives on is free. It proves we can do the work before you pay a cent."
+              "title": "Get more reviews, catch the bad ones",
+              "body": "The problem: your best jobs never turn into the reviews that win the next customer. What we do: a one-tap review ask after every good job, with unhappy customers routed to you privately first. The outcome: more 5-star reviews, fewer public surprises."
+            },
+            {
+              "title": "Bring back the work that repeats",
+              "body": "The problem: tune-ups and yearly service quietly slip because nobody reminds the customer. What we do: timed \"you're due\" nudges to the right people at the right moment. The outcome: recurring revenue without a contract and without you chasing it."
             }
           ]
         },
         {
           "type": "value",
-          "heading": "Stack it stronger",
+          "heading": "Need something custom? We build that too.",
           "items": [
             {
-              "title": "More eyes on you",
-              "body": "Content that pulls homeowners in before they even pick up the phone — so you're the name they already trust when something breaks."
+              "title": "Custom booking apps",
+              "body": "Real software when you need it. We've built booking apps where customers choose passengers and bags, then the next available driver gets pinged to accept the ride — round-robin, automatic. If your business needs a way for customers to book and your team to dispatch, we'll build it."
             },
             {
-              "title": "Your best customers, selling for you",
-              "body": "We turn the people who already love your work into your best source of referrals — on autopilot."
-            }
-          ]
-        },
-        {
-          "type": "value",
-          "heading": "…and we grow with you (where we're headed, not promised today)",
-          "items": [
-            {
-              "title": "Book in two taps",
-              "body": "As you scale, your customers book you straight from their phone — no phone tag, fewer clicks to the sale."
+              "title": "Business automations",
+              "body": "The follow-up before an appointment. The reminder six months later. The \"thanks for your business\" that quietly asks for the next job. We wire up the little touches that win repeat work — so they happen whether or not you remember."
             },
             {
-              "title": "On their home screen",
-              "body": "Down the road, your business one tap away on your customer's phone — the shortest path from \"I need this\" to \"booked.\""
-            },
-            {
-              "title": "Sell directly",
-              "body": "For the businesses that sell products: sell right from your site, no middleman. (Situational — not core for the trades.)"
+              "title": "Content that pulls customers in",
+              "body": "We write blogs that bring homeowners to you before they even pick up the phone — so you're the name they already trust when something breaks. (Social media isn't part of what we do right now — we'll tell you straight.)"
             }
           ]
         },
@@ -333,13 +329,15 @@
             "Free SEO website + Google Business Profile",
             "Missed-call text-back + appointment reminders",
             "Past-customer reactivation",
+            "Automated review asks + bad-review interception",
+            "Repeat-work and recurring-service reminders",
             "Booked-job attribution in your own system",
             "Done-for-you setup, including your customer-list export",
             "Pay-when-it-works guarantee (~60 days)"
           ],
           "cta": {
-            "label": "Book your free setup call",
-            "href": "#book"
+            "label": "Book a free call",
+            "href": "/contact#book"
           }
         },
         {
@@ -415,7 +413,7 @@
             },
             {
               "title": "You decide",
-              "body": "Keep the numbers and do nothing, or book a free setup call to plug the leaks. No pressure."
+              "body": "Keep the numbers and do nothing, or book a free call to plug the leaks. No pressure."
             }
           ]
         },
@@ -464,11 +462,11 @@
       "path": "/about",
       "seo": {
         "title": "About AlignCompass | Built by an Analyst, Not a Reseller",
-        "description": "AlignCompass is run by a working business analyst who proves ROI in your own booked jobs — not impressions. Built for local home-service owners. Meet us.",
-        "h1": "We built this for the owner who's sick of paying for impressions.",
+        "description": "AlignCompass is run by a working business analyst who proves ROI in your own booked jobs — not impressions. For owners who love the work but can't be two places at once.",
+        "h1": "For owners who love the work — and can't be two places at once.",
         "keywords": [
           "about AlignCompass",
-          "lead capture partner for contractors",
+          "done for you marketing for contractors",
           "business analyst marketing for home service"
         ]
       },
@@ -479,8 +477,8 @@
         {
           "type": "hero",
           "eyebrow": "Who we are",
-          "headline": "We built this for the owner who's sick of paying for impressions.",
-          "subhead": "You've been pitched before. You got a report full of numbers that didn't matter and a bill that did. AlignCompass is the opposite of that.",
+          "headline": "For owners who love the work — and can't be two places at once.",
+          "subhead": "You've been pitched before — a report full of numbers that didn't matter and a bill that did. AlignCompass is the opposite of that. We're for the owner who loves their customers and takes pride in the job, and just needs the rest to run itself.",
           "image": {
             "publicId": "aligncompass-site/about-operator",
             "alt": "A focused operator reviewing real booked-job numbers on a laptop",
@@ -490,11 +488,12 @@
         {
           "type": "guide",
           "heading": "Why this exists",
-          "empathy": "We've watched good owners do everything right — show up, do great work, earn a real reputation — and still bleed money to a gap in their system. The phone rings while they're under a house. A customer they wowed two years ago forgets the name and calls a competitor. It's not a hustle problem. It's a capture problem. And it's fixable.",
+          "empathy": "We've watched good owners do everything right — show up, do great work, earn a real reputation — and still bleed money to a gap in their day. The phone rings while they're under a house. A customer they wowed two years ago forgets the name and calls a competitor. Your cousin doesn't answer the phone, and a front desk is a payroll you don't want yet. It's not a hustle problem. It's a capture problem. So we put the parts you can't get to on autopilot: you handle everything you can, and the moment you can't, that's us.",
           "authority": [
             "Run by a working business analyst — you see what we recover as booked jobs, not impressions",
             "Outcome-first: the website's free, and you don't pay for the engine until it pays for itself",
-            "No spend treadmill — we make the demand you already have actually convert"
+            "No spend treadmill — we make the demand you already have actually convert",
+            "We work with owners who love their customers, not owners trying to avoid them"
           ],
           "image": {
             "publicId": "aligncompass-site/about-attribution-report",
@@ -508,7 +507,7 @@
           "items": [
             {
               "title": "Straight talk",
-              "body": "Plain numbers, no jargon, no vanity metrics. If something isn't working, you'll hear it from us first."
+              "body": "Plain numbers, no jargon, no vanity metrics. We'll tell you what we do and don't do — and if something isn't working, you'll hear it from us first."
             },
             {
               "title": "Skin in the game",
@@ -523,7 +522,7 @@
         {
           "type": "contact",
           "heading": "Let's see if this fits.",
-          "body": "Book a free 15-minute setup call, or start with a free missed-revenue audit.",
+          "body": "Book a free 15-minute call, or start with a free missed-revenue audit.",
           "form": {
             "enabled": false
           },
@@ -537,7 +536,7 @@
       "path": "/faq",
       "seo": {
         "title": "AlignCompass FAQ | Pricing, Guarantee & How It Works",
-        "description": "Answers on pricing, the pay-when-it-works guarantee, \"I already get enough leads,\" and how AlignCompass recovers missed calls and re-books past customers.",
+        "description": "Answers on pricing, the pay-when-it-works guarantee, what's included, and how AlignCompass recovers missed calls, re-books past customers, and automates reviews.",
         "h1": "Questions owners ask before they say yes.",
         "keywords": [
           "AlignCompass pricing",
@@ -559,8 +558,8 @@
           "type": "faq",
           "items": [
             {
-              "q": "I already get enough leads through Google and Jobber. Why pay extra?",
-              "a": "You're not buying more leads — you're keeping the ones you already paid for. Most owners quietly lose a fifth to a third of their calls and let past customers go cold. We capture both, and you see it as booked jobs in your own system, not a vague promise."
+              "q": "I already stay busy. Why do I need this?",
+              "a": "Busy and full aren't the same. While you're working you're still missing calls, still letting past customers go cold, still leaving reviews unasked. We capture all of it, and you see it as booked jobs in your own system — not a vague promise."
             },
             {
               "q": "Is this just another recurring fee that creeps onto my card?",
@@ -571,35 +570,39 @@
               "a": "$297/mo plus a one-time setup of about $500–800. Founding clients pay near cost for the first few slots in exchange for a testimonial."
             },
             {
+              "q": "Isn't this just an AI robot answering my phone?",
+              "a": "No. Nobody wants a robot picking up — and nobody replies to one. When you miss a call, the caller gets a real text back in seconds, so the conversation actually starts. People answer texts."
+            },
+            {
               "q": "What's the \"pay-when-it-works\" guarantee, exactly?",
-              "a": "We build the free site, switch on missed-call recovery, and reactivate your list. If that doesn't book enough to pay for itself in roughly 60 days, you don't start paying until it does."
+              "a": "We build the free site, switch on missed-call recovery, reactivate your list, and turn on reviews. If that doesn't book enough to pay for itself in roughly 60 days, you don't start paying until it does."
             },
             {
               "q": "What do I actually have to do?",
-              "a": "Almost nothing. We do 100% of the setup — including pulling your customer list for you, which most owners can't export themselves. Your only job is replying \"Y\" to a one-tap text after a good job."
+              "a": "Almost nothing. We do 100% of the setup — including pulling your customer list for you, which most owners can't export themselves. Your only job is replying to a one-tap text after a good job."
             },
             {
               "q": "How fast will I see results?",
               "a": "Often within the first week — the first recovered call can land quickly, and a reactivation blast to your existing list is fast cash once we import it. Text-back goes live as soon as carrier approval clears."
             },
             {
+              "q": "Can you build something custom for my business?",
+              "a": "Often, yes. Beyond the core engine we've built booking apps, dispatch tools, automations and blogs. If it gets you more booked work and it's a fit, we'll scope it with you honestly."
+            },
+            {
               "q": "Do you have case studies?",
-              "a": "We're a newer operation building our first founding-client results right now, so we lead with your own numbers — a free audit that shows what you're losing — rather than someone else's case study. The mechanisms (missed-call text-back and reactivation) are well-proven across the industry, and we back the whole thing with pay-when-it-works."
+              "a": "We're a newer operation building our first founding-client results right now, so we lead with your own numbers — a free audit that shows what you're losing — rather than someone else's case study. The mechanisms are well-proven across the industry, and we back the whole thing with pay-when-it-works."
             },
             {
               "q": "Who owns my website and my data?",
               "a": "You do. The site is yours to keep, and your customer data stays yours — always."
-            },
-            {
-              "q": "Do I have to switch the tools I already use?",
-              "a": "No. Results show up in the system you already work in. We fit around how you run your business."
             }
           ]
         },
         {
           "type": "contact",
           "heading": "Still have a question?",
-          "body": "Book a free setup call, or just email us — we answer straight.",
+          "body": "Book a free call, or just email us — we answer straight.",
           "form": {
             "enabled": false
           },
@@ -612,12 +615,12 @@
       "slug": "contact",
       "path": "/contact",
       "seo": {
-        "title": "Contact AlignCompass | Book Your Free Setup Call",
-        "description": "Ready to stop losing jobs to missed calls? Book a free setup call or send us a message. AlignCompass helps US local service businesses capture every lead.",
-        "h1": "Let's plug the leaks. Book your free setup call.",
+        "title": "Contact AlignCompass | Book Your Free Call",
+        "description": "Ready to put the work you can't get to on autopilot? Book a free call or send us a message. AlignCompass helps US local service businesses capture every lead.",
+        "h1": "Let's plug the leaks. Book your free call.",
         "keywords": [
           "contact AlignCompass",
-          "book free setup call",
+          "book free call",
           "lead capture for local service businesses"
         ]
       },
@@ -628,18 +631,18 @@
         {
           "type": "hero",
           "eyebrow": "Get in touch",
-          "headline": "Let's plug the leaks. Book your free setup call.",
+          "headline": "Let's plug the leaks. Book your free call.",
           "subhead": "A free 15-minute call — we'll look at where you're losing jobs and whether the engine's a fit. No pressure, no jargon.",
           "image": {
             "publicId": "aligncompass-site/contact-book-call",
-            "alt": "Phone calendar open to book a free 15-minute setup call",
+            "alt": "Phone calendar open to book a free 15-minute call",
             "focal": "center"
           }
         },
         {
           "type": "contact",
-          "heading": "Send us a message",
-          "body": "Prefer to type it out? Tell us about your business and we'll get right back to you. Or skip ahead and get your free missed-revenue audit.",
+          "heading": "Book a time or send a message",
+          "body": "Grab a free 15-minute call and we'll talk through where you're losing jobs — or type it out below and we'll get right back to you. Prefer to start smaller? Get your free missed-revenue audit first.",
           "form": {
             "enabled": true,
             "endpoint": "",
@@ -668,8 +671,8 @@
               "body": "Local home-service businesses across the United States. Based in Southwest Florida, run remotely."
             },
             {
-              "title": "Hours",
-              "body": "By appointment. Book a time that works for you."
+              "title": "Booking",
+              "body": "Pick a time that works for you — book a free 15-minute call and we'll take it from there."
             }
           ]
         }
@@ -677,15 +680,16 @@
     }
   ],
   "footer": {
-    "blurb": "AlignCompass — we text back every missed call and re-book your past customers, so US local home-service owners fill their schedule without renting another ad.",
+    "blurb": "AlignCompass puts the work you can't get to on autopilot — missed calls, past customers, reviews and repeat work — so US local home-service owners fill their schedule without renting another ad.",
     "showHours": true
   },
   "flags": [
-    "NAP incomplete: no phone number and no street address (service-area business, run remotely from Southwest Florida). Email-only NAP is consistent across all pages. Do not invent — supply a phone/booking link before launch.",
-    "No first-party proof: the proof/testimonials section is intentionally omitted site-wide. Lawyer testimonial + cousin's HVAC pilot numbers are pending — add a proof section once real.",
-    "CTAs are placeholders: primary 'Book your free setup call' -> #book; audit anchor -> #audit. No booking backend yet (Phase-4). Wire to a real booking link/Calendly before launch.",
-    "Forms post via mailto:aligncompass@gmail.com (endpoint empty). Add a real form endpoint (Formspree-style) before launch.",
-    "Founding-rate scarcity ('first few founding slots') is real but confirm exact slot count/window before publishing.",
-    "Base is '/' (apex root site), not a /slug/ subdir — this is the AlignCompass apex marketing site."
+    "Palette reskinned to Cyprus (#004741) + Sand (#F0EDE4) per Pedro's reference card; accent #00695a. Replaces the prior slate/teal. Fonts unchanged (Archivo/Inter).",
+    "Copy rewritten in Pedro's voice: broadened from missed-call-only to the 'autopilot for what you can't get to' frame (capture + reactivation + reviews + repeat work + custom builds); sharpened the 'who we work with' stance (owners who love customers, not those avoiding them).",
+    "Primary CTA now resolves to /contact#book (the real contact form) so buttons work site-wide. Booking-WIDGET embed still pending: drop the booking-platform scheduler URL in at the contact section + NAP 'Booking' item when ready.",
+    "NAP incomplete: no phone number yet. Email-only NAP. Do not invent — supply a phone before adding it.",
+    "No first-party proof: testimonials section intentionally omitted site-wide until real (founding-client results pending).",
+    "Forms post via mailto:aligncompass@gmail.com (endpoint empty). Add a real form endpoint (Formspree-style) for reliable delivery.",
+    "Base is '/' (apex root site). vercel.json customer rewrites preserved."
   ]
 }
