@@ -66,9 +66,25 @@ const ogImg = ogImage
 // "zips and zaps" around the page. Asset ids are constants (the compass motif is
 // fixed for this site); platform stays Cloudinary, asset stays the Higgsfield one.
 const compassStillId = 'aligncompass-site/compass-solid-still';
-const compassVideoId = 'aligncompass-site/compass-solid-loop';
+// The roaming compass video is now driven by content.json design.compassCinematic
+// (the cinematic open/spin/slam asset). It defaults to the existing solid loop so
+// preview works today; swap design.compassCinematic to the cinematic id when ready.
+// design.* poster still is unchanged.
+const compassVideoId = design.compassCinematic || 'aligncompass-site/compass-solid-loop';
 const compassStill = cldUrl(cloudinary.cloudName, compassStillId, { width: 900, transforms: 'f_auto,q_auto' });
 const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 900 });
+
+// ── GTM landscape band (footer) ─────────────────────────────────────────────
+// A full-width cinematic "go-to-market landscape you traverse" band fused above
+// the footer. Driven by content.json design.gtmLandscape (a Cloudinary video
+// public id). If the video fails / is missing, a dark CSS topographic backdrop
+// (.ac-gtm-fallback) shows through so the band always looks intentional.
+const gtmLandscapeId = design.gtmLandscape || '';
+const gtmLandscape = gtmLandscapeId
+  ? cldVideoUrl(cloudinary.cloudName, gtmLandscapeId, { width: 1920 })
+  : '';
+// Primary CTA reused in the band (the same one used site-wide).
+const gtmCta = content.cta?.primary;
 ---
 <!doctype html>
 <html lang={meta.lang || 'en'}>
@@ -127,6 +143,15 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
     )}
   </head>
   <body>
+    {/* ── SECTION DEEP-TINT BACKGROUND ─────────────────────────────────────
+        Fixed, full-viewport color wash that sits BEHIND the roaming compass
+        (z-index:-1; compass layer is 0, content is 10). Its color is a CSS
+        custom property (--ac-tint) lerped by the rAF scroll loop through a
+        sequence of deep-tinted near-blacks — one per major section — so the
+        page background settles into a new deep tint as each section arrives.
+        Tints are very dark (AA-safe with Bone-White type). aria-hidden. */}
+    <div id="ac-tint" class="ac-tint" aria-hidden="true"></div>
+
     {/* ── ROAMING COMPASS ──────────────────────────────────────────────────
         Single persistent compass that roams the whole page on scroll. Fixed
         full-viewport layer behind all content (z-index 0; page content is z-10).
@@ -167,6 +192,53 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
     <main id="main">
       <slot />
     </main>
+
+    {/* ── GTM LANDSCAPE BAND ────────────────────────────────────────────────
+        Full-width cinematic band fused above the footer: a landscape the
+        visitor appears to traverse, dramatizing "we help you navigate the
+        go-to-market landscape." A muted/looping/playsinline <video> (Cloudinary,
+        design.gtmLandscape) plays under a dark gradient scrim with short GTM
+        copy + the primary CTA. If the video can't load, the .ac-gtm-fallback
+        steel-blue contour backdrop carries the band. The roaming compass'
+        final waypoint lands in this band, as if leading along the path.
+        Decorative media is aria-hidden; the copy is real content. */}
+    <section id="ac-gtm" class="ac-gtm" aria-labelledby="ac-gtm-title">
+      {/* Always-present dark topographic fallback (cool steel-blue contours). */}
+      <div class="ac-gtm-fallback" aria-hidden="true"></div>
+      {gtmLandscape && (
+        <video
+          id="ac-gtm-video"
+          class="ac-gtm-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src={gtmLandscape} type="video/mp4" />
+        </video>
+      )}
+      {/* Legibility scrim so the overlaid copy stays AA over the landscape. */}
+      <div class="ac-gtm-scrim" aria-hidden="true"></div>
+      <div class="ac-gtm-inner">
+        <p class="ac-label text-ink/70">The go-to-market landscape</p>
+        <h2 id="ac-gtm-title" class="ac-heading mt-4 text-ink">
+          We chart the route — you do the work you love.
+        </h2>
+        <p class="ac-subhead mt-6 max-w-2xl text-ink/80">
+          Reviews, missed calls, past customers, the path to getting found — it's
+          easy to get lost out there. We map every avenue that gets you paid and
+          walk it for you, so you stay on the job and the booked work keeps coming.
+        </p>
+        {gtmCta && (
+          <div class="mt-9">
+            <a href={gtmCta.href} class="ac-ghost ac-ghost--accent">{gtmCta.label}</a>
+          </div>
+        )}
+      </div>
+    </section>
+
     <Footer content={content} />
 
     <script>
@@ -191,23 +263,25 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
     </script>
 
     <script>
-      // ── ROAMING COMPASS: scroll-driven motion ──────────────────────────────
-      // A single compass "zips and zaps" between waypoints as the page scrolls.
-      // We compute scroll progress p (0 at top → 1 at bottom), find which two
-      // waypoints we're between, ease the local segment fraction, and lerp the
-      // (x, y, scale, rotate, opacity) values. The result is written to a single
-      // transform + opacity on the inner element inside requestAnimationFrame so
-      // it stays GPU-friendly and never blocks the scroll thread.
+      // ── CINEMATIC SCROLL CHOREOGRAPHY ──────────────────────────────────────
+      // One rAF loop drives three synced layers as the page scrolls:
+      //   1) SECTION DEEP-TINT — the fixed #ac-tint background washes through a
+      //      sequence of deep-tinted near-blacks, one per major section, with a
+      //      "hold then snap/settle" ease at each boundary so the tint locks in.
+      //   2) ROAMING COMPASS — the single compass drifts calmly through each
+      //      section, then PUNCHES (quick scale-up + a touch of rotation + a
+      //      forward "slam") exactly at each section boundary, landing as the
+      //      tint snaps, then settles. Final waypoint lands in the GTM band.
+      //   3) (compass video itself carries the open/spin/slam motion — swapped
+      //      in via design.compassCinematic.)
       //
-      // Waypoints are expressed in viewport units relative to the layer centre:
-      //   x/y are vw/vh offsets from centre (so the path is responsive),
-      //   scale is multiplier, rot is degrees, op is opacity.
-      // The eased path (hero → lower-left → top-right → centre → right → exit)
-      // gives the playful "darting around the page" feel while keeping the
-      // compass behind dense text at lower opacity.
+      // Everything is transform/opacity + one CSS color var, written inside a
+      // single rAF, GPU-friendly, with will-change set. Reduced-motion = static
+      // still + first tint, no motion. Mobile = calmer/smaller motion.
       (function () {
         const layer = document.getElementById('ac-roam');
         const el = document.getElementById('ac-roam-compass');
+        const tint = document.getElementById('ac-tint');
         const video = document.getElementById('ac-roam-video');
         const still = document.getElementById('ac-roam-still');
         if (!layer || !el) return;
@@ -215,55 +289,114 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
         const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
         const mqSmall = window.matchMedia('(max-width: 767px)');
 
-        // Keyframe waypoints across scroll progress (t: 0→1). x = vw offset,
-        // y = vh offset from viewport centre; s = scale; r = rotation deg; o = opacity.
-        const WAYPOINTS = [
-          { t: 0.0, x: 24, y: -4, s: 1.0, r: -8, o: 0.95 }, // hero: right-of-centre, large
-          { t: 0.22, x: -30, y: 18, s: 0.62, r: 26, o: 0.7 }, // darts to lower-left, smaller
-          { t: 0.44, x: 30, y: -22, s: 0.78, r: -34, o: 0.78 }, // zips to top-right
-          { t: 0.62, x: -6, y: 4, s: 1.18, r: 12, o: 0.6 }, // sweeps to centre, big (dimmed behind text)
-          { t: 0.8, x: 28, y: 16, s: 0.7, r: 48, o: 0.72 }, // darts to lower-right
-          { t: 1.0, x: -22, y: -10, s: 0.9, r: -18, o: 0.85 }, // settles upper-left near footer
-        ];
-
-        // Calmer, tighter path for small screens (less travel, less rotation) so
-        // mobile stays smooth and the compass never crowds the narrow column.
-        const WAYPOINTS_SMALL = [
-          { t: 0.0, x: 8, y: -6, s: 0.8, r: -6, o: 0.5 },
-          { t: 0.35, x: -10, y: 10, s: 0.6, r: 14, o: 0.42 },
-          { t: 0.7, x: 10, y: -8, s: 0.7, r: -16, o: 0.46 },
-          { t: 1.0, x: -6, y: 6, s: 0.7, r: 8, o: 0.5 },
+        // ── DEEP-TINT SEQUENCE ───────────────────────────────────────────────
+        // One deep, desaturated near-black per major section, in scroll order:
+        // near-black (hero) → ink-blue-black → oxblood-black → forest-black →
+        // slate-black → back to near-black (footer/GTM band). All very dark so
+        // Bone-White (#fffdf9) stays >= 4.5:1 AA on every tint (verified: each
+        // tint's luminance is far below the ~#3a3a3a ceiling for AA vs bone).
+        const TINTS = [
+          [14, 18, 22],   // #0e1216  near-black (hero)
+          [14, 19, 32],   // #0e1320  ink-blue-black
+          [26, 15, 18],   // #1a0f12  oxblood-black
+          [12, 20, 15],   // #0c140f  forest-black
+          [17, 21, 26],   // #11151a  slate-black
+          [14, 18, 22],   // #0e1216  back to near-black (footer / GTM band)
         ];
 
         const lerp = (a, b, t) => a + (b - a) * t;
-        // Smootherstep easing for fluid, slightly springy segment transitions.
-        const ease = (t) => t * t * t * (t * (t * 6 - 15) + 10);
+        // Smootherstep — fluid drift between waypoints.
+        const smoother = (t) => t * t * t * (t * (t * 6 - 15) + 10);
+        // "Hold then snap/settle" for the tint + the boundary punch: stays near
+        // the start, then snaps over the last third and overshoots slightly into
+        // a settle. Gives each boundary a crisp lock-in synced with the slam.
+        const snap = (t) => {
+          // ease that holds (slow start) then snaps (fast finish), with a tiny
+          // settle via a back-ease near the end.
+          const e = t * t * (3 - 2 * t); // smoothstep base
+          const s = Math.pow(t, 3.2);    // holds longer, snaps late
+          return e * 0.35 + s * 0.65;
+        };
 
-        function sample(points, p) {
-          if (p <= points[0].t) return points[0];
-          if (p >= points[points.length - 1].t) return points[points.length - 1];
+        // Compass waypoints across scroll progress (t: 0→1). x = vw offset,
+        // y = vh offset from viewport centre; s = scale; r = rot deg; o = opacity.
+        // There is one waypoint per tint boundary so the compass settles into
+        // each section; the final point lands lower-centre (into the GTM band).
+        const WAYPOINTS = [
+          { t: 0.0,  x: 24,  y: -4,  s: 1.0,  r: -8,  o: 0.95 }, // hero
+          { t: 0.2,  x: -28, y: 16,  s: 0.66, r: 22,  o: 0.7 },  // ink-blue
+          { t: 0.4,  x: 30,  y: -20, s: 0.8,  r: -30, o: 0.78 }, // oxblood
+          { t: 0.6,  x: -8,  y: 6,   s: 1.12, r: 12,  o: 0.6 },  // forest (centre, big, dim)
+          { t: 0.8,  x: 26,  y: 14,  s: 0.72, r: 40,  o: 0.72 }, // slate
+          { t: 1.0,  x: 0,   y: 24,  s: 0.92, r: -10, o: 0.9 },  // settles INTO GTM band (lower-centre)
+        ];
+
+        // Calmer/tighter path for small screens (less travel + rotation).
+        const WAYPOINTS_SMALL = [
+          { t: 0.0,  x: 8,   y: -6,  s: 0.8,  r: -6,  o: 0.5 },
+          { t: 0.25, x: -10, y: 8,   s: 0.6,  r: 12,  o: 0.42 },
+          { t: 0.5,  x: 9,   y: -7,  s: 0.66, r: -14, o: 0.46 },
+          { t: 0.75, x: -8,  y: 6,   s: 0.62, r: 12,  o: 0.46 },
+          { t: 1.0,  x: 0,   y: 12,  s: 0.7,  r: -6,  o: 0.5 },
+        ];
+
+        // Boundary slam profile: scale + rotation kick that peaks AT each
+        // waypoint boundary and decays as we settle into the section. We compute
+        // a per-segment "nearness to boundary" and add a short punch. Mobile and
+        // the kick are scaled down so it's crisp, not nauseating.
+        const SLAM_SCALE = 0.16;  // extra scale at the punch peak (desktop)
+        const SLAM_ROT = 6;       // extra degrees at the punch peak (desktop)
+        const SLAM_SMALL = 0.5;   // mobile damping
+
+        function sampleTint(p) {
+          const n = TINTS.length - 1;
+          const seg = Math.min(n - 1, Math.floor(p * n));
+          const f = snap((p - seg / n) * n); // hold-then-snap within the segment
+          const a = TINTS[seg];
+          const b = TINTS[seg + 1];
+          return (
+            'rgb(' +
+            Math.round(lerp(a[0], b[0], f)) + ',' +
+            Math.round(lerp(a[1], b[1], f)) + ',' +
+            Math.round(lerp(a[2], b[2], f)) + ')'
+          );
+        }
+
+        function sampleCompass(points, p, slamFactor) {
+          if (p <= points[0].t) return Object.assign({}, points[0], { punch: 0 });
+          const last = points[points.length - 1];
+          if (p >= last.t) return Object.assign({}, last, { punch: 0 });
           for (let i = 0; i < points.length - 1; i++) {
             const a = points[i];
             const b = points[i + 1];
             if (p >= a.t && p <= b.t) {
-              const f = ease((p - a.t) / (b.t - a.t));
+              const lf = (p - a.t) / (b.t - a.t);
+              const f = smoother(lf);
+              // Punch peaks near the END of the segment (arriving at boundary b)
+              // and at the very START (just left boundary a): a quick bump that
+              // is strongest right at the snap, then decays into the section.
+              const nearEnd = Math.pow(Math.max(0, (lf - 0.78) / 0.22), 2); // 0→1 approaching b
+              const nearStart = Math.pow(Math.max(0, (0.16 - lf) / 0.16), 2); // 1→0 leaving a
+              const punch = Math.min(1, nearEnd + nearStart) * slamFactor;
               return {
                 x: lerp(a.x, b.x, f),
                 y: lerp(a.y, b.y, f),
                 s: lerp(a.s, b.s, f),
                 r: lerp(a.r, b.r, f),
                 o: lerp(a.o, b.o, f),
+                punch: punch,
               };
             }
           }
-          return points[points.length - 1];
+          return Object.assign({}, last, { punch: 0 });
         }
 
-        // Apply a single static pose (reduced-motion / fallback): a tasteful
-        // off-centre placement, no motion, show the still, pause the video.
+        // Static pose (reduced-motion / fallback): off-centre, no motion, first
+        // tint, show the still, pause the video.
         function applyStatic() {
           el.style.transform = 'translate3d(18vw, -2vh, 0) scale(0.95) rotate(-6deg)';
           el.style.opacity = '0.55';
+          if (tint) tint.style.backgroundColor = 'rgb(14,18,22)';
           if (video) {
             try { video.pause(); } catch (e) {}
             video.style.display = 'none';
@@ -280,12 +413,21 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
           const doc = document.documentElement;
           const max = (doc.scrollHeight - window.innerHeight) || 1;
           const p = Math.min(1, Math.max(0, window.scrollY / max));
+
+          // 1) Deep-tint background.
+          if (tint) tint.style.backgroundColor = sampleTint(p);
+
+          // 2) Roaming compass + boundary slam.
           const pts = small ? WAYPOINTS_SMALL : WAYPOINTS;
-          const v = sample(pts, p);
-          // translate uses vw/vh so the path scales with the viewport; the layer
-          // is centred (flex), so these are offsets from centre.
+          const slamScale = SLAM_SCALE * (small ? SLAM_SMALL : 1);
+          const slamRot = SLAM_ROT * (small ? SLAM_SMALL : 1);
+          const v = sampleCompass(pts, p, 1);
+          // The forward "slam": a quick scale-up + a touch of rotation kick,
+          // layered onto the drifting pose, peaking at each boundary.
+          const s = v.s + v.punch * slamScale;
+          const r = v.r + v.punch * slamRot;
           el.style.transform =
-            'translate3d(' + v.x + 'vw, ' + v.y + 'vh, 0) scale(' + v.s + ') rotate(' + v.r + 'deg)';
+            'translate3d(' + v.x + 'vw, ' + v.y + 'vh, 0) scale(' + s + ') rotate(' + r + 'deg)';
           el.style.opacity = String(v.o);
         }
 
@@ -305,7 +447,6 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
             window.removeEventListener('scroll', onScroll);
             return;
           }
-          // Motion path: show + autoplay the video (still hidden), bind scroll.
           if (video) {
             video.style.display = 'block';
             const playPromise = video.play();
@@ -313,12 +454,11 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
           }
           if (still) still.style.display = 'none';
           window.addEventListener('scroll', onScroll, { passive: true });
-          render(); // initial pose
+          render(); // initial pose + tint
         }
 
         setup();
         window.addEventListener('resize', () => {
-          // Re-evaluate small-screen state + recompute pose on resize/orientation.
           const wasReduced = reduced;
           const wasSmall = small;
           reduced = mqReduce.matches;
@@ -329,8 +469,18 @@ const compassVideo = cldVideoUrl(cloudinary.cloudName, compassVideoId, { width: 
             render();
           }
         }, { passive: true });
-        // React to OS-level reduced-motion changes mid-session.
         if (mqReduce.addEventListener) mqReduce.addEventListener('change', setup);
+
+        // GTM landscape video: if it errors (asset not yet uploaded), hide it so
+        // the CSS topographic fallback carries the band — band always looks
+        // intentional.
+        const gtmVideo = document.getElementById('ac-gtm-video');
+        if (gtmVideo) {
+          gtmVideo.addEventListener('error', function () { gtmVideo.style.display = 'none'; }, true);
+          gtmVideo.querySelectorAll('source').forEach(function (sourceEl) {
+            sourceEl.addEventListener('error', function () { gtmVideo.style.display = 'none'; });
+          });
+        }
       })();
     </script>
   </body>

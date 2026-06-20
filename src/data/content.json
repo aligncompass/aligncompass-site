@@ -54,7 +54,9 @@
       "revealEnabled": true,
       "durationMs": 600,
       "easing": "cubic-bezier(0.22, 1, 0.36, 1)"
-    }
+    },
+    "compassCinematic": "aligncompass-site/compass-solid-loop",
+    "gtmLandscape": "aligncompass-site/gtm-landscape"
   },
   "cta": {
     "primary": {

@@ -13,9 +13,15 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Near-black fallback canvas — also prevents any flash before the #ac-tint
+       layer paints (it starts at this same colour, so it's seamless). */
+    background-color: var(--ac-bg);
   }
   body {
-    background-color: var(--ac-bg); /* Carbon near-black #0e1216 — full canvas */
+    /* The full canvas is painted by the fixed #ac-tint layer (which washes
+       through the deep-tint sequence on scroll), so body is transparent and the
+       tint shows through behind all content. html keeps --ac-bg as fallback. */
+    background-color: transparent;
     color: var(--ac-text);          /* Bone White #fffdf9 */
     font-family: var(--ac-font-body);
     font-weight: 400;
@@ -198,6 +204,88 @@
     );
   }
 
+  /* ── SECTION DEEP-TINT BACKGROUND LAYER ──────────────────────────────────
+     Fixed, full-viewport color wash that sits BEHIND the roaming compass
+     (z-index:-1; compass layer 0, content 10). The rAF scroll loop writes its
+     background-color (via inline style) through the deep-tint sequence. Starts
+     at the first tint so there's no flash. Only the color changes — no layout,
+     no compositing churn beyond a single paint of a fixed layer. */
+  .ac-tint {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--ac-bg); /* first deep tint (#0e1216) */
+    will-change: background-color;
+  }
+
+  /* ── GTM LANDSCAPE BAND ───────────────────────────────────────────────────
+     Full-width cinematic band fused above the footer. A muted/looping video
+     (design.gtmLandscape) plays full-bleed under a dark scrim with GTM copy +
+     CTA. A dark steel-blue topographic CSS backdrop (.ac-gtm-fallback) sits
+     beneath and shows if the video is absent/fails, so the band always reads as
+     intentional. Content sits above both at z-10 (relative). */
+  .ac-gtm {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: clamp(360px, 56vh, 620px);
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(111, 135, 156, 0.25);
+  }
+  /* Dark steel-blue topographic / contour-line fallback backdrop. Built from
+     layered repeating conic/linear + radial gradients to suggest contour lines
+     and depth in cool steel-blue over near-black. Always present (z-0). */
+  .ac-gtm-fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: #0b1016;
+    background-image:
+      radial-gradient(140% 120% at 50% 120%, rgba(111, 135, 156, 0.18) 0%, transparent 55%),
+      repeating-radial-gradient(120% 90% at 50% 130%,
+        rgba(111, 135, 156, 0.14) 0px,
+        rgba(111, 135, 156, 0.14) 1px,
+        transparent 1px,
+        transparent 26px),
+      repeating-radial-gradient(150% 110% at 30% 150%,
+        rgba(120, 150, 170, 0.08) 0px,
+        rgba(120, 150, 170, 0.08) 1px,
+        transparent 1px,
+        transparent 40px),
+      linear-gradient(180deg, #0a0e13 0%, #0b1119 60%, #0c1620 100%);
+  }
+  /* The traversed landscape video, full-bleed cover, above the fallback. */
+  .ac-gtm-video {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+  /* Legibility scrim so the copy stays AA over the landscape: darker at the
+     left/bottom where the text sits, lighter toward the horizon. */
+  .ac-gtm-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(10, 14, 19, 0.86) 0%, rgba(10, 14, 19, 0.55) 48%, rgba(10, 14, 19, 0.2) 100%),
+      linear-gradient(180deg, rgba(10, 14, 19, 0.5) 0%, transparent 32%, rgba(10, 14, 19, 0.62) 100%);
+  }
+  .ac-gtm-inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: var(--ac-max, 80rem);
+    margin: 0 auto;
+    padding: clamp(56px, 8vh, 96px) 1.5rem;
+  }
+
   /* ── ROAMING COMPASS LAYER ───────────────────────────────────────────────
      ONE persistent compass for the whole page. A fixed, full-viewport layer
      that sits BEHIND all page content (z-index:0; content gets z-10 via the
@@ -293,4 +381,9 @@
   .ac-reduced-show { display: block !important; }
   /* Roaming compass: hold static, no transition; the JS also pins one pose. */
   .ac-roam-compass { transition: none !important; }
+  /* Tint background: no animated colour churn (JS pins the first tint). */
+  .ac-tint { will-change: auto; }
+  /* GTM band: hide the moving landscape video; the static topographic CSS
+     backdrop carries the band so it still reads as intentional. */
+  .ac-gtm-video { display: none !important; }
 }
