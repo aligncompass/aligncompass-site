@@ -3,11 +3,11 @@ const { section, content } = Astro.props;
 const { cta } = content;
 
 // NOTE: the compass motif is no longer rendered per-section. A SINGLE persistent
-// "roaming compass" is rendered once in Layout.astro as a fixed overlay layer
+//"roaming compass" is rendered once in Layout.astro as a fixed overlay layer
 // behind all content, and is driven around the page by the scroll script there.
 // Heroes now render as clean type on the near-black canvas (ambient bloom kept).
 ---
-<section class="relative overflow-hidden bg-bg">
+<section class="relative overflow-hidden">
   {/* Ambient bloom over the near-black canvas (warm + cool corner leaks + vignette). */}
   <div class="ac-atmos ac-atmos--hero" aria-hidden="true"></div>
   <div class="relative mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">

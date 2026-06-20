@@ -2,7 +2,7 @@
 const { section } = Astro.props;
 const steps = section.steps ?? [];
 ---
-<section id={section.id} class="bg-bg">
+<section id={section.id} class="">
   <div class="mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">
     {section.heading && <h2 class="reveal ac-heading max-w-4xl text-ink">{section.heading}</h2>}
     <ol class="mt-12 border-t border-line/50">

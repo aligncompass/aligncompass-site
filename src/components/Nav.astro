@@ -5,7 +5,7 @@ const here = Astro.url.pathname.replace(/\/$/, '');
 const isCurrent = (href) => here === href.replace(/\/$/, '');
 const home = nav[0]?.href || meta.base || '/';
 ---
-<header class="sticky top-0 z-40 border-b border-line/60 bg-bg/90 backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-line/60/90 backdrop-blur">
   <div class="mx-auto flex max-w-ac items-center justify-between gap-4 px-6 py-5">
     <a href={home} class="font-heading text-lg font-normal tracking-tight text-ink">{meta.businessName}</a>
     <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -29,7 +29,7 @@ const home = nav[0]?.href || meta.base || '/';
         <summary class="flex h-10 w-10 cursor-pointer list-none items-center justify-center border border-line text-ink [&::-webkit-details-marker]:hidden" aria-label="Open menu">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </summary>
-        <div class="absolute right-0 z-50 mt-3 w-56 border border-line bg-bg p-2">
+        <div class="absolute right-0 z-50 mt-3 w-56 border border-line p-2">
           {nav.map((item) => (
             <a
               href={item.href}

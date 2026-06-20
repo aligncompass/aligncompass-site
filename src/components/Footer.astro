@@ -3,7 +3,7 @@ const { content } = Astro.props;
 const { meta, nap, nav = [], footer = {} } = content;
 const year = new Date().getFullYear();
 ---
-<footer class="border-t border-line/60 bg-bg">
+<footer class="border-t border-line/60">
   <div class="mx-auto grid max-w-ac gap-10 px-6 py-20 sm:grid-cols-2 lg:grid-cols-4">
     <div class="sm:col-span-2 lg:col-span-1">
       <p class="font-heading text-lg font-normal text-ink">{meta.businessName}</p>
