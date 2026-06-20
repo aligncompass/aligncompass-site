@@ -6,7 +6,7 @@
     "base": "/",
     "siteUrl": "https://aligncompass.com",
     "lang": "en",
-    "tagline": "You do the work you love. We put everything you can't get to on autopilot — missed calls, past customers, reviews, repeat work. Free website, pay when it works."
+    "tagline": "I fill every avenue that gets you paid — reviews, missed calls, past customers, even your website or store — so you keep doing the work you love while the rest runs on autopilot. Free website, pay when it works."
   },
   "nap": {
     "name": "AlignCompass",
@@ -115,7 +115,7 @@
           "type": "hero",
           "eyebrow": "For owners who love the work — and the customers",
           "headline": "Do the work you love. We'll catch everything you can't get to.",
-          "subhead": "You're under a house, mid-contract, elbow-deep in a furnace — you can't answer every call, chase every old customer, or ask for every review. So we put all of it on autopilot: missed calls texted back in seconds, past customers re-booked, reviews handled — landing right in the system you already use. Your website's free. You only pay once it pays for itself.",
+          "subhead": "You love your customers and you're proud of your work — you just can't ask for a review, answer every call, or chase last year's customers while you're under a house. So I fill every one of those avenues for you: more 5-star reviews, missed calls texted back in seconds, past customers re-booked — landing in the system you already use, or one I set up for you. None of it replaces you. It just makes sure you get paid. Your website's free, and you only pay once it pays for itself.",
           "image": {
             "publicId": "aligncompass-site/hero-owner-on-job",
             "alt": "Home-service owner working a job while a new booking notification lights up the phone in their hand",
@@ -136,36 +136,36 @@
           "heading": "Everything you can't get to, handled.",
           "items": [
             {
+              "title": "Get more 5-star reviews — start here",
+              "body": "Let's be real: reviews are what get you the next job, so this comes first. After every good job your customer gets a one-tap nudge to rate you where it matters — Google, Yelp, wherever you want the stars. And if someone's unhappy, I catch it privately, before it ever lands in public."
+            },
+            {
               "title": "Answer every call — even the ones you miss",
-              "body": "The second you can't pick up, the caller gets a real text back: \"Sorry we missed you — what do you need?\" Not a robot answering the phone. Nobody replies to those. People reply to a text. The job stays yours instead of going to the next name on the list."
+              "body": "The second you can't pick up, the caller gets a real text back: \"Sorry we missed you — what do you need?\" Not a robot answering the phone. Nobody replies to those; people reply to a text. The job stays yours instead of going to the competitor — and you manage it in the system you already use, or one I set up and integrate for you."
             },
             {
               "title": "Wake up the customers you already earned",
-              "body": "They're sitting in your spreadsheet or your Jobber. You should call them — but who has the time? We warm them up first by text and email, so the ones who are ready raise their hand. Then you spend your time only on the customers who actually want to book."
+              "body": "They're sitting in your spreadsheet or your Jobber. You should call them — but who has the time? I automate the whole follow-up: maintenance reminders and \"time for your next service,\" by text and email, so the ones who are ready raise their hand and you only spend time on the customers who actually want to book."
             },
             {
-              "title": "Get more 5-star reviews — and stop the bad ones cold",
-              "body": "Reviews are how you keep winning. After a good job your customer gets a one-tap ask, so you never leave a five-star on the table. And if someone's unhappy, we catch it privately — before it ever lands in public."
+              "title": "No customer list yet? We get you found.",
+              "body": "Just starting out? We still might be a fit. I build your website, add a blog and optimize the posts, dial in your Google Business Profile, and start pulling reviews from anyone you've worked with — so you show up first when a neighbor searches for what you do."
             },
             {
-              "title": "Bring back the work that repeats",
-              "body": "The tune-up they need in six months. The service that comes due every year. We nudge them at the right moment, so repeat work shows up on your calendar without a contract — and without you chasing it."
-            },
-            {
-              "title": "Need something custom? We build it.",
-              "body": "We've built booking apps where customers pick their passengers and bags and the next driver gets pinged to accept the ride — round-robin, automatic. We write blogs that pull homeowners in. If it gets you more booked work, we'll build it. (Social media isn't our thing right now — we'll always tell you straight what we do and don't do.)"
+              "title": "Need something custom? I build it.",
+              "body": "Booking platforms, web apps, even mobile apps — so customers can book you faster (not to replace you). We've built dispatch apps where customers pick passengers and bags and the next driver gets pinged to accept the ride. Selling a product? I build e-commerce stores too, so customers who'd rather not call can just buy. If it fills an avenue that gets you paid, I'll build it."
             }
           ]
         },
         {
           "type": "guide",
-          "heading": "We're picky about who we work with — in a good way.",
-          "empathy": "We're not for the owner who hates dealing with people and wants a machine to run the whole thing. We're for you: the one who loves your customers and takes pride in the work — you just can't do it with your hand in a furnace or your name on a contract. Your cousin isn't answering the phone. A front desk is a payroll you don't want yet. So what do you do? You put your business on autopilot. You handle everything you can — and the moment you can't get to something, that's where we come in.",
+          "heading": "I'm picky about who I work with — in a good way.",
+          "empathy": "I'm not for the owner who'd rather never talk to a customer and wants a machine to run the whole thing. I'm for you: the one who actually likes your customers and takes pride in the job — you just can't pick up with your hand in a furnace or your name on a contract. Your cousin isn't answering the phone, and a front desk is a payroll you don't want yet. So what do you do? You put your business on autopilot. You handle everything you can — and the moment you can't get to something, that's where I come in. None of it replaces you. It just makes sure you get paid.",
           "authority": [
-            "Pay-when-it-works — you don't pay until it covers itself (about 60 days)",
-            "Everything shows up as real booked jobs in the system you already use — not impressions",
-            "Built and run by a working business analyst, not a template reseller",
-            "We do 100% of the setup, and your customers and data stay yours"
+            "Pay-when-it-works — you don't pay me until it covers itself (about 60 days)",
+            "Everything shows up as real booked jobs — in the system you already use, or one I set up for you",
+            "I'm a working business analyst, not a template reseller",
+            "I do 100% of the setup, and your customers and data stay yours"
           ],
           "image": {
             "publicId": "aligncompass-site/guide-analyst-attribution",
@@ -221,13 +221,12 @@
           "heading": "Simple pricing. You don't pay until it works.",
           "price": "$297/mo + a one-time setup of about $500–800",
           "includes": [
-            "Free SEO website + Google Business Profile — yours to keep",
+            "Automated 5-star review asks — on Google, Yelp, wherever matters (bad-review interception included)",
             "Missed-call text-back + appointment reminders",
-            "Past-customer reactivation campaigns",
-            "Automated 5-star review asks (and bad-review interception)",
-            "Repeat-work reminders for tune-ups and recurring service",
-            "Booked-job attribution in your own system",
-            "We do all the setup — including pulling your customer list for you",
+            "Past-customer reactivation — maintenance + follow-up campaigns",
+            "Free SEO website + blog + Google Business Profile — yours to keep",
+            "Jobs land in your own system, or one I set up and integrate for you",
+            "I do all the setup — including pulling your customer list for you",
             "Pay-when-it-works guarantee (~60 days)",
             "Founding clients pay near cost for the first few slots in exchange for a testimonial"
           ],
@@ -270,7 +269,7 @@
           "type": "hero",
           "eyebrow": "What we do",
           "headline": "Everything we do points at one thing: more booked jobs.",
-          "subhead": "We catch the calls you miss, wake up the customers you already earned, keep the reviews coming, and bring back the work that repeats. The capture engine is the core — and when you need something custom, we build it.",
+          "subhead": "Three pillars do the heavy lifting — reviews, captured calls, and reactivated customers. No customer list yet? I get you found. Need real software? I build that too. The point is simple: fill every avenue that gets you paid.",
           "image": {
             "publicId": "aligncompass-site/services-calendar-filling",
             "alt": "A service business calendar filling up with booked jobs over the week",
@@ -279,45 +278,59 @@
         },
         {
           "type": "value",
-          "heading": "The core engine",
+          "heading": "The three pillars: reviews, calls, customers",
           "items": [
             {
-              "title": "Get found",
-              "body": "The problem: you don't show up when neighbors search for what you do. What we do: build you a fast, SEO-strong website and dial in your Google Business Profile. The outcome: you show up first when someone nearby needs you — and the site is free."
+              "title": "Get more reviews — the one that gets you jobs",
+              "body": "Reviews are what win the next customer, so this is pillar one. After every good job your customer gets a one-tap nudge to rate you where it counts — Google, Yelp, wherever you want the stars. Unhappy customers get routed to me privately first, so it's fixed before it ever goes public."
             },
             {
-              "title": "Answer every call — even the ones you miss",
-              "body": "The problem: you're on a job, the phone rings, and the caller is gone before you surface. What we do: every missed call gets a real text back in seconds — not a robot — plus reminders that cut no-shows. The outcome: the job doesn't go to the next guy on the list."
+              "title": "Never miss a call — and manage the job your way",
+              "body": "You're on a job, the phone rings, and the caller's gone before you surface. Every missed call gets a real text back in seconds — not a robot — so the job stays yours. Then manage it in the system you already use, or one I set up and integrate for you."
             },
             {
-              "title": "Wake up your past customers",
-              "body": "The problem: the customers you already served drift to whoever markets to them next. What we do: warm up your list by text and email so the ready ones raise their hand. The outcome: old jobs turn into new ones — and you only call the people who actually want to book."
-            },
-            {
-              "title": "Get more reviews, catch the bad ones",
-              "body": "The problem: your best jobs never turn into the reviews that win the next customer. What we do: a one-tap review ask after every good job, with unhappy customers routed to you privately first. The outcome: more 5-star reviews, fewer public surprises."
-            },
-            {
-              "title": "Bring back the work that repeats",
-              "body": "The problem: tune-ups and yearly service quietly slip because nobody reminds the customer. What we do: timed \"you're due\" nudges to the right people at the right moment. The outcome: recurring revenue without a contract and without you chasing it."
+              "title": "Reactivate the customers you already earned",
+              "body": "The people you already served drift to whoever markets to them next. I automate the follow-up — maintenance reminders and \"time for your next service\" by text and email — so the ready ones raise their hand and old jobs turn into new ones, at far better odds than chasing cold leads."
             }
           ]
         },
         {
           "type": "value",
-          "heading": "Need something custom? We build that too.",
+          "heading": "No customers yet? I get you found.",
           "items": [
             {
-              "title": "Custom booking apps",
-              "body": "Real software when you need it. We've built booking apps where customers choose passengers and bags, then the next available driver gets pinged to accept the ride — round-robin, automatic. If your business needs a way for customers to book and your team to dispatch, we'll build it."
+              "title": "A website that works",
+              "body": "A fast, SEO-strong website — free, and yours to keep."
             },
             {
-              "title": "Business automations",
-              "body": "The follow-up before an appointment. The reminder six months later. The \"thanks for your business\" that quietly asks for the next job. We wire up the little touches that win repeat work — so they happen whether or not you remember."
+              "title": "A blog that ranks",
+              "body": "I add a blog and optimize the posts, so homeowners find you before they even pick up the phone."
             },
             {
-              "title": "Content that pulls customers in",
-              "body": "We write blogs that bring homeowners to you before they even pick up the phone — so you're the name they already trust when something breaks. (Social media isn't part of what we do right now — we'll tell you straight.)"
+              "title": "Google Business Profile, dialed in",
+              "body": "Optimized so you show up in the Map Pack — where over half of local-service searches actually click."
+            },
+            {
+              "title": "Your first reviews",
+              "body": "I start pulling reviews from anyone you've already worked with, so you launch with real credibility."
+            }
+          ]
+        },
+        {
+          "type": "value",
+          "heading": "Need something custom? I build it.",
+          "items": [
+            {
+              "title": "Booking platforms, web apps, even mobile apps",
+              "body": "So customers can book your services faster — not to replace you. We've built dispatch apps where customers pick passengers and bags and the next available driver gets pinged to accept the ride, round-robin and automatic. If your business needs booking and dispatch, I'll build it."
+            },
+            {
+              "title": "E-commerce stores",
+              "body": "Selling a product — even if you already have a storefront? I build you a store so the customers who'd rather not call can just buy, and you get your product in their hands without the phone tag."
+            },
+            {
+              "title": "Automations that win repeat work",
+              "body": "The follow-up before an appointment, the reminder six months later, the quiet \"thanks — ready for the next one?\" I wire up the touches that bring work back, whether or not you remember."
             }
           ]
         },
@@ -478,7 +491,7 @@
           "type": "hero",
           "eyebrow": "Who we are",
           "headline": "For owners who love the work — and can't be two places at once.",
-          "subhead": "You've been pitched before — a report full of numbers that didn't matter and a bill that did. AlignCompass is the opposite of that. We're for the owner who loves their customers and takes pride in the job, and just needs the rest to run itself.",
+          "subhead": "You've been pitched before — a report full of numbers that didn't matter and a bill that did. AlignCompass is the opposite of that. I'm Pedro, and I built this for the owner who loves their customers and takes pride in the job, and just needs the rest to run itself.",
           "image": {
             "publicId": "aligncompass-site/about-operator",
             "alt": "A focused operator reviewing real booked-job numbers on a laptop",
@@ -487,13 +500,13 @@
         },
         {
           "type": "guide",
-          "heading": "Why this exists",
-          "empathy": "We've watched good owners do everything right — show up, do great work, earn a real reputation — and still bleed money to a gap in their day. The phone rings while they're under a house. A customer they wowed two years ago forgets the name and calls a competitor. Your cousin doesn't answer the phone, and a front desk is a payroll you don't want yet. It's not a hustle problem. It's a capture problem. So we put the parts you can't get to on autopilot: you handle everything you can, and the moment you can't, that's us.",
+          "heading": "Why I built this",
+          "empathy": "I kept watching good owners do everything right — show up, do great work, earn a real reputation — and still bleed money to a gap in their day. The phone rings while they're under a house. A customer they wowed two years ago forgets the name and calls a competitor. The reviews never get asked for. It's not a hustle problem; it's a capture problem. So I put the parts you can't get to on autopilot: you handle everything you can, and the moment you can't, that's me. None of it replaces you — it just makes sure you get paid.",
           "authority": [
-            "Run by a working business analyst — you see what we recover as booked jobs, not impressions",
+            "I'm a working business analyst — you see what I recover as booked jobs, not impressions",
             "Outcome-first: the website's free, and you don't pay for the engine until it pays for itself",
-            "No spend treadmill — we make the demand you already have actually convert",
-            "We work with owners who love their customers, not owners trying to avoid them"
+            "No spend treadmill — I make the demand you already have actually convert",
+            "I work with owners who love their customers, not owners trying to avoid them"
           ],
           "image": {
             "publicId": "aligncompass-site/about-attribution-report",
@@ -507,15 +520,15 @@
           "items": [
             {
               "title": "Straight talk",
-              "body": "Plain numbers, no jargon, no vanity metrics. We'll tell you what we do and don't do — and if something isn't working, you'll hear it from us first."
+              "body": "Plain numbers, no jargon. I'll tell you exactly what I do and don't do — and if something isn't working, you'll hear it from me first."
             },
             {
               "title": "Skin in the game",
-              "body": "Pay-when-it-works means we carry the risk until the system earns its keep."
+              "body": "Pay-when-it-works means I carry the risk until the system earns its keep."
             },
             {
               "title": "Your data stays yours",
-              "body": "We do the setup — including pulling your customer list for you — and you keep ownership of everything."
+              "body": "I do the setup — including pulling your customer list for you — and you keep ownership of everything."
             }
           ]
         },
@@ -680,10 +693,11 @@
     }
   ],
   "footer": {
-    "blurb": "AlignCompass puts the work you can't get to on autopilot — missed calls, past customers, reviews and repeat work — so US local home-service owners fill their schedule without renting another ad.",
+    "blurb": "AlignCompass fills every avenue that gets you paid — more reviews, missed calls captured, past customers re-booked, even your website or store — so US local owners keep doing the work they love while the rest runs on autopilot.",
     "showHours": true
   },
   "flags": [
+    "Copy pass 3 (Pedro voice): first-person founder voice; reviews elevated to #1 pillar; job management = use yours (integrate) or one I set up; added 'no customers yet' visibility path (site/blog/GBP/reviews); broadened custom builds to booking/web/mobile apps + e-commerce; framed as 'fill every avenue so you get paid.'",
     "Palette reskinned to Cyprus (#004741) + Sand (#F0EDE4) per Pedro's reference card; accent #00695a. Replaces the prior slate/teal. Fonts unchanged (Archivo/Inter).",
     "Copy rewritten in Pedro's voice: broadened from missed-call-only to the 'autopilot for what you can't get to' frame (capture + reactivation + reviews + repeat work + custom builds); sharpened the 'who we work with' stance (owners who love customers, not those avoiding them).",
     "Primary CTA now resolves to /contact#book (the real contact form) so buttons work site-wide. Booking-WIDGET embed still pending: drop the booking-platform scheduler URL in at the contact section + NAP 'Booking' item when ready.",
