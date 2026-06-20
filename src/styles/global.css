@@ -1,141 +1,49 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-
-  /* Brand */
-  --color-brand-50:  #f0fdfa;
-  --color-brand-100: #ccfbf1;
-  --color-brand-200: #99f6e4;
-  --color-brand-300: #5eead4;
-  --color-brand-400: #2dd4bf;
-  --color-brand-500: #14b8a6;
-  --color-brand-600: #0d9488;
-  --color-brand-700: #0f766e;
-  --color-brand-800: #115e59;
-  --color-brand-900: #134e4a;
-}
-
-html {
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  letter-spacing: -0.011em;
+/* Base, on top of Tailwind. Theme colors/fonts come from the CSS variables
+   injected by Layout.astro from content.json's design block. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--ac-bg);
+    color: var(--ac-text);
+    font-family: var(--ac-font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--ac-font-heading);
+    color: var(--ac-text);
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ac-accent);
+    outline-offset: 2px;
+  }
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  letter-spacing: -0.022em;
+/* Light, tasteful scroll-reveal — the free premium touch. Honors
+   prefers-reduced-motion and degrades to fully visible if JS never runs. */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity var(--ac-motion-duration, 500ms) var(--ac-motion-easing, ease),
+      transform var(--ac-motion-duration, 500ms) var(--ac-motion-easing, ease);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* Native details polish */
-details > summary {
-  list-style: none;
-  cursor: pointer;
-}
-details > summary::-webkit-details-marker {
-  display: none;
-}
-
-/* Reveal-on-scroll: hidden by default, revealed when .in is added by IntersectionObserver */
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.8s cubic-bezier(0.21, 0.96, 0.39, 1.01),
-              transform 0.8s cubic-bezier(0.21, 0.96, 0.39, 1.01);
-  will-change: opacity, transform;
-}
-.reveal.in {
-  opacity: 1;
-  transform: none;
-}
-.reveal[data-delay="100"] { transition-delay: 0.08s; }
-.reveal[data-delay="200"] { transition-delay: 0.16s; }
-.reveal[data-delay="300"] { transition-delay: 0.24s; }
-.reveal[data-delay="400"] { transition-delay: 0.32s; }
-.reveal[data-delay="500"] { transition-delay: 0.40s; }
-
-/* Phone mockup float: subtle ambient motion */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-.float-slow {
-  animation: float 7s ease-in-out infinite;
-}
-
-/* Subtle background grain for premium feel on dark sections */
-.grain::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-}
-
-/* Honor reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .float-slow { animation: none; }
   html { scroll-behavior: auto; }
-}
-
-/* Hide-on-scroll-down sticky nav */
-.scroll-nav {
-  transition: transform 0.35s cubic-bezier(0.21, 0.96, 0.39, 1.01);
-  will-change: transform;
-}
-.scroll-nav.nav-hidden {
-  transform: translateY(-100%);
-}
-
-/* Flip cards (audience portraits) */
-.flip-card {
-  background: none;
-  border: 0;
-  padding: 0;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  perspective: 1400px;
-  -webkit-tap-highlight-color: transparent;
-}
-.flip-card:focus-visible {
-  outline: 2px solid var(--color-brand-500);
-  outline-offset: 4px;
-  border-radius: 1.5rem;
-}
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.75s cubic-bezier(0.21, 0.96, 0.39, 1.01);
-  transform-style: preserve-3d;
-}
-.flip-card.is-flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  inset: 0;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-radius: inherit;
-  overflow: hidden;
-}
-.flip-card-back {
-  transform: rotateY(180deg);
-}
-@media (prefers-reduced-motion: reduce) {
-  .flip-card-inner { transition: none; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
