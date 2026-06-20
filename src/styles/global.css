@@ -4,7 +4,7 @@
 
 /* ──────────────────────────────────────────────────────────────────────────
    Vivid+Co — dark editorial design system.
-   Single palette (Slate Veil canvas + Bone White type + Gunmetal Blue accent),
+   Single palette (Carbon near-black canvas + Bone White type + Gunmetal Blue accent),
    one typeface (Inter 400/700), full-bleed sections, no cards/shadows/radius,
    huge display type pressed onto the canvas, outlined ghost buttons.
    Theme colors/fonts come from the CSS variables injected by Layout.astro from
@@ -15,7 +15,7 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--ac-bg); /* Slate Veil #495764 — full canvas */
+    background-color: var(--ac-bg); /* Carbon near-black #0e1216 — full canvas */
     color: var(--ac-text);          /* Bone White #fffdf9 */
     font-family: var(--ac-font-body);
     font-weight: 400;
@@ -113,15 +113,46 @@
   /* Hairline rule (accent / graphite) */
   .ac-rule { border-color: var(--ac-accent); }
 
-  /* Compass / prism masking: the black-based renders are screen-blended onto
-     the slate canvas so the pure-black background drops out and only the
-     refracted light remains, then a soft radial mask + edge vignette melts the
-     asset into the canvas with NO hard rectangle edges — it floats with depth
-     rather than sitting in a box. */
+  /* ── AMBIENT ATMOSPHERE ──────────────────────────────────────────────────
+     Subtle ambient bloom over the near-black canvas: a warm amber leak from one
+     corner, a cool blue/slate leak from another, plus a soft vignette that pulls
+     the edges back toward black. Very low opacity — the canvas stays near-black,
+     never grey. Applied per-section via .ac-atmos (pointer-events:none overlay). */
+  .ac-atmos {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 55% at 82% 12%, rgba(212, 150, 74, 0.10) 0%, transparent 60%),
+      radial-gradient(58% 60% at 12% 88%, rgba(111, 135, 156, 0.12) 0%, transparent 62%),
+      radial-gradient(120% 120% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+  }
+  /* Hero gets a stronger cool bloom behind the floating compass object. */
+  .ac-atmos--hero {
+    background:
+      radial-gradient(46% 50% at 62% 46%, rgba(111, 135, 156, 0.16) 0%, transparent 64%),
+      radial-gradient(55% 50% at 88% 6%, rgba(212, 150, 74, 0.10) 0%, transparent 60%),
+      radial-gradient(50% 55% at 8% 92%, rgba(111, 135, 156, 0.10) 0%, transparent 60%),
+      radial-gradient(120% 120% at 50% 45%, transparent 52%, rgba(0, 0, 0, 0.6) 100%);
+  }
+
+  /* Compass masking: the pure-black-based renders are screen-blended onto the
+     near-black canvas so the black background drops out and only the refracted
+     light + glow remains, then a soft radial mask melts the asset into the
+     canvas with NO hard rectangle edges — it floats with depth, not in a box.
+     On screen blend over near-black the pure-black render leaves only light. */
   .ac-compass {
     mix-blend-mode: screen;
-    -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 38%, rgba(0,0,0,0.55) 64%, transparent 86%);
-    mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 38%, rgba(0,0,0,0.55) 64%, transparent 86%);
+    -webkit-mask-image: radial-gradient(ellipse 58% 58% at 50% 50%, #000 34%, rgba(0,0,0,0.5) 60%, transparent 82%);
+    mask-image: radial-gradient(ellipse 58% 58% at 50% 50%, #000 34%, rgba(0,0,0,0.5) 60%, transparent 82%);
+  }
+  /* Soft glow halo behind the compass so it blooms into the near-black. */
+  .ac-compass-halo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgba(111,135,156,0.18) 0%, rgba(212,150,74,0.06) 45%, transparent 72%);
+    filter: blur(8px);
   }
   /* Slow, gentle drift + breathe to add depth. Honors reduced-motion below. */
   .ac-compass--float {
@@ -136,7 +167,7 @@
 
   @keyframes ac-float {
     0%   { transform: translateY(-50%) scale(1.0); }
-    50%  { transform: translateY(-52%) scale(1.06); }
+    50%  { transform: translateY(-51%) scale(1.05); }
     100% { transform: translateY(-50%) scale(1.0); }
   }
   @keyframes ac-spin {
@@ -144,23 +175,19 @@
     to   { transform: rotate(360deg); }
   }
 
-  /* Dark scrim over the headline side so Bone White type keeps AA contrast
-     (>=4.5:1) against the screen-blended glow behind it. */
+  /* Dark scrim under the headline so Bone White type keeps AA contrast
+     (>=4.5:1) against the screen-blended glow behind it. The compass now sits
+     centered/behind the headline, so the scrim is a soft near-black radial
+     bloom centered on the text column rather than a hard left panel. */
   .ac-hero-scrim {
-    background: linear-gradient(
-      90deg,
-      var(--ac-bg) 0%,
-      var(--ac-bg) 34%,
-      rgba(73,87,100,0.78) 56%,
-      rgba(73,87,100,0.30) 78%,
-      transparent 100%
-    );
+    background:
+      radial-gradient(75% 90% at 30% 50%, var(--ac-bg) 0%, rgba(14,18,22,0.86) 42%, rgba(14,18,22,0.45) 66%, transparent 88%);
   }
   .ac-hero-scrim--mobile {
     background: radial-gradient(
-      ellipse 120% 80% at 50% 38%,
-      rgba(73,87,100,0.25) 0%,
-      rgba(73,87,100,0.72) 70%,
+      ellipse 120% 80% at 50% 42%,
+      rgba(14,18,22,0.45) 0%,
+      rgba(14,18,22,0.82) 66%,
       var(--ac-bg) 100%
     );
   }

@@ -5,11 +5,12 @@ const { cloudinary, cta } = content;
 const img = section.image;
 const cn = cloudinary.cloudName;
 
-// The compass motif: a looping video (compass-loop) with the still (compass-still)
-// as poster + reduced-motion fallback. Both are pure-black-based renders that we
-// screen-blend + radial-mask into the slate canvas so they float with depth and
-// have no hard rectangle edges. The video publicId is derived from the still's
-// publicId unless an explicit videoPublicId is supplied in content.
+// The compass motif: a looping video (compass-glass-loop) with the still
+// (compass-glass-still) as poster + reduced-motion fallback. Both are
+// pure-black-based glass-compass renders that we screen-blend + radial-mask into
+// the near-black canvas so they float with depth and have no hard rectangle
+// edges. The compass sits large and centered, overlapping/behind the headline,
+// with a soft glow halo. The video publicId is supplied in content.
 const stillId = img?.publicId;
 const videoId = img?.videoPublicId;
 const stillUrl = stillId ? cldUrl(cn, stillId, { width: 1280, transforms: 'f_auto,q_auto' }) : '';
@@ -17,12 +18,16 @@ const videoUrl = videoId ? cldVideoUrl(cn, videoId, { width: 1280 }) : '';
 const hasMotif = Boolean(stillId);
 ---
 <section class="relative overflow-hidden bg-bg">
+  {/* Ambient bloom over the near-black canvas (warm + cool corner leaks + vignette). */}
+  <div class="ac-atmos ac-atmos--hero" aria-hidden="true"></div>
   {hasMotif && (
     <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
-      <div class="ac-compass ac-compass--float absolute right-[-6%] top-1/2 h-[150%] w-[64%] -translate-y-1/2">
+      {/* Large, centred glass compass that overlaps/sits behind the headline. */}
+      <div class="ac-compass ac-compass--float absolute left-1/2 top-1/2 h-[150%] w-[80%] -translate-x-1/2 -translate-y-1/2">
+        <div class="ac-compass-halo"></div>
         {videoUrl ? (
           <video
-            class="h-full w-full object-cover ac-reduced-hide"
+            class="h-full w-full object-contain ac-reduced-hide"
             autoplay
             muted
             loop
@@ -36,7 +41,7 @@ const hasMotif = Boolean(stillId);
           <img
             src={stillUrl}
             alt=""
-            class="h-full w-full object-cover ac-compass--spin"
+            class="h-full w-full object-contain ac-compass--spin"
             loading="eager"
             decoding="async"
           />
@@ -46,13 +51,13 @@ const hasMotif = Boolean(stillId);
           <img
             src={stillUrl}
             alt=""
-            class="ac-reduced-show absolute inset-0 h-full w-full object-cover"
+            class="ac-reduced-show absolute inset-0 h-full w-full object-contain"
             loading="eager"
             decoding="async"
           />
         )}
       </div>
-      {/* Dark scrim over the headline side so Bone White type keeps AA contrast. */}
+      {/* Soft near-black bloom under the text column so Bone White type keeps AA contrast. */}
       <div class="ac-hero-scrim absolute inset-0"></div>
     </div>
   )}
@@ -75,10 +80,11 @@ const hasMotif = Boolean(stillId);
     {hasMotif && (
       <div class="reveal relative mt-12 lg:hidden">
         <div class="ac-compass relative mx-auto aspect-[16/10] w-full max-w-md overflow-hidden">
+          <div class="ac-compass-halo"></div>
           <img
             src={stillUrl}
             alt={img.alt}
-            class="ac-compass--spin h-full w-full object-cover"
+            class="ac-compass--spin h-full w-full object-contain"
             loading="eager"
             decoding="async"
           />
