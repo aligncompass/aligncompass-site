@@ -1,69 +1,15 @@
 ---
-import { cldUrl, cldVideoUrl } from '../../lib/cloudinary.js';
 const { section, content } = Astro.props;
-const { cloudinary, cta } = content;
-const img = section.image;
-const cn = cloudinary.cloudName;
+const { cta } = content;
 
-// The compass motif: a looping video (compass-solid-loop) with the still
-// (compass-solid-still) as poster + reduced-motion fallback. Both are
-// solid, dimensional metal-compass renders on a near-black background. We seat
-// them in the canvas with an EDGE-ONLY radial vignette mask (so only the outer
-// rim melts into the dark — no hard rectangle edge) while the solid body stays
-// opaque, high-contrast and dimensional, with a drop shadow + ambient glow halo
-// for depth. The compass sits large and centered, overlapping/behind the
-// headline, with a dark scrim preserving Bone White headline contrast. The
-// video publicId is supplied in content.
-const stillId = img?.publicId;
-const videoId = img?.videoPublicId;
-const stillUrl = stillId ? cldUrl(cn, stillId, { width: 1280, transforms: 'f_auto,q_auto' }) : '';
-const videoUrl = videoId ? cldVideoUrl(cn, videoId, { width: 1280 }) : '';
-const hasMotif = Boolean(stillId);
+// NOTE: the compass motif is no longer rendered per-section. A SINGLE persistent
+// "roaming compass" is rendered once in Layout.astro as a fixed overlay layer
+// behind all content, and is driven around the page by the scroll script there.
+// Heroes now render as clean type on the near-black canvas (ambient bloom kept).
 ---
 <section class="relative overflow-hidden bg-bg">
   {/* Ambient bloom over the near-black canvas (warm + cool corner leaks + vignette). */}
   <div class="ac-atmos ac-atmos--hero" aria-hidden="true"></div>
-  {hasMotif && (
-    <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
-      {/* Large, centred solid compass that overlaps/sits behind the headline. */}
-      <div class="ac-compass ac-compass--float absolute left-1/2 top-1/2 h-[132%] w-[64%] -translate-x-1/2 -translate-y-1/2">
-        <div class="ac-compass-halo"></div>
-        {videoUrl ? (
-          <video
-            class="h-full w-full object-contain ac-reduced-hide"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster={stillUrl}
-          >
-            <source src={videoUrl} type="video/mp4" />
-          </video>
-        ) : (
-          <img
-            src={stillUrl}
-            alt=""
-            class="h-full w-full object-contain ac-compass--spin"
-            loading="eager"
-            decoding="async"
-          />
-        )}
-        {/* Reduced-motion / no-video fallback still */}
-        {videoUrl && (
-          <img
-            src={stillUrl}
-            alt=""
-            class="ac-reduced-show absolute inset-0 h-full w-full object-contain"
-            loading="eager"
-            decoding="async"
-          />
-        )}
-      </div>
-      {/* Soft near-black bloom under the text column so Bone White type keeps AA contrast. */}
-      <div class="ac-hero-scrim absolute inset-0"></div>
-    </div>
-  )}
   <div class="relative mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">
     <div class="reveal max-w-4xl">
       {section.eyebrow && (
@@ -80,19 +26,5 @@ const hasMotif = Boolean(stillId);
         )}
       </div>
     </div>
-    {hasMotif && (
-      <div class="reveal relative mt-12 lg:hidden">
-        <div class="ac-compass relative mx-auto aspect-[16/10] w-full max-w-md overflow-hidden">
-          <div class="ac-compass-halo"></div>
-          <img
-            src={stillUrl}
-            alt={img.alt}
-            class="ac-compass--spin h-full w-full object-contain"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      </div>
-    )}
   </div>
 </section>

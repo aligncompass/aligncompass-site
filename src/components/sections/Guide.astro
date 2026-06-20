@@ -1,31 +1,15 @@
 ---
-import CloudinaryImage from '../CloudinaryImage.astro';
-const { section, content } = Astro.props;
-const { cloudinary } = content;
-const img = section.image;
+const { section } = Astro.props;
 const authority = section.authority ?? [];
+// NOTE: the per-section compass image has been removed. A single roaming compass
+// (Layout.astro) now serves the whole page; Guide sections are clean type on the
+// near-black canvas, with the section content spanning the full width.
 ---
 <section class="relative overflow-hidden bg-bg">
   {/* Subtle ambient bloom + vignette over the near-black canvas. */}
   <div class="ac-atmos" aria-hidden="true"></div>
-  <div class="relative mx-auto grid max-w-ac items-center gap-12 px-6 py-[72px] sm:py-[108px] lg:grid-cols-2">
-    {img && (
-      <div class="reveal order-last lg:order-first">
-        {/* Solid compass motif: seated with an edge-only vignette mask + glow halo + drop shadow — solid, dimensional, no hard rectangle edges. */}
-        <div class="relative mx-auto aspect-square w-full max-w-lg overflow-hidden">
-          <div class="ac-compass-halo"></div>
-          <CloudinaryImage
-            cloudName={cloudinary.cloudName}
-            publicId={img.publicId}
-            alt={img.alt}
-            sizes="(min-width: 1024px) 36rem, 100vw"
-            transforms="f_auto,q_auto"
-            class="ac-compass ac-compass--spin h-full w-full object-contain"
-          />
-        </div>
-      </div>
-    )}
-    <div class={`reveal ${img ? '' : 'lg:col-span-2'}`}>
+  <div class="relative mx-auto grid max-w-ac items-center gap-12 px-6 py-[72px] sm:py-[108px]">
+    <div class="reveal">
       {section.heading && <h2 class="ac-heading text-ink">{section.heading}</h2>}
       {section.empathy && <p class="ac-subhead mt-6 text-ink/80">{section.empathy}</p>}
       {authority.length > 0 && (
