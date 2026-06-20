@@ -11,7 +11,7 @@ const authority = section.authority ?? [];
   <div class="relative mx-auto grid max-w-ac items-center gap-12 px-6 py-[72px] sm:py-[108px] lg:grid-cols-2">
     {img && (
       <div class="reveal order-last lg:order-first">
-        {/* Compass motif floats with a soft vignette mask + glow halo — no hard rectangle edges. */}
+        {/* Solid compass motif: seated with an edge-only vignette mask + glow halo + drop shadow — solid, dimensional, no hard rectangle edges. */}
         <div class="relative mx-auto aspect-square w-full max-w-lg overflow-hidden">
           <div class="ac-compass-halo"></div>
           <CloudinaryImage
@@ -20,7 +20,7 @@ const authority = section.authority ?? [];
             alt={img.alt}
             sizes="(min-width: 1024px) 36rem, 100vw"
             transforms="f_auto,q_auto"
-            class="ac-compass ac-compass--spin h-full w-full scale-110 object-contain"
+            class="ac-compass ac-compass--spin h-full w-full object-contain"
           />
         </div>
       </div>

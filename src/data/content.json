@@ -117,9 +117,9 @@
           "headline": "Do the work you love. We'll catch everything you can't get to.",
           "subhead": "You love your customers and you're proud of your work — you just can't ask for a review, answer every call, or chase last year's customers while you're under a house. So I fill every one of those avenues for you: more 5-star reviews, missed calls texted back in seconds, past customers re-booked — landing in the system you already use, or one I set up for you. None of it replaces you. It just makes sure you get paid. Your website's free, and you only pay once it pays for itself.",
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "videoPublicId": "aligncompass-site/compass-glass-loop",
-            "alt": "A 3D glass crystal compass slowly turning, its refracted light leaking soft rainbow edges on a dark field",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "videoPublicId": "aligncompass-site/compass-solid-loop",
+            "alt": "A solid brushed-gunmetal navigational compass at a three-quarter angle, slowly turning to reveal its dimensional form, lit with a cool rim light on a near-black field",
             "focal": "center"
           }
         },
@@ -169,8 +169,8 @@
             "I do 100% of the setup, and your customers and data stay yours"
           ],
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "alt": "A 3D glass crystal compass floating in a dark field, its needle catching soft refracted rainbow light",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "alt": "A solid blackened-steel navigational compass at a three-quarter angle on a near-black field, its needle and engraved rose catching a cool rim light",
             "focal": "center"
           }
         },
@@ -272,9 +272,9 @@
           "headline": "Everything we do points at one thing: more booked jobs.",
           "subhead": "Three pillars do the heavy lifting — reviews, captured calls, and reactivated customers. No customer list yet? I get you found. Need real software? I build that too. The point is simple: fill every avenue that gets you paid.",
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "videoPublicId": "aligncompass-site/compass-glass-loop",
-            "alt": "A 3D glass crystal compass slowly turning, its refracted light leaking soft rainbow edges on a dark field",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "videoPublicId": "aligncompass-site/compass-solid-loop",
+            "alt": "A solid brushed-gunmetal navigational compass at a three-quarter angle, slowly turning to reveal its dimensional form, lit with a cool rim light on a near-black field",
             "focal": "center"
           }
         },
@@ -390,9 +390,9 @@
           "headline": "See exactly what you're leaving on the table — for free.",
           "subhead": "Most owners have no idea how much a few missed calls a week and a quiet customer list really cost. We'll show you the number — in your own math, not someone else's case study.",
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "videoPublicId": "aligncompass-site/compass-glass-loop",
-            "alt": "A 3D glass crystal compass slowly turning, its refracted light leaking soft rainbow edges on a dark field",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "videoPublicId": "aligncompass-site/compass-solid-loop",
+            "alt": "A solid brushed-gunmetal navigational compass at a three-quarter angle, slowly turning to reveal its dimensional form, lit with a cool rim light on a near-black field",
             "focal": "center"
           }
         },
@@ -496,9 +496,9 @@
           "headline": "For owners who love the work — and can't be two places at once.",
           "subhead": "You've been pitched before — a report full of numbers that didn't matter and a bill that did. AlignCompass is the opposite of that. I'm Pedro, and I built this for the owner who loves their customers and takes pride in the job, and just needs the rest to run itself.",
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "videoPublicId": "aligncompass-site/compass-glass-loop",
-            "alt": "A 3D glass crystal compass slowly turning, its refracted light leaking soft rainbow edges on a dark field",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "videoPublicId": "aligncompass-site/compass-solid-loop",
+            "alt": "A solid brushed-gunmetal navigational compass at a three-quarter angle, slowly turning to reveal its dimensional form, lit with a cool rim light on a near-black field",
             "focal": "center"
           }
         },
@@ -513,8 +513,8 @@
             "I work with owners who love their customers, not owners trying to avoid them"
           ],
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "alt": "A 3D glass crystal compass floating in a dark field, its needle catching soft refracted rainbow light",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "alt": "A solid blackened-steel navigational compass at a three-quarter angle on a near-black field, its needle and engraved rose catching a cool rim light",
             "focal": "center"
           }
         },
@@ -651,9 +651,9 @@
           "headline": "Let's plug the leaks. Book your free call.",
           "subhead": "A free 15-minute call — we'll look at where you're losing jobs and whether the engine's a fit. No pressure, no jargon.",
           "image": {
-            "publicId": "aligncompass-site/compass-glass-still",
-            "videoPublicId": "aligncompass-site/compass-glass-loop",
-            "alt": "A 3D glass crystal compass slowly turning, its refracted light leaking soft rainbow edges on a dark field",
+            "publicId": "aligncompass-site/compass-solid-still",
+            "videoPublicId": "aligncompass-site/compass-solid-loop",
+            "alt": "A solid brushed-gunmetal navigational compass at a three-quarter angle, slowly turning to reveal its dimensional form, lit with a cool rim light on a near-black field",
             "focal": "center"
           }
         },
@@ -703,7 +703,7 @@
   },
   "flags": [
     "PREVIEW RESTYLE — Vivid+Co dark editorial design system, refined to match vividand.co. Canvas darkened from Slate Veil (#495764) to Carbon near-black (#0e1216) full-bleed, Bone White text (#fffdf9), Gunmetal Blue accent (#6f879c); no cards/shadows/radius. Added subtle ambient atmosphere: low-opacity warm-amber + cool-slate radial glow leaks from section corners plus a soft vignette (.ac-atmos / .ac-atmos--hero), keeping the canvas near-black not grey. Typeface unified to Inter 400/700 only; display headlines clamp up to ~136px pressed on the canvas. Buttons are outlined ghost rectangles. ALL copy, page structure, sections, CTAs, forms, SEO/schema/analytics preserved. Do not merge — preview only.",
-    "COMPASS MOTIF — Translucent glass compass with glowing rainbow (chromatic-aberration) edges, rendered LARGE + CENTERED so it overlaps/sits behind the hero headline (not a hard right-side block). Heroes render a Cloudinary-hosted looping <video> (publicId aligncompass-site/compass-glass-loop, autoplay+muted+loop+playsinline, poster=compass-glass-still) screen-blended over the near-black canvas (pure-black render drops out, only refracted light + glow remain), radial-masked + a soft glow halo (.ac-compass-halo) so it melts into the canvas with no hard edges; a centered near-black scrim bloom keeps Bone White headline contrast AA. prefers-reduced-motion and mobile fall back to the still (aligncompass-site/compass-glass-still). Guide sections use the masked still with a very slow rotation + halo. Both glass assets generated via Higgsfield (pure-black bg, strong R/G/B rainbow edge-leaks + bloom) and served only from Cloudinary (never hotlinked). Replaces the prior compass-loop/compass-still renders. Masking via .ac-compass (mix-blend screen + radial mask) + .ac-compass--float / --spin, all disabled under reduced-motion.",
+    "COMPASS MOTIF — SOLID, dimensional metal compass (sleek dark brushed gunmetal / blackened steel, three-quarter angle, real depth + weight; NO glass, NO translucency, NO rainbow/chromatic edges). Rendered LARGE + CENTERED so it overlaps/sits behind the hero headline. Heroes render a Cloudinary-hosted looping <video> (publicId aligncompass-site/compass-solid-loop, autoplay+muted+loop+playsinline, poster=compass-solid-still) seated in the near-black canvas with an EDGE-ONLY soft radial vignette mask (only the outer rim fades into the dark — the solid body stays opaque, high-contrast, dimensional), a drop shadow + ambient glow halo (.ac-compass-halo) for depth; a centered near-black scrim bloom (.ac-hero-scrim) keeps Bone White headline contrast AA (>=4.5:1). prefers-reduced-motion and mobile fall back to the still (aligncompass-site/compass-solid-still) with a slow CSS rotation. Guide sections use the same solid treatment + halo. Assets generated via Higgsfield (solid metal compass, near-black bg, cinematic key+rim light) and served only from Cloudinary (never hotlinked). Replaces the prior compass-glass-* (and earlier compass-loop/compass-still) renders; old Cloudinary assets left in place. Treatment via .ac-compass (edge-only mask + drop-shadow, NO screen blend) + .ac-compass--float / --spin, all disabled under reduced-motion.",
     "Copy pass 3 (Pedro voice): first-person founder voice; reviews elevated to #1 pillar; job management = use yours (integrate) or one I set up; added 'no customers yet' visibility path (site/blog/GBP/reviews); broadened custom builds to booking/web/mobile apps + e-commerce; framed as 'fill every avenue so you get paid.'",
     "Palette reskinned to Cyprus (#004741) + Sand (#F0EDE4) per Pedro's reference card; accent #00695a. Replaces the prior slate/teal. Fonts unchanged (Archivo/Inter).",
     "Copy rewritten in Pedro's voice: broadened from missed-call-only to the 'autopilot for what you can't get to' frame (capture + reactivation + reviews + repeat work + custom builds); sharpened the 'who we work with' stance (owners who love customers, not those avoiding them).",

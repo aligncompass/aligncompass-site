@@ -5,12 +5,15 @@ const { cloudinary, cta } = content;
 const img = section.image;
 const cn = cloudinary.cloudName;
 
-// The compass motif: a looping video (compass-glass-loop) with the still
-// (compass-glass-still) as poster + reduced-motion fallback. Both are
-// pure-black-based glass-compass renders that we screen-blend + radial-mask into
-// the near-black canvas so they float with depth and have no hard rectangle
-// edges. The compass sits large and centered, overlapping/behind the headline,
-// with a soft glow halo. The video publicId is supplied in content.
+// The compass motif: a looping video (compass-solid-loop) with the still
+// (compass-solid-still) as poster + reduced-motion fallback. Both are
+// solid, dimensional metal-compass renders on a near-black background. We seat
+// them in the canvas with an EDGE-ONLY radial vignette mask (so only the outer
+// rim melts into the dark — no hard rectangle edge) while the solid body stays
+// opaque, high-contrast and dimensional, with a drop shadow + ambient glow halo
+// for depth. The compass sits large and centered, overlapping/behind the
+// headline, with a dark scrim preserving Bone White headline contrast. The
+// video publicId is supplied in content.
 const stillId = img?.publicId;
 const videoId = img?.videoPublicId;
 const stillUrl = stillId ? cldUrl(cn, stillId, { width: 1280, transforms: 'f_auto,q_auto' }) : '';
@@ -22,8 +25,8 @@ const hasMotif = Boolean(stillId);
   <div class="ac-atmos ac-atmos--hero" aria-hidden="true"></div>
   {hasMotif && (
     <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
-      {/* Large, centred glass compass that overlaps/sits behind the headline. */}
-      <div class="ac-compass ac-compass--float absolute left-1/2 top-1/2 h-[150%] w-[80%] -translate-x-1/2 -translate-y-1/2">
+      {/* Large, centred solid compass that overlaps/sits behind the headline. */}
+      <div class="ac-compass ac-compass--float absolute left-1/2 top-1/2 h-[132%] w-[64%] -translate-x-1/2 -translate-y-1/2">
         <div class="ac-compass-halo"></div>
         {videoUrl ? (
           <video

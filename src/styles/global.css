@@ -136,23 +136,29 @@
       radial-gradient(120% 120% at 50% 45%, transparent 52%, rgba(0, 0, 0, 0.6) 100%);
   }
 
-  /* Compass masking: the pure-black-based renders are screen-blended onto the
-     near-black canvas so the black background drops out and only the refracted
-     light + glow remains, then a soft radial mask melts the asset into the
-     canvas with NO hard rectangle edges — it floats with depth, not in a box.
-     On screen blend over near-black the pure-black render leaves only light. */
+  /* Compass treatment — SOLID + DIMENSIONAL (not translucent).
+     The render is a cool, solid metal compass on a near-black background. We do
+     NOT screen-blend it (that drops the black and flattens the object into a
+     ghost). Instead we keep the compass body fully opaque, high-contrast and
+     dimensional, and use an EDGE-ONLY soft radial vignette mask so only the
+     outer rim of the frame fades into the dark canvas — no hard rectangle edge,
+     but the solid object and its depth stay intact. A soft drop shadow + an
+     ambient glow halo seat it in the scene with weight. */
   .ac-compass {
-    mix-blend-mode: screen;
-    -webkit-mask-image: radial-gradient(ellipse 58% 58% at 50% 50%, #000 34%, rgba(0,0,0,0.5) 60%, transparent 82%);
-    mask-image: radial-gradient(ellipse 58% 58% at 50% 50%, #000 34%, rgba(0,0,0,0.5) 60%, transparent 82%);
+    -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 68%, rgba(0,0,0,0.85) 82%, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 68%, rgba(0,0,0,0.85) 82%, transparent 100%);
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.7)) contrast(1.05);
   }
-  /* Soft glow halo behind the compass so it blooms into the near-black. */
+  /* Soft ambient glow halo behind/beneath the compass so it has presence and a
+     subtle contact bloom against the near-black, without washing it out. */
   .ac-compass-halo {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(closest-side, rgba(111,135,156,0.18) 0%, rgba(212,150,74,0.06) 45%, transparent 72%);
-    filter: blur(8px);
+    background:
+      radial-gradient(closest-side, rgba(111,135,156,0.16) 0%, rgba(212,150,74,0.05) 46%, transparent 70%),
+      radial-gradient(40% 18% at 50% 78%, rgba(0,0,0,0.55) 0%, transparent 70%);
+    filter: blur(10px);
   }
   /* Slow, gentle drift + breathe to add depth. Honors reduced-motion below. */
   .ac-compass--float {
@@ -176,12 +182,12 @@
   }
 
   /* Dark scrim under the headline so Bone White type keeps AA contrast
-     (>=4.5:1) against the screen-blended glow behind it. The compass now sits
+     (>=4.5:1) against the solid compass + glow behind it. The compass sits
      centered/behind the headline, so the scrim is a soft near-black radial
-     bloom centered on the text column rather than a hard left panel. */
+     bloom weighted to the text column rather than a hard left panel. */
   .ac-hero-scrim {
     background:
-      radial-gradient(75% 90% at 30% 50%, var(--ac-bg) 0%, rgba(14,18,22,0.86) 42%, rgba(14,18,22,0.45) 66%, transparent 88%);
+      radial-gradient(80% 95% at 32% 50%, var(--ac-bg) 0%, rgba(14,18,22,0.9) 40%, rgba(14,18,22,0.5) 66%, transparent 90%);
   }
   .ac-hero-scrim--mobile {
     background: radial-gradient(
