@@ -1,24 +1,10 @@
-# build output
-dist/
-# generated types
-.astro/
-
-# dependencies
+# Astro / Node build artifacts — never committed to a customer repo
 node_modules/
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-
-# environment variables
+dist/
+.astro/
+.vercel/
 .env
 .env.production
-
-# macOS-specific files
+npm-debug.log*
 .DS_Store
-
-# jetbrains setting folder
-.idea/
+.vercel
