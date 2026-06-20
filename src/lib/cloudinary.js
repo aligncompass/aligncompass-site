@@ -24,3 +24,16 @@ export function cldSrcset(
     .map((w) => `${cldUrl(cloudName, publicId, { width: w, transforms })} ${w}w`)
     .join(', ');
 }
+
+// Builds a Cloudinary video delivery URL. Defaults trim and lightly compress for
+// a fast, looping background asset; ext selects the container (mp4 for broad
+// support). Never hotlink the raw generator URL — serve from Cloudinary.
+export function cldVideoUrl(
+  cloudName,
+  publicId,
+  { width = 1280, transforms = 'f_auto,q_auto', ext = 'mp4' } = {},
+) {
+  if (!cloudName || !publicId) return '';
+  const w = width ? `,w_${width}` : '';
+  return `https://res.cloudinary.com/${cloudName}/video/upload/${transforms}${w}/${publicId}.${ext}`;
+}

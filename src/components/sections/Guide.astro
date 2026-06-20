@@ -9,14 +9,17 @@ const authority = section.authority ?? [];
   <div class="mx-auto grid max-w-ac items-center gap-12 px-6 py-[72px] sm:py-[108px] lg:grid-cols-2">
     {img && (
       <div class="reveal order-last lg:order-first">
-        <CloudinaryImage
-          cloudName={cloudinary.cloudName}
-          publicId={img.publicId}
-          alt={img.alt}
-          sizes="(min-width: 1024px) 36rem, 100vw"
-          transforms="f_auto,q_auto,c_fill,g_auto"
-          class="ac-prism aspect-square w-full object-cover opacity-80"
-        />
+        {/* Compass motif floats with a soft vignette mask — no hard rectangle edges. */}
+        <div class="relative mx-auto aspect-square w-full max-w-lg overflow-hidden">
+          <CloudinaryImage
+            cloudName={cloudinary.cloudName}
+            publicId={img.publicId}
+            alt={img.alt}
+            sizes="(min-width: 1024px) 36rem, 100vw"
+            transforms="f_auto,q_auto"
+            class="ac-compass ac-compass--spin h-full w-full scale-110 object-contain"
+          />
+        </div>
       </div>
     )}
     <div class={`reveal ${img ? '' : 'lg:col-span-2'}`}>

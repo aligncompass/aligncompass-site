@@ -113,14 +113,62 @@
   /* Hairline rule (accent / graphite) */
   .ac-rule { border-color: var(--ac-accent); }
 
-  /* Prism image masking: vignette/soft-mask the black prism renders into the
-     slate canvas so the black base melts away and only the refracted light
-     remains. */
-  .ac-prism {
+  /* Compass / prism masking: the black-based renders are screen-blended onto
+     the slate canvas so the pure-black background drops out and only the
+     refracted light remains, then a soft radial mask + edge vignette melts the
+     asset into the canvas with NO hard rectangle edges — it floats with depth
+     rather than sitting in a box. */
+  .ac-compass {
     mix-blend-mode: screen;
-    -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 45%, transparent 90%);
-    mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 45%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 38%, rgba(0,0,0,0.55) 64%, transparent 86%);
+    mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 38%, rgba(0,0,0,0.55) 64%, transparent 86%);
   }
+  /* Slow, gentle drift + breathe to add depth. Honors reduced-motion below. */
+  .ac-compass--float {
+    animation: ac-float 22s ease-in-out infinite;
+    will-change: transform;
+  }
+  /* Still-image fallback gets a barely-there slow rotation for life. */
+  .ac-compass--spin {
+    animation: ac-spin 90s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes ac-float {
+    0%   { transform: translateY(-50%) scale(1.0); }
+    50%  { transform: translateY(-52%) scale(1.06); }
+    100% { transform: translateY(-50%) scale(1.0); }
+  }
+  @keyframes ac-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* Dark scrim over the headline side so Bone White type keeps AA contrast
+     (>=4.5:1) against the screen-blended glow behind it. */
+  .ac-hero-scrim {
+    background: linear-gradient(
+      90deg,
+      var(--ac-bg) 0%,
+      var(--ac-bg) 34%,
+      rgba(73,87,100,0.78) 56%,
+      rgba(73,87,100,0.30) 78%,
+      transparent 100%
+    );
+  }
+  .ac-hero-scrim--mobile {
+    background: radial-gradient(
+      ellipse 120% 80% at 50% 38%,
+      rgba(73,87,100,0.25) 0%,
+      rgba(73,87,100,0.72) 70%,
+      var(--ac-bg) 100%
+    );
+  }
+
+  /* Reduced-motion swap: by default show the video, hide the still fallback.
+     The reduced-motion block below flips this so the static poster is shown. */
+  .ac-reduced-show { display: none; }
+  .ac-reduced-hide { display: block; }
 }
 
 /* Light, tasteful scroll-reveal — the free premium touch. Honors
@@ -143,4 +191,9 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .ac-compass--float,
+  .ac-compass--spin { animation: none !important; }
+  /* Swap the autoplay video out for the static poster image. */
+  .ac-reduced-hide { display: none !important; }
+  .ac-reduced-show { display: block !important; }
 }

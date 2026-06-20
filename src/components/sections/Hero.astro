@@ -1,22 +1,59 @@
 ---
-import CloudinaryImage from '../CloudinaryImage.astro';
+import { cldUrl, cldVideoUrl } from '../../lib/cloudinary.js';
 const { section, content } = Astro.props;
 const { cloudinary, cta } = content;
 const img = section.image;
+const cn = cloudinary.cloudName;
+
+// The compass motif: a looping video (compass-loop) with the still (compass-still)
+// as poster + reduced-motion fallback. Both are pure-black-based renders that we
+// screen-blend + radial-mask into the slate canvas so they float with depth and
+// have no hard rectangle edges. The video publicId is derived from the still's
+// publicId unless an explicit videoPublicId is supplied in content.
+const stillId = img?.publicId;
+const videoId = img?.videoPublicId;
+const stillUrl = stillId ? cldUrl(cn, stillId, { width: 1280, transforms: 'f_auto,q_auto' }) : '';
+const videoUrl = videoId ? cldVideoUrl(cn, videoId, { width: 1280 }) : '';
+const hasMotif = Boolean(stillId);
 ---
 <section class="relative overflow-hidden bg-bg">
-  {img && (
+  {hasMotif && (
     <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
-      <CloudinaryImage
-        cloudName={cloudinary.cloudName}
-        publicId={img.publicId}
-        alt=""
-        loading="eager"
-        fetchpriority="high"
-        sizes="60vw"
-        transforms="f_auto,q_auto,c_fill,g_auto"
-        class="ac-prism absolute right-0 top-1/2 h-[120%] w-[60%] -translate-y-1/2 object-cover opacity-80"
-      />
+      <div class="ac-compass ac-compass--float absolute right-[-6%] top-1/2 h-[150%] w-[64%] -translate-y-1/2">
+        {videoUrl ? (
+          <video
+            class="h-full w-full object-cover ac-reduced-hide"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster={stillUrl}
+          >
+            <source src={videoUrl} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={stillUrl}
+            alt=""
+            class="h-full w-full object-cover ac-compass--spin"
+            loading="eager"
+            decoding="async"
+          />
+        )}
+        {/* Reduced-motion / no-video fallback still */}
+        {videoUrl && (
+          <img
+            src={stillUrl}
+            alt=""
+            class="ac-reduced-show absolute inset-0 h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
+        )}
+      </div>
+      {/* Dark scrim over the headline side so Bone White type keeps AA contrast. */}
+      <div class="ac-hero-scrim absolute inset-0"></div>
     </div>
   )}
   <div class="relative mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">
@@ -35,17 +72,17 @@ const img = section.image;
         )}
       </div>
     </div>
-    {img && (
-      <div class="reveal mt-12 lg:hidden">
-        <CloudinaryImage
-          cloudName={cloudinary.cloudName}
-          publicId={img.publicId}
-          alt={img.alt}
-          loading="eager"
-          sizes="100vw"
-          transforms="f_auto,q_auto,c_fill,g_auto"
-          class="ac-prism aspect-[16/10] w-full object-cover opacity-80"
-        />
+    {hasMotif && (
+      <div class="reveal relative mt-12 lg:hidden">
+        <div class="ac-compass relative mx-auto aspect-[16/10] w-full max-w-md overflow-hidden">
+          <img
+            src={stillUrl}
+            alt={img.alt}
+            class="ac-compass--spin h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
       </div>
     )}
   </div>
