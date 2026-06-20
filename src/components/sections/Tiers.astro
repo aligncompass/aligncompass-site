@@ -1,39 +1,40 @@
 ---
-// Pricing tiers: a responsive grid of plan cards. One tier may be `featured`
-// (accent ring). Renders only the prices/fields supplied — never invents numbers.
+// Pricing tiers as clean type columns separated by hairline rules — no cards,
+// no shadows. A featured tier is marked with a small accent label, not a panel.
+// Renders only the prices/fields supplied — never invents numbers.
 const { section } = Astro.props;
 const tiers = section.tiers ?? [];
 const cols = tiers.length === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3';
 ---
-<section class="bg-bg-muted">
-  <div class="mx-auto max-w-ac px-6 py-16 sm:py-20">
+<section class="bg-bg">
+  <div class="mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">
     {section.heading && (
-      <h2 class="reveal font-heading text-2xl font-semibold text-ink sm:text-3xl">{section.heading}</h2>
+      <h2 class="reveal ac-heading max-w-4xl text-ink">{section.heading}</h2>
     )}
-    {section.subhead && <p class="reveal mt-3 max-w-2xl text-muted">{section.subhead}</p>}
-    <div class={`mt-10 grid gap-6 sm:grid-cols-2 ${cols}`}>
+    {section.subhead && <p class="reveal ac-subhead mt-5 max-w-2xl text-ink/80">{section.subhead}</p>}
+    <div class={`mt-12 grid border-t border-line/50 sm:grid-cols-2 ${cols}`}>
       {tiers.map((t) => (
-        <div class={`reveal flex flex-col rounded-ac border bg-bg p-6 shadow-ac ${t.featured ? 'border-accent ring-1 ring-accent' : 'border-line'}`}>
+        <div class="reveal flex flex-col border-b border-line/50 py-9 pr-8 lg:border-r lg:border-line/50 lg:pl-8 lg:pr-12 lg:first:pl-0">
           {t.featured && (
-            <span class="mb-3 inline-flex w-fit items-center rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-contrast">Most popular</span>
+            <span class="mb-4 ac-label text-accent">Most popular</span>
           )}
-          <h3 class="font-heading text-lg font-semibold text-ink">{t.name}</h3>
+          <h3 class="font-heading text-xl font-normal text-ink">{t.name}</h3>
           {t.price && (
-            <p class="mt-3 font-heading text-3xl font-semibold text-ink">
+            <p class="mt-4 font-heading text-3xl font-normal text-ink">
               {t.price}
-              {t.cadence && <span class="ml-1 align-middle text-sm font-normal text-muted">{t.cadence}</span>}
+              {t.cadence && <span class="ml-1 align-middle text-sm font-normal text-ink/60">{t.cadence}</span>}
             </p>
           )}
-          {t.description && <p class="mt-3 text-sm text-muted">{t.description}</p>}
+          {t.description && <p class="mt-3 text-ink/75">{t.description}</p>}
           {(t.includes ?? []).length > 0 && (
-            <ul class="mt-6 space-y-2 text-sm">
+            <ul class="mt-7 space-y-3">
               {t.includes.map((it) => (
-                <li class="flex gap-3 text-muted"><span aria-hidden="true" class="text-accent">✓</span><span>{it}</span></li>
+                <li class="flex gap-3 text-ink/80"><span aria-hidden="true" class="text-accent">✓</span><span>{it}</span></li>
               ))}
             </ul>
           )}
           {t.cta && (
-            <a href={t.cta.href} class={`mt-8 inline-flex items-center justify-center rounded-ac px-5 py-3 font-medium shadow-ac transition-transform hover:-translate-y-0.5 ${t.featured ? 'bg-accent text-accent-contrast' : 'bg-primary text-primary-contrast'}`}>{t.cta.label}</a>
+            <a href={t.cta.href} class={`ac-ghost mt-8 self-start ${t.featured ? '' : 'ac-ghost--accent'}`}>{t.cta.label}</a>
           )}
         </div>
       ))}

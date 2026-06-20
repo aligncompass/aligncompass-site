@@ -29,30 +29,30 @@
   },
   "design": {
     "colors": {
-      "primary": "#004741",
-      "primaryContrast": "#ffffff",
-      "accent": "#00695a",
-      "accentContrast": "#ffffff",
-      "bg": "#f0ede4",
-      "bgMuted": "#e7e2d6",
-      "surface": "#ffffff",
-      "text": "#13302b",
-      "textMuted": "#586b64",
-      "border": "#d8d2c4"
+      "primary": "#495764",
+      "primaryContrast": "#fffdf9",
+      "accent": "#6f879c",
+      "accentContrast": "#fffdf9",
+      "bg": "#495764",
+      "bgMuted": "#495764",
+      "surface": "#495764",
+      "text": "#fffdf9",
+      "textMuted": "#fffdf9",
+      "border": "#6f879c"
     },
     "fonts": {
-      "heading": "'Archivo', system-ui, sans-serif",
+      "heading": "'Inter', system-ui, sans-serif",
       "body": "'Inter', system-ui, sans-serif",
-      "googleFontsHref": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&display=swap"
+      "googleFontsHref": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
     },
     "scale": {
-      "radius": "0.375rem",
-      "shadow": "0 1px 2px rgba(0,71,65,0.06), 0 10px 28px rgba(0,71,65,0.08)",
-      "maxWidth": "72rem"
+      "radius": "0",
+      "shadow": "none",
+      "maxWidth": "80rem"
     },
     "motion": {
       "revealEnabled": true,
-      "durationMs": 480,
+      "durationMs": 600,
       "easing": "cubic-bezier(0.22, 1, 0.36, 1)"
     }
   },
@@ -117,9 +117,9 @@
           "headline": "Do the work you love. We'll catch everything you can't get to.",
           "subhead": "You love your customers and you're proud of your work — you just can't ask for a review, answer every call, or chase last year's customers while you're under a house. So I fill every one of those avenues for you: more 5-star reviews, missed calls texted back in seconds, past customers re-booked — landing in the system you already use, or one I set up for you. None of it replaces you. It just makes sure you get paid. Your website's free, and you only pay once it pays for itself.",
           "image": {
-            "publicId": "aligncompass-site/hero-owner-on-job",
-            "alt": "Home-service owner working a job while a new booking notification lights up the phone in their hand",
-            "focal": "center-right on the phone screen"
+            "publicId": "aligncompass-site/prism-hero",
+            "alt": "Abstract 3D glass prism refracting light into a chromatic-aberration rainbow on a dark field",
+            "focal": "center"
           }
         },
         {
@@ -168,9 +168,9 @@
             "I do 100% of the setup, and your customers and data stay yours"
           ],
           "image": {
-            "publicId": "aligncompass-site/guide-analyst-attribution",
-            "alt": "Phone screen showing a booked job traced back to a recovered missed call",
-            "focal": "center on the booking confirmation"
+            "publicId": "aligncompass-site/prism-services",
+            "alt": "Three glass crystal columns splitting a beam of white light into a vivid spectrum",
+            "focal": "center"
           }
         },
         {
@@ -271,8 +271,8 @@
           "headline": "Everything we do points at one thing: more booked jobs.",
           "subhead": "Three pillars do the heavy lifting — reviews, captured calls, and reactivated customers. No customer list yet? I get you found. Need real software? I build that too. The point is simple: fill every avenue that gets you paid.",
           "image": {
-            "publicId": "aligncompass-site/services-calendar-filling",
-            "alt": "A service business calendar filling up with booked jobs over the week",
+            "publicId": "aligncompass-site/prism-services",
+            "alt": "Three glass crystal columns splitting a beam of white light into a vivid spectrum",
             "focal": "center"
           }
         },
@@ -388,8 +388,8 @@
           "headline": "See exactly what you're leaving on the table — for free.",
           "subhead": "Most owners have no idea how much a few missed calls a week and a quiet customer list really cost. We'll show you the number — in your own math, not someone else's case study.",
           "image": {
-            "publicId": "aligncompass-site/audit-revenue-math",
-            "alt": "Simple worksheet showing calls received, calls missed, and dollars lost per week",
+            "publicId": "aligncompass-site/prism-hero",
+            "alt": "Abstract 3D glass prism refracting light into a chromatic-aberration rainbow on a dark field",
             "focal": "center"
           }
         },
@@ -493,8 +493,8 @@
           "headline": "For owners who love the work — and can't be two places at once.",
           "subhead": "You've been pitched before — a report full of numbers that didn't matter and a bill that did. AlignCompass is the opposite of that. I'm Pedro, and I built this for the owner who loves their customers and takes pride in the job, and just needs the rest to run itself.",
           "image": {
-            "publicId": "aligncompass-site/about-operator",
-            "alt": "A focused operator reviewing real booked-job numbers on a laptop",
+            "publicId": "aligncompass-site/prism-about",
+            "alt": "A cluster of fractured glass crystal shards leaking spectral red, green and blue light in a dark void",
             "focal": "center"
           }
         },
@@ -509,8 +509,8 @@
             "I work with owners who love their customers, not owners trying to avoid them"
           ],
           "image": {
-            "publicId": "aligncompass-site/about-attribution-report",
-            "alt": "A plain recovered-revenue summary showing jobs traced back to the system",
+            "publicId": "aligncompass-site/prism-services",
+            "alt": "Three glass crystal columns splitting a beam of white light into a vivid spectrum",
             "focal": "center"
           }
         },
@@ -647,8 +647,8 @@
           "headline": "Let's plug the leaks. Book your free call.",
           "subhead": "A free 15-minute call — we'll look at where you're losing jobs and whether the engine's a fit. No pressure, no jargon.",
           "image": {
-            "publicId": "aligncompass-site/contact-book-call",
-            "alt": "Phone calendar open to book a free 15-minute call",
+            "publicId": "aligncompass-site/prism-hero",
+            "alt": "Abstract 3D glass prism refracting light into a chromatic-aberration rainbow on a dark field",
             "focal": "center"
           }
         },
@@ -697,6 +697,7 @@
     "showHours": true
   },
   "flags": [
+    "PREVIEW RESTYLE — Vivid+Co dark editorial design system. Palette swapped to Slate Veil canvas (#495764) full-bleed, Bone White text (#fffdf9), Gunmetal Blue accent (#6f879c); no cards/shadows/radius. Typeface unified to Inter 400/700 only; display headlines clamp up to ~136px pressed on the canvas. Photography replaced with 3D glass-prism renders (prism-hero, prism-about, prism-services) masked/vignetted into the canvas via .ac-prism (mix-blend screen + radial mask). Buttons are outlined ghost rectangles. ALL copy, page structure, sections, CTAs, forms, SEO/schema/analytics preserved. Do not merge — preview only.",
     "Copy pass 3 (Pedro voice): first-person founder voice; reviews elevated to #1 pillar; job management = use yours (integrate) or one I set up; added 'no customers yet' visibility path (site/blog/GBP/reviews); broadened custom builds to booking/web/mobile apps + e-commerce; framed as 'fill every avenue so you get paid.'",
     "Palette reskinned to Cyprus (#004741) + Sand (#F0EDE4) per Pedro's reference card; accent #00695a. Replaces the prior slate/teal. Fonts unchanged (Archivo/Inter).",
     "Copy rewritten in Pedro's voice: broadened from missed-call-only to the 'autopilot for what you can't get to' frame (capture + reactivation + reviews + repeat work + custom builds); sharpened the 'who we work with' stance (owners who love customers, not those avoiding them).",

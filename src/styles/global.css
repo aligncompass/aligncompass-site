@@ -2,27 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base, on top of Tailwind. Theme colors/fonts come from the CSS variables
-   injected by Layout.astro from content.json's design block. */
+/* ──────────────────────────────────────────────────────────────────────────
+   Vivid+Co — dark editorial design system.
+   Single palette (Slate Veil canvas + Bone White type + Gunmetal Blue accent),
+   one typeface (Inter 400/700), full-bleed sections, no cards/shadows/radius,
+   huge display type pressed onto the canvas, outlined ghost buttons.
+   Theme colors/fonts come from the CSS variables injected by Layout.astro from
+   content.json's design block.
+   ────────────────────────────────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--ac-bg);
-    color: var(--ac-text);
+    background-color: var(--ac-bg); /* Slate Veil #495764 — full canvas */
+    color: var(--ac-text);          /* Bone White #fffdf9 */
     font-family: var(--ac-font-body);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 {
     font-family: var(--ac-font-heading);
     color: var(--ac-text);
-    letter-spacing: -0.01em;
+    font-weight: 400; /* headlines sit at weight 400, pressed onto the canvas */
+    letter-spacing: -0.02em;
+    line-height: 1.03;
   }
+  /* 700 only for occasional emphasis words */
+  strong, b { font-weight: 700; }
+
   :focus-visible {
-    outline: 2px solid var(--ac-accent);
-    outline-offset: 2px;
+    outline: 1px solid var(--ac-accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* DISPLAY headline — responsive clamp up to ~136px, scaling down on mobile */
+  .ac-display {
+    font-size: clamp(2.75rem, 9vw, 8.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+  /* Section headings — 56px desktop, scaling down */
+  .ac-heading {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+  /* Sub / lead body */
+  .ac-subhead {
+    font-size: clamp(1.0625rem, 1.4vw, 1.375rem); /* ~17–22px */
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  /* Small caption / label / eyebrow — 14px ALL-CAPS with tracking */
+  .ac-label {
+    font-size: 0.875rem; /* 14px */
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* Outlined ghost button — transparent, 1px border, 0 radius, no fill.
+     On hover the border shifts to the Gunmetal Blue accent. */
+  .ac-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--ac-text);
+    border-radius: 0;
+    color: var(--ac-text);
+    font-size: 0.9375rem; /* ~15px */
+    font-weight: 400;
+    padding: 9px 15px;
+    line-height: 1;
+    transition: border-color var(--ac-motion-duration, 600ms) var(--ac-motion-easing, ease),
+      color var(--ac-motion-duration, 600ms) var(--ac-motion-easing, ease),
+      opacity 200ms ease;
+    cursor: pointer;
+  }
+  .ac-ghost:hover {
+    border-color: var(--ac-accent);
+    color: var(--ac-accent);
+  }
+  /* Accent-outlined variant (already gunmetal); darkens to bone on hover */
+  .ac-ghost--accent {
+    border-color: var(--ac-accent);
+  }
+  .ac-ghost--accent:hover {
+    border-color: var(--ac-text);
+    color: var(--ac-text);
+  }
+  /* Text/transitional link */
+  .ac-link {
+    color: var(--ac-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ac-accent);
+    padding-bottom: 2px;
+    transition: border-color 200ms ease, opacity 200ms ease;
+  }
+  .ac-link:hover { opacity: 0.7; }
+
+  /* Hairline rule (accent / graphite) */
+  .ac-rule { border-color: var(--ac-accent); }
+
+  /* Prism image masking: vignette/soft-mask the black prism renders into the
+     slate canvas so the black base melts away and only the refracted light
+     remains. */
+  .ac-prism {
+    mix-blend-mode: screen;
+    -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 45%, transparent 90%);
+    mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 45%, transparent 90%);
   }
 }
 
@@ -31,10 +128,10 @@
 @layer utilities {
   .reveal {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(20px);
     transition:
-      opacity var(--ac-motion-duration, 500ms) var(--ac-motion-easing, ease),
-      transform var(--ac-motion-duration, 500ms) var(--ac-motion-easing, ease);
+      opacity var(--ac-motion-duration, 600ms) var(--ac-motion-easing, ease),
+      transform var(--ac-motion-duration, 600ms) var(--ac-motion-easing, ease);
     will-change: opacity, transform;
   }
   .reveal.is-visible {

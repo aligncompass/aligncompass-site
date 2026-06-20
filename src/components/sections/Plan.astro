@@ -3,14 +3,16 @@ const { section } = Astro.props;
 const steps = section.steps ?? [];
 ---
 <section id={section.id} class="bg-bg">
-  <div class="mx-auto max-w-ac px-6 py-16 sm:py-20">
-    {section.heading && <h2 class="reveal font-heading text-2xl font-semibold text-ink sm:text-3xl">{section.heading}</h2>}
-    <ol class="mt-10 grid gap-6 sm:grid-cols-3">
+  <div class="mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">
+    {section.heading && <h2 class="reveal ac-heading max-w-4xl text-ink">{section.heading}</h2>}
+    <ol class="mt-12 border-t border-line/50">
       {steps.map((step, i) => (
-        <li class="reveal rounded-ac border border-line bg-surface p-6">
-          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent font-heading font-semibold text-accent-contrast">{i + 1}</span>
-          <h3 class="mt-4 font-heading text-lg font-semibold text-ink">{step.title}</h3>
-          <p class="mt-2 text-muted">{step.body}</p>
+        <li class="reveal grid gap-4 border-b border-line/50 py-9 sm:grid-cols-[auto_1fr] sm:gap-10">
+          <span class="font-heading text-3xl font-normal text-accent">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="font-heading text-xl font-normal text-ink">{step.title}</h3>
+            <p class="mt-3 max-w-2xl text-ink/75">{step.body}</p>
+          </div>
         </li>
       ))}
     </ol>

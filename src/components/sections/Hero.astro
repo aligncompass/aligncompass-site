@@ -4,33 +4,47 @@ const { section, content } = Astro.props;
 const { cloudinary, cta } = content;
 const img = section.image;
 ---
-<section class="relative overflow-hidden bg-bg-muted">
-  <div class="mx-auto grid max-w-ac items-center gap-10 px-6 py-16 sm:py-24 lg:grid-cols-2">
-    <div class="reveal">
+<section class="relative overflow-hidden bg-bg">
+  {img && (
+    <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
+      <CloudinaryImage
+        cloudName={cloudinary.cloudName}
+        publicId={img.publicId}
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        sizes="60vw"
+        transforms="f_auto,q_auto,c_fill,g_auto"
+        class="ac-prism absolute right-0 top-1/2 h-[120%] w-[60%] -translate-y-1/2 object-cover opacity-80"
+      />
+    </div>
+  )}
+  <div class="relative mx-auto max-w-ac px-6 py-[72px] sm:py-[108px]">
+    <div class="reveal max-w-4xl">
       {section.eyebrow && (
-        <p class="mb-4 text-sm font-medium uppercase tracking-wide text-accent">{section.eyebrow}</p>
+        <p class="mb-6 ac-label text-ink/70">{section.eyebrow}</p>
       )}
-      <h1 class="font-heading text-4xl font-semibold leading-tight text-ink sm:text-5xl">{section.headline}</h1>
-      {section.subhead && <p class="mt-5 max-w-xl text-lg text-muted">{section.subhead}</p>}
-      <div class="mt-8 flex flex-wrap items-center gap-4">
+      <h1 class="ac-display text-ink">{section.headline}</h1>
+      {section.subhead && <p class="ac-subhead mt-8 max-w-2xl text-ink/80">{section.subhead}</p>}
+      <div class="mt-10 flex flex-wrap items-center gap-5">
         {cta?.primary && (
-          <a href={cta.primary.href} class="inline-flex items-center rounded-ac bg-accent px-6 py-3 font-medium text-accent-contrast shadow-ac transition-transform hover:-translate-y-0.5">{cta.primary.label}</a>
+          <a href={cta.primary.href} class="ac-ghost">{cta.primary.label}</a>
         )}
         {cta?.transitional && (
-          <a href={cta.transitional.href} class="inline-flex items-center font-medium text-ink underline-offset-4 hover:underline">{cta.transitional.label} →</a>
+          <a href={cta.transitional.href} class="ac-link">{cta.transitional.label} →</a>
         )}
       </div>
     </div>
     {img && (
-      <div class="reveal">
+      <div class="reveal mt-12 lg:hidden">
         <CloudinaryImage
           cloudName={cloudinary.cloudName}
           publicId={img.publicId}
           alt={img.alt}
           loading="eager"
-          fetchpriority="high"
-          sizes="(min-width: 1024px) 40rem, 100vw"
-          class="aspect-[4/3] w-full rounded-ac object-cover shadow-ac"
+          sizes="100vw"
+          transforms="f_auto,q_auto,c_fill,g_auto"
+          class="ac-prism aspect-[16/10] w-full object-cover opacity-80"
         />
       </div>
     )}

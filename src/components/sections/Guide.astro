@@ -5,8 +5,8 @@ const { cloudinary } = content;
 const img = section.image;
 const authority = section.authority ?? [];
 ---
-<section class="bg-bg-muted">
-  <div class="mx-auto grid max-w-ac items-center gap-10 px-6 py-16 sm:py-20 lg:grid-cols-2">
+<section class="bg-bg">
+  <div class="mx-auto grid max-w-ac items-center gap-12 px-6 py-[72px] sm:py-[108px] lg:grid-cols-2">
     {img && (
       <div class="reveal order-last lg:order-first">
         <CloudinaryImage
@@ -14,17 +14,21 @@ const authority = section.authority ?? [];
           publicId={img.publicId}
           alt={img.alt}
           sizes="(min-width: 1024px) 36rem, 100vw"
-          class="aspect-square w-full rounded-ac object-cover shadow-ac"
+          transforms="f_auto,q_auto,c_fill,g_auto"
+          class="ac-prism aspect-square w-full object-cover opacity-80"
         />
       </div>
     )}
     <div class={`reveal ${img ? '' : 'lg:col-span-2'}`}>
-      {section.heading && <h2 class="font-heading text-2xl font-semibold text-ink sm:text-3xl">{section.heading}</h2>}
-      {section.empathy && <p class="mt-5 text-lg text-muted">{section.empathy}</p>}
+      {section.heading && <h2 class="ac-heading text-ink">{section.heading}</h2>}
+      {section.empathy && <p class="ac-subhead mt-6 text-ink/80">{section.empathy}</p>}
       {authority.length > 0 && (
-        <ul class="mt-6 flex flex-wrap gap-3">
+        <ul class="mt-10 border-t border-line/50">
           {authority.map((a) => (
-            <li class="rounded-full border border-line bg-bg px-4 py-2 text-sm font-medium text-ink">{a}</li>
+            <li class="flex gap-4 border-b border-line/50 py-4 text-ink/80">
+              <span aria-hidden="true" class="ac-label shrink-0 text-accent">—</span>
+              <span>{a}</span>
+            </li>
           ))}
         </ul>
       )}
