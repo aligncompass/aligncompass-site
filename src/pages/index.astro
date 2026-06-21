@@ -1,11 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionRenderer from '../components/SectionRenderer.astro';
+import ScrollSeq from '../components/ScrollSeq.astro';
 import content from '../data/content.json';
 
 const page = content.pages.find((p) => p.slug === 'index') ?? content.pages[0];
 const ogImage = page.sections.find((s) => s.image)?.image?.publicId ?? null;
 ---
 <Layout content={content} page={page} ogImage={ogImage}>
+  {/* Scroll-scrubbed cinematic hero — the storyboard plays as you scroll, then
+      the page flows into the existing content sections below. Home page only. */}
+  <ScrollSeq content={content} />
   {page.sections.map((section) => <SectionRenderer section={section} content={content} />)}
 </Layout>

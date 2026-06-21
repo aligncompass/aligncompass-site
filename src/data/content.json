@@ -29,16 +29,16 @@
   },
   "design": {
     "colors": {
-      "primary": "#0e1216",
+      "primary": "#141d2e",
       "primaryContrast": "#fffdf9",
-      "accent": "#6f879c",
+      "accent": "#8aa0b8",
       "accentContrast": "#fffdf9",
-      "bg": "#0e1216",
-      "bgMuted": "#0e1216",
-      "surface": "#0e1216",
+      "bg": "#141d2e",
+      "bgMuted": "#141d2e",
+      "surface": "#141d2e",
       "text": "#fffdf9",
       "textMuted": "#fffdf9",
-      "border": "#6f879c"
+      "border": "#8aa0b8"
     },
     "fonts": {
       "heading": "'Inter', system-ui, sans-serif",
@@ -56,7 +56,13 @@
       "easing": "cubic-bezier(0.22, 1, 0.36, 1)"
     },
     "compassCinematic": "aligncompass-site/compass-cinematic-loop",
-    "gtmLandscape": "aligncompass-site/gtm-landscape"
+    "gtmLandscape": "aligncompass-site/gtm-landscape",
+    "scrollSeq": [
+      "aligncompass-site/seq-1-wordmark",
+      "aligncompass-site/seq-2-tilt",
+      "aligncompass-site/seq-3-barren",
+      "aligncompass-site/seq-4-green"
+    ]
   },
   "cta": {
     "primary": {
