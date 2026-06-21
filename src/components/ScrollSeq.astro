@@ -214,7 +214,21 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       const r = el.getBoundingClientRect();
       return r.top + window.scrollY;
     }
-    let B = { hero: 0, stakes: 0, value: 0, hold: 0, max: 1 };
+    // ── MORPH-ZONE + HOLD MODEL ─────────────────────────────────────────────
+    // Each themed landscape must be FULLY RESOLVED by the TOP of its section and
+    // then HOLD (frozen at that clip's end frame) across the whole section body.
+    // The morph happens only in a short zone right BEFORE the section top.
+    //
+    //   stakes(bs):  clip 3 BARREN scrubs 0→1 across [bs - mLen, bs]; resolved by
+    //                bs; then HOLDS at the barren end frame across [bs, mv].
+    //   value(bv):   clip 4 GREEN  scrubs 0→1 across [mv = bv - mLen, bv]; resolved
+    //                by bv; then HOLDS at the green end frame from bv to the end.
+    //   hero [0, bs - mLen]: clip 1 (wordmark→compass) then clip 2 (tilt) play and
+    //                resolve, so the compass has tilted by the time the barren
+    //                morph zone begins.
+    // currentTime stays a pure function of scrollY (the holds are just flat
+    // segments of that function) → video paused; freezes the instant idle.
+    let B = { hero: 0, mStakes: 0, stakes: 0, mValue: 0, value: 0, max: 1 };
     function computeBounds() {
       const max = docScrollMax();
       const vh = window.innerHeight;
@@ -222,14 +236,21 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       let bs = topOf('[data-seq-anchor="stakes"]');
       let bv = topOf('[data-seq-anchor="value"]');
       // Defensive fallbacks so the scrub always runs even if anchors move.
-      if (bs == null) bs = max * 0.33;
-      if (bv == null) bv = max * 0.6;
-      // Clamp into sane, ordered ranges.
-      bs = clamp(bs, vh * 0.4, max);
-      bv = clamp(bv, bs + vh * 0.2, max);
-      // Green fully bloomed a little after the value section's top, then HOLD.
-      const hold = clamp(bv + vh * 0.85, bv + 1, max);
-      B = { hero: 0, stakes: bs, value: bv, hold: hold, max: max };
+      if (bs == null) bs = max * 0.4;
+      if (bv == null) bv = max * 0.68;
+      // Clamp into sane, ordered ranges (value must sit below stakes).
+      bs = clamp(bs, vh * 0.5, max);
+      bv = clamp(bv, bs + vh * 0.4, max);
+      // Morph-zone length: a short band ending exactly at each section top, in
+      // which the active clip scrubs start→end. ~80vh, but never eating more
+      // than ~45% of the preceding span so a hold always remains visible.
+      const heroSpan = bs;                 // [0 .. stakes-top]
+      const stakesSpan = bv - bs;          // [stakes-top .. value-top]
+      const mLenStakes = clamp(vh * 0.8, vh * 0.3, heroSpan * 0.45);
+      const mLenValue = clamp(vh * 0.8, vh * 0.3, stakesSpan * 0.55);
+      const mStakes = clamp(bs - mLenStakes, 0, bs - 1);   // barren morph begins
+      const mValue = clamp(bv - mLenValue, bs, bv - 1);    // green morph begins
+      B = { hero: 0, mStakes: mStakes, stakes: bs, mValue: mValue, value: bv, max: max };
     }
 
     let activeBand = -1;
@@ -243,15 +264,17 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       videos.forEach((v, i) => { v.style.opacity = i === k ? '1' : '0'; });
     }
 
-    // Phase-tuned scrim strength + tint opacity, by band/phase. Brighter frames
-    // (green valley, barren) get a stronger scrim so bone-white type stays AA.
+    // Phase-tuned scrim strength + tint opacity, by band/phase. Now that the
+    // barren and green END frames HOLD (parked) across whole sections — their
+    // brightest frames sitting still behind bone-white type — the held states
+    // get a stronger scrim so #fffdf9 stays AA across the entire hold, not just
+    // mid-morph. The morph zones ramp toward the held strength.
     function applyPhase(band, parked) {
       if (!scrim) return;
-      // 0 = compass (lighter, navy base carries it), 1 = barren, 2 = green.
       let strength;
       if (band <= 1) strength = 0.34;          // compass phases (navy base)
-      else if (band === 2) strength = 0.6;     // barren badlands
-      else strength = parked ? 0.7 : 0.62;     // green valley (brightest)
+      else if (band === 2) strength = parked ? 0.68 : 0.6;  // barren: held end is brighter
+      else strength = parked ? 0.74 : 0.64;    // green valley (brightest); held end strongest
       scrim.style.setProperty('--seq-scrim', String(strength));
       // Navy base (#ac-tint) is for the metal-on-navy compass phases only; it
       // fades out as we cross into the landscape phases so the green/barren
@@ -281,26 +304,38 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       ticking = false;
       const y = window.scrollY || window.pageYOffset || 0;
 
+      // Five segments along scrollY, mapping to morph zones + holds:
+      //   [0 .. mStakes)        HERO: clip 0 (wordmark→compass) then clip 1 (tilt)
+      //   [mStakes .. stakes)   MORPH → barren: clip 2 scrubs 0→1
+      //   [stakes .. mValue)    HOLD barren: clip 2 pinned at end frame
+      //   [mValue .. value)     MORPH → green: clip 3 scrubs 0→1
+      //   [value .. end]        HOLD green: clip 3 pinned at end frame
       let band, q, parked = false;
-      if (y < B.stakes) {
-        // Hero → stakes span carries clip 1 (hero) then clip 2 (tilt handoff).
-        // Split the span so clip 1 gets the hero viewport and clip 2 the gap.
-        const span = B.stakes - B.hero || 1;
+      if (y < B.mStakes) {
+        // HERO: the compass phases play and resolve (tilted) before the barren
+        // morph zone begins. Split clip 0 / clip 1 across the hero span.
+        const span = B.mStakes - B.hero || 1;
         const p = clamp((y - B.hero) / span, 0, 1);
-        // Give clip 1 the first ~55% (the hero is the focal moment), clip 2 the
-        // rest (the compass laying down as the page leaves the hero).
         if (p < 0.55) { band = 0; q = p / 0.55; }
         else { band = 1; q = (p - 0.55) / 0.45; }
-      } else if (y < B.value) {
-        // Stakes section → the barren badlands sits behind the problem copy.
+      } else if (y < B.stakes) {
+        // MORPH → BARREN: short zone just before the stakes top; clip 2 scrubs
+        // start→end so the barren badlands is fully resolved AT stakes-top.
         band = 2;
-        q = clamp((y - B.stakes) / ((B.value - B.stakes) || 1), 0, 1);
-      } else if (y < B.hold) {
-        // Value section → bloom into the green valley.
+        q = clamp((y - B.mStakes) / ((B.stakes - B.mStakes) || 1), 0, 1);
+      } else if (y < B.mValue) {
+        // HOLD BARREN: pin clip 2 at its end frame across the whole stakes body.
+        band = 2;
+        q = 1;
+        parked = true;
+      } else if (y < B.value) {
+        // MORPH → GREEN: short zone just before the value top; clip 3 scrubs
+        // start→end so the green valley is fully resolved AT value-top.
         band = 3;
-        q = clamp((y - B.value) / ((B.hold - B.value) || 1), 0, 1);
+        q = clamp((y - B.mValue) / ((B.value - B.mValue) || 1), 0, 1);
       } else {
-        // HOLD: park clip 4 at its last frame through the rest of the page.
+        // HOLD GREEN: pin clip 3 at its end frame through value + every section
+        // after it (plan/proof/pricing/FAQ/contact + folded GTM closing).
         band = 3;
         q = 1;
         parked = true;
@@ -310,10 +345,10 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       applyPhase(band, parked);
       seekActive(band, q);
 
-      // Hero overlay fades out as the hero scrolls away (gone by ~75% of the
-      // hero→stakes span).
+      // Hero overlay fades out as the hero scrolls away (gone by ~55% of the
+      // hero span, i.e. while clip 0 is still the active compass phase).
       if (overlay) {
-        const span = B.stakes - B.hero || 1;
+        const span = B.mStakes - B.hero || 1;
         const heroP = clamp((y - B.hero) / span, 0, 1);
         overlay.style.opacity = String(clamp(1 - heroP / 0.55, 0, 1));
       }
