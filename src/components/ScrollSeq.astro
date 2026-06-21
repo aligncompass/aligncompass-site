@@ -212,17 +212,14 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       // can blank some decoders).
       const d = meta[k].duration;
       if (d && isFinite(d)) {
+        // The frame is a DIRECT function of scroll position — no easing, no
+        // auto-advance — so playback freezes the instant scrolling stops
+        // (strictly scroll-proportional). The video is kept paused; we only seek.
         const target = clamp(q * d, 0, d - 0.05);
-        // Light smoothing toward the target; snap if very close or first frame.
-        const cur = meta[k].smooth || 0;
-        const next = Math.abs(target - cur) < 0.02 ? target : lerp(cur, target, 0.5);
-        meta[k].smooth = next;
         const v = videos[k];
         try {
-          if (v.paused === false) v.pause();
-          // Only assign if it actually moved enough to matter (avoids spamming
-          // the decoder with sub-frame seeks).
-          if (Math.abs((v.currentTime || 0) - next) > 0.015) v.currentTime = next;
+          if (!v.paused) v.pause();          // never let it play on its own
+          if (Math.abs((v.currentTime || 0) - target) > 0.01) v.currentTime = target;
         } catch (e) {}
       }
 
@@ -241,55 +238,11 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
     }
 
     function onScroll() {
-      if (reduced || small) return;
+      if (reduced) return;
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(renderScrub);
       }
-    }
-
-    // ── MOBILE: calmer fallback ─────────────────────────────────────────────
-    // currentTime scrubbing is janky on iOS Safari, so on small screens we play
-    // each clip through when its band scrolls into view (autoplay+muted), and
-    // step the band by the same scroll-progress math (no per-frame seeking).
-    let mobileWatch = null;
-    function setupMobile() {
-      // Show first band; let videos play through on band-enter.
-      videos.forEach((v, i) => {
-        v.style.opacity = i === 0 ? '1' : '0';
-        v.loop = true; // gentle loop so a band that lingers stays alive
-        v.muted = true;
-      });
-      activeBand = -1;
-      function mobileRender() {
-        ticking = false;
-        const rect = stage.getBoundingClientRect();
-        const scrollable = stage.offsetHeight - window.innerHeight;
-        const p = scrollable > 0 ? clamp(-rect.top / scrollable, 0, 1) : 0;
-        const k = Math.min(N - 1, Math.floor(clamp(p * N, 0, N - 1e-6)));
-        if (k !== activeBand) {
-          activeBand = k;
-          videos.forEach((v, i) => {
-            v.style.opacity = i === k ? '1' : '0';
-            if (i === k) {
-              const pr = v.play();
-              if (pr && pr.catch) pr.catch(() => {});
-            } else {
-              try { v.pause(); } catch (e) {}
-            }
-          });
-        }
-        if (overlay) {
-          const band0Local = clamp(p * N, 0, 1);
-          overlay.style.opacity = String(clamp(1 - band0Local * 1.35, 0, 1));
-        }
-        if (!cueHidden && cue && p > 0.02) { cueHidden = true; cue.style.opacity = '0'; }
-      }
-      mobileWatch = function () {
-        if (!ticking) { ticking = true; requestAnimationFrame(mobileRender); }
-      };
-      window.addEventListener('scroll', mobileWatch, { passive: true });
-      mobileRender();
     }
 
     // ── REDUCED MOTION: static poster hero ──────────────────────────────────
@@ -303,7 +256,6 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
 
     function teardown() {
       window.removeEventListener('scroll', onScroll);
-      if (mobileWatch) { window.removeEventListener('scroll', mobileWatch); mobileWatch = null; }
       stage.classList.remove('ac-seq-static');
     }
 
@@ -314,8 +266,9 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       cueHidden = false;
       if (cue) { cue.style.display = ''; cue.style.opacity = ''; }
       if (reduced) { setupStatic(); return; }
-      if (small) { setupMobile(); return; }
-      // Desktop frame-scrub.
+      // Strict frame-scrub on ALL screen sizes — the frame is tied to scroll
+      // position with no autoplay/loop fallback, so the video never advances
+      // on its own (it freezes when scrolling stops).
       window.addEventListener('scroll', onScroll, { passive: true });
       renderScrub();
     }
