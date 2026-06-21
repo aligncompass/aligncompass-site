@@ -47,3 +47,227 @@
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* ── SCROLL-SCRUBBED CINEMATIC HERO ───────────────────────────────────────────
+   Synced from the cinematic-scroll-hero skill (aligncompass-playbook, PR #56).
+   Pairs with src/components/ScrollSeq.astro. The stage is ~100vh of scroll per
+   clip; the sticky child is pinned at 100vh. Only opacity is animated
+   (GPU-friendly); the script drives currentTime.
+
+   PALETTE NOTE: the storyboard footage is dark/cinematic, so the stage runs a
+   deep-navy canvas + bone-white type. Those tokens are overridden LOCALLY on
+   .ac-seq-stage only — the rest of the site keeps its sand/cyprus palette. */
+
+.ac-seq-stage {
+  --ac-bg: #141d2e;         /* dark cinematic canvas — local to the hero stage */
+  --ac-text: #fffdf9;       /* bone-white overlay type — local to the hero stage */
+  --ac-seq-clips: 4;        /* clip count — overridden inline from seq.length */
+  --ac-seq-hold: 80vh;      /* intro-hold: scroll reserved for the headline to LEAVE
+                               before any scrubbing starts (text & imagery never
+                               move together). Taller = slower, more deliberate exit. */
+  position: relative;
+  /* intro hold + ~100vh of scroll per clip. */
+  height: calc(var(--ac-seq-hold) + var(--ac-seq-clips) * 100vh);
+  z-index: 10;              /* sits above any fixed background/tint layer */
+  background-color: var(--ac-bg);
+}
+
+/* Probe whose height === --ac-seq-hold so the script can read the intro-hold
+   distance in px (vh/px/calc agnostic). Hidden + absolute → zero layout impact. */
+.ac-seq-hold-probe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: var(--ac-seq-hold);
+  visibility: hidden;
+  pointer-events: none;
+}
+.ac-seq-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--ac-bg);
+}
+.ac-seq-stack { position: absolute; inset: 0; z-index: 0; }
+.ac-seq-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;                 /* script raises the active band to 1 */
+  will-change: opacity;       /* only opacity is animated — GPU-friendly */
+  transition: opacity 220ms ease;
+  background-color: var(--ac-bg);
+}
+/* First band visible by default (before JS runs / poster phase). */
+.ac-seq-video[data-band='0'] { opacity: 1; }
+
+/* Legibility scrim so bone-white overlay type stays AA over any video frame. */
+.ac-seq-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(15,22,36,0.42) 0%, rgba(15,22,36,0.12) 30%, rgba(15,22,36,0.30) 70%, rgba(15,22,36,0.72) 100%),
+    radial-gradient(120% 90% at 28% 78%, rgba(15,22,36,0.62) 0%, transparent 60%);
+}
+
+/* Overlay: real HTML text. During the intro hold the script lifts it up
+   (translateY) and fades it out — the imagery stays frozen until it's gone. */
+.ac-seq-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.ac-seq-overlay-inner {
+  width: 100%;
+  max-width: var(--ac-max, 72rem);
+  margin: 0 auto;
+  padding: 0 1.5rem clamp(72px, 12vh, 140px);
+}
+.ac-seq-eyebrow {
+  color: var(--ac-text);
+  opacity: 0.78;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.ac-seq-guarantee {
+  font-family: var(--ac-font-heading);
+  color: var(--ac-text);                  /* bone-white, AA over the scrim */
+  font-size: clamp(2rem, 5.2vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  max-width: 18ch;
+  text-shadow: 0 2px 30px rgba(8, 12, 22, 0.7); /* extra AA insurance */
+}
+.ac-seq-guarantee-sub {
+  margin-top: 1.25rem;
+  color: var(--ac-text);
+  opacity: 0.86;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  max-width: 46ch;
+  text-shadow: 0 1px 18px rgba(8, 12, 22, 0.6);
+}
+
+/* Scroll cue — fades after the first scroll (script sets opacity:0). */
+.ac-seq-cue {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(20px, 4vh, 40px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+  opacity: 0.8;
+}
+.ac-seq-cue-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ac-text);
+  opacity: 0.8;
+}
+.ac-seq-cue-arrow {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(180deg, rgba(255,253,249,0.0), rgba(255,253,249,0.85));
+  animation: ac-seq-cue-bob 1.8s ease-in-out infinite;
+}
+@keyframes ac-seq-cue-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+
+/* Static reduced-motion fallback poster (hidden unless .ac-seq-static set). */
+.ac-seq-static-fallback { position: absolute; inset: 0; z-index: 2; display: none; }
+.ac-seq-static-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ac-seq-stage.ac-seq-static .ac-seq-static-fallback { display: block; }
+.ac-seq-stage.ac-seq-static .ac-seq-video { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-seq-video { transition: none !important; }
+  .ac-seq-cue-arrow { animation: none !important; }
+}
+
+/* ── POST-SEQUENCE SCROLL-REVEAL GALLERY ──────────────────────────────────────
+   integration.md §7: hands the green-valley payoff off into the content with a
+   staggered image strip instead of a flat text block. Background bridges the
+   stage's deep navy into the site's sand canvas so the seam disappears. Pairs
+   with src/components/HeroGallery.astro. */
+.ac-gallery {
+  position: relative;
+  background: linear-gradient(180deg, #141d2e 0%, #1c2a36 22%, var(--ac-bg-muted) 78%, var(--ac-bg) 100%);
+}
+.ac-gallery-inner {
+  max-width: var(--ac-max, 72rem);
+  margin: 0 auto;
+  padding: clamp(3rem, 8vh, 6rem) 1.5rem clamp(3.5rem, 9vh, 7rem);
+}
+.ac-gallery-eyebrow {
+  color: #fffdf9;
+  opacity: 0.82;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 clamp(1.25rem, 3vh, 2rem);
+  text-align: center;
+}
+.ac-gallery-strip {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+@media (min-width: 640px) { .ac-gallery-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .ac-gallery-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ac-gallery-item {
+  position: relative;
+  margin: 0;
+  border-radius: var(--ac-radius, 0.375rem);
+  overflow: hidden;
+  box-shadow: var(--ac-shadow);
+}
+/* Per-item stagger: reuse the global .reveal observer, cascade via delay. */
+.ac-gallery-item.reveal {
+  transition-delay: calc(var(--ac-rv-i, 0) * 90ms);
+}
+.ac-gallery-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.ac-gallery-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem 1rem 0.85rem;
+  color: #fffdf9;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  background: linear-gradient(180deg, transparent, rgba(8, 12, 22, 0.72));
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-gallery-item.reveal { transition-delay: 0ms !important; }
+}

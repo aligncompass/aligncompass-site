@@ -54,7 +54,41 @@
       "revealEnabled": true,
       "durationMs": 480,
       "easing": "cubic-bezier(0.22, 1, 0.36, 1)"
-    }
+    },
+    "scrollSeq": [
+      "aligncompass-site/seq-1-wordmark",
+      "aligncompass-site/seq-2-tilt",
+      "aligncompass-site/seq-3-barren",
+      "aligncompass-site/seq-4-green"
+    ],
+    "heroGalleryEyebrow": "What that looks like in your week",
+    "heroGallery": [
+      {
+        "publicId": "aligncompass-site/hero-owner-on-job",
+        "alt": "Home-service owner working a job while a new booking lights up the phone in their hand",
+        "caption": "You stay on the job — the phone still gets answered."
+      },
+      {
+        "publicId": "aligncompass-site/services-calendar-filling",
+        "alt": "A service business calendar filling up with booked jobs over the week",
+        "caption": "The calendar fills while you work."
+      },
+      {
+        "publicId": "aligncompass-site/guide-analyst-attribution",
+        "alt": "Phone screen showing a booked job traced back to a recovered missed call",
+        "caption": "Every job traced back to the system."
+      },
+      {
+        "publicId": "aligncompass-site/audit-revenue-math",
+        "alt": "Simple worksheet showing calls received, calls missed, and dollars lost per week",
+        "caption": "See exactly what you're leaving on the table."
+      },
+      {
+        "publicId": "aligncompass-site/contact-book-call",
+        "alt": "Phone calendar open to book a free 15-minute call",
+        "caption": "Booked while your hands are full."
+      }
+    ]
   },
   "cta": {
     "primary": {

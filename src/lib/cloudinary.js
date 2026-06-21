@@ -24,3 +24,17 @@ export function cldSrcset(
     .map((w) => `${cldUrl(cloudName, publicId, { width: w, transforms })} ${w}w`)
     .join(', ');
 }
+
+// Builds a Cloudinary VIDEO delivery URL (resource_type=video). Used by the
+// cinematic scroll-hero (ScrollSeq.astro) to stream each storyboard clip as an
+// h264 mp4 the scroll script scrubs frame-by-frame. The .ext on the public id is
+// what tells Cloudinary which container to transcode to.
+export function cldVideoUrl(
+  cloudName,
+  publicId,
+  { width, transforms = 'f_mp4,q_auto', ext = 'mp4' } = {},
+) {
+  if (!cloudName || !publicId) return '';
+  const w = width ? `,w_${width}` : '';
+  return `https://res.cloudinary.com/${cloudName}/video/upload/${transforms}${w}/${publicId}.${ext}`;
+}

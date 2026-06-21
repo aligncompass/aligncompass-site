@@ -1,0 +1,44 @@
+---
+// ── POST-SEQUENCE SCROLL-REVEAL GALLERY ───────────────────────────────────────
+// integration.md §7: when the cinematic stage unpins on the green-valley payoff,
+// the page must KEEP MOVING — don't dead-end on a flat text block. This is the
+// "more pictures afterwards" beat: an image strip that stagger-fades in on scroll
+// as the page flows out of the hero. It also BRIDGES the palette — the section
+// background runs from the stage's deep navy at the top into the site's sand
+// canvas at the bottom, so the seam off the valley is seamless before the normal
+// content sections take over.
+//
+// Reveal reuses the site's existing `.reveal` IntersectionObserver (Layout.astro)
+// plus a per-item transition-delay (--ac-rv-i) for the stagger. One motion at a
+// time: the strip settles before the section below it begins.
+import CloudinaryImage from './CloudinaryImage.astro';
+
+const { content } = Astro.props;
+const { cloudinary, design } = content;
+const cloud = cloudinary.cloudName;
+
+const items = Array.isArray(design.heroGallery) ? design.heroGallery : [];
+const eyebrow = design.heroGalleryEyebrow ?? 'What that looks like in your week';
+---
+{items.length > 0 && (
+  <section class="ac-gallery" aria-label="Booked work, handled while you do the job">
+    <div class="ac-gallery-inner">
+      <p class="ac-gallery-eyebrow reveal">{eyebrow}</p>
+      <div class="ac-gallery-strip">
+        {items.map((it, i) => (
+          <figure class="ac-gallery-item reveal" style={`--ac-rv-i:${i}`}>
+            <CloudinaryImage
+              cloudName={cloud}
+              publicId={it.publicId}
+              alt={it.alt}
+              loading="lazy"
+              sizes="(min-width: 1024px) 30rem, (min-width: 640px) 45vw, 85vw"
+              class="ac-gallery-img"
+            />
+            {it.caption && <figcaption class="ac-gallery-cap">{it.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

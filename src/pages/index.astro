@@ -1,11 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionRenderer from '../components/SectionRenderer.astro';
+import ScrollSeq from '../components/ScrollSeq.astro';
+import HeroGallery from '../components/HeroGallery.astro';
 import content from '../data/content.json';
 
 const page = content.pages.find((p) => p.slug === 'index') ?? content.pages[0];
 const ogImage = page.sections.find((s) => s.image)?.image?.publicId ?? null;
+
+// The cinematic scroll-hero IS the homepage hero now — it carries the eyebrow +
+// H1 + sub as crisp overlay text (ALI-78). So drop the standard `hero` section
+// from the flow to avoid a second, redundant hero under the green-valley payoff.
+const heroSection = page.sections.find((s) => s.type === 'hero');
+const bodySections = page.sections.filter((s) => s.type !== 'hero');
+
+// Feed the cinematic overlay the page's real, accurate copy (single-sourced
+// from content.json) rather than the component's generic fallback.
+const overlay = heroSection
+  ? {
+      eyebrow: 'aligncompass',
+      headline: heroSection.headline,
+      sub: "Free website. Missed calls texted back, past customers re-booked, reviews handled. You only pay once it pays for itself.",
+    }
+  : {};
 ---
 <Layout content={content} page={page} ogImage={ogImage}>
-  {page.sections.map((section) => <SectionRenderer section={section} content={content} />)}
+  <ScrollSeq content={content} overlay={overlay} />
+  <HeroGallery content={content} />
+  {bodySections.map((section) => <SectionRenderer section={section} content={content} />)}
 </Layout>
