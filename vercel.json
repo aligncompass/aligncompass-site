@@ -29,6 +29,11 @@
       "source": "/autonomia",
       "destination": "/autonomia/",
       "permanent": true
+    },
+    {
+      "source": "/national-comfort-cooling",
+      "destination": "/national-comfort-cooling/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -79,6 +84,14 @@
     {
       "source": "/autonomia/:path*",
       "destination": "https://autonomia-pi.vercel.app/autonomia/:path*"
+    },
+    {
+      "source": "/national-comfort-cooling/",
+      "destination": "https://national-comfort-cooling.vercel.app/national-comfort-cooling/"
+    },
+    {
+      "source": "/national-comfort-cooling/:path*",
+      "destination": "https://national-comfort-cooling.vercel.app/national-comfort-cooling/:path*"
     }
   ]
 }
