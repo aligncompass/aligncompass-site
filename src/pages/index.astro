@@ -6,10 +6,39 @@ import content from '../data/content.json';
 
 const page = content.pages.find((p) => p.slug === 'index') ?? content.pages[0];
 const ogImage = page.sections.find((s) => s.image)?.image?.publicId ?? null;
+
+// ── Thematic anchors for the GLOBAL scroll-scrub backdrop ────────────────────
+// The 4-clip compass→landscape sequence is now a fixed, full-viewport backdrop
+// behind ALL content (see ScrollSeq.astro), scrubbed by TOTAL page scroll. To
+// land each clip's frame behind the right section, we tag three sections with
+// data-seq-anchor; the scrub engine reads their real scroll offsets (not even
+// quarters) to place the band boundaries:
+//   • hero    → clip 1 (wordmark → compass grows/spins)
+//   • stakes  → clip 3 (barren badlands — the "it's costing you" problem)
+//   • value   → clip 4 (green valley — "Everything you can't get to, handled")
+// Clip 2 (compass tilt) fills the hero→stakes handoff; remaining sections hold
+// the resolved green end frame. The engine derives boundaries from these
+// offsets, so re-ordering/resizing sections keeps the mapping correct.
+//
+// We mark the FIRST occurrence of each anchor type only (the page has two
+// `value` sections; clip 4 should land on the "Everything you can't get to,
+// handled" one — the first value section).
+const anchorFor = (type, idx, firstIndexOfType) =>
+  idx === firstIndexOfType[type] ? type : undefined;
+const firstIndexOfType = {};
+page.sections.forEach((s, i) => {
+  if (!(s.type in firstIndexOfType)) firstIndexOfType[s.type] = i;
+});
 ---
-<Layout content={content} page={page} ogImage={ogImage}>
-  {/* Scroll-scrubbed cinematic hero — the storyboard plays as you scroll, then
-      the page flows into the existing content sections below. Home page only. */}
+<Layout content={content} page={page} ogImage={ogImage} scrollSeq={true}>
+  {/* Global scroll-scrubbed cinematic backdrop — the 4-clip compass→landscape
+      storyboard is a position:fixed layer BEHIND every section, scrubbed by
+      total page scroll. Content sections lay over it (transparent, with a
+      phase-tuned scrim). Home page only. */}
   <ScrollSeq content={content} />
-  {page.sections.map((section) => <SectionRenderer section={section} content={content} />)}
+  {page.sections.map((section, i) => (
+    <div data-seq-anchor={anchorFor(section.type, i, firstIndexOfType)}>
+      <SectionRenderer section={section} content={content} />
+    </div>
+  ))}
 </Layout>

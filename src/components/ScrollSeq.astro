@@ -1,28 +1,31 @@
 ---
-// ── SCROLL-SCRUBBED CINEMATIC HERO ("scrollytelling") ─────────────────────────
-// Apple-product-page style: scrolling the page scrubs a 4-clip Higgsfield video
-// storyboard frame-by-frame. A tall (~400vh) "stage" wraps a position:sticky,
-// top:0, full-viewport (100vh) container holding the 4 <video> elements stacked
-// (absolute, object-fit:cover). A requestAnimationFrame loop maps the stage's
-// scroll progress (0→1) into 4 equal bands; the active band's video is shown and
-// its currentTime is driven by the local progress within the band. Scrolling
-// down plays the whole sequence forward; scrolling up reverses it.
+// ── GLOBAL SCROLL-SCRUBBED CINEMATIC BACKDROP ("scrollytelling") ──────────────
+// Apple-product-page style, but spread across the WHOLE home page: the 4-clip
+// Higgsfield compass→landscape storyboard is a position:FIXED, full-viewport
+// layer that sits BEHIND every section (low z-index; nav/main/footer above it).
+// A single requestAnimationFrame scroll handler computes TOTAL document scroll
+// progress 0→1 and drives the active clip's currentTime DIRECTLY — strictly
+// proportional, video kept paused (only seeked), no autoplay / no loop, freezes
+// the instant scrolling stops.
 //
-// Storyboard (end frame of clip N == start frame of clip N+1, so swaps are
-// seamless):
-//   band 0 → seq-1-wordmark : AlignCompass wordmark on navy → letters fade, the
-//                              built-in compass grows + spins to fill frame.
-//                              (may 404 at build time — still uploading — so we
-//                              always show a poster fallback; band 1 is never blank.)
-//   band 1 → seq-2-tilt     : the ornate compass spins + tilts to a flat oblique angle.
-//   band 2 → seq-3-barren   : camera pushes into the compass face; it dissolves
-//                              into a dark, barren badlands landscape.
-//   band 3 → seq-4-green    : the badlands bloom into a lush green valley, sun breaking through.
+// THEMATIC MAPPING (band boundaries derived at runtime from the real section
+// scroll offsets via data-seq-anchor, NOT even quarters):
+//   clip 1  seq-1-wordmark : hero band — wordmark on navy → compass grows/spins.
+//   clip 2  seq-2-tilt     : hero→stakes handoff — the compass tilts / lays down.
+//   clip 3  seq-3-barren   : the STAKES section ("you can't be two places at
+//                            once — it's costing you") — dissolve into the
+//                            barren badlands; the barren frame sits behind that
+//                            section's text.
+//   clip 4  seq-4-green    : the VALUE section ("Everything you can't get to,
+//                            handled") — bloom into the lush green valley.
+//   hold    seq-4-green@end : remaining sections (plan / proof / pricing / FAQ /
+//                            contact + the folded GTM closing) hold the green
+//                            END frame, so the resolved state carries to the CTA.
 //
-// Overlays (band 1) are real, crisp HTML (NOT baked into the video): an eyebrow
-// + a guarantee line in the real brand voice, fading out as band 1 progresses.
-// When the sticky stage ends (on the green valley) the page flows into the
-// existing content sections; the green valley sits behind the first intro.
+// Overlays (hero band) are real, crisp HTML (NOT baked into the video): an
+// eyebrow + a guarantee line in the real brand voice, fading out as the hero
+// scrolls away. A phase-tuned scrim keeps bone-white #fffdf9 type AA on every
+// frame (stronger over the bright green and the barren badlands).
 import { cldVideoUrl } from '../lib/cloudinary.js';
 
 const { content } = Astro.props;
@@ -33,8 +36,12 @@ const cloud = cloudinary.cloudName;
 const seq = Array.isArray(design.scrollSeq) ? design.scrollSeq : [];
 
 // Build, per clip, the streamed mp4 src + a Cloudinary first-frame poster (so_0 →
-// jpg) so each band shows something before/while the video buffers — and band 1
-// shows the wordmark poster even if the seq-1 video 404s (still uploading).
+// jpg) so each band shows something before/while the video buffers — and the
+// hero band shows the wordmark poster even if the seq-1 video 404s (still
+// uploading). Phase metadata tags which clips are the "metal-on-navy" compass
+// phases (so we keep a navy base behind them) vs. the landscape phases (which
+// bring their own colour).
+const PHASE = ['compass', 'compass', 'landscape', 'landscape'];
 const clips = seq.map((id, i) => ({
   id,
   // h264 mp4 from Cloudinary; modest width keeps the file scrub-friendly.
@@ -42,14 +49,17 @@ const clips = seq.map((id, i) => ({
   // First frame of the VIDEO rendered as a still jpg (image/upload on a video
   // public id with so_0 gives the frame at t=0).
   poster: `https://res.cloudinary.com/${cloud}/video/upload/so_0,f_jpg,q_auto,w_1280/${id}.jpg`,
+  // A LAST-frame still (so_e... isn't available, so we use a large so_ value;
+  // Cloudinary clamps to the final frame) — used as the parked "green end" base.
+  endPoster: `https://res.cloudinary.com/${cloud}/video/upload/so_999,f_jpg,q_auto,w_1280/${id}.jpg`,
   band: i,
+  phase: PHASE[i] || 'landscape',
 }));
 
-// Poster for the static (reduced-motion / no-JS) fallback hero: the wordmark
-// first frame; if absent it degrades to the green-valley frame (handled by the
-// <img> onerror below). Both come from Cloudinary first-frame stills.
+// Posters for the static (reduced-motion / no-JS) fallback hero and the parked
+// green-end hold. Both come from Cloudinary stills.
 const wordmarkPoster = clips[0]?.poster || '';
-const greenPoster = clips[3]?.poster || '';
+const greenEndPoster = clips[3]?.endPoster || clips[3]?.poster || '';
 
 // ── Overlay copy ──────────────────────────────────────────────────────────────
 // Guarantee line in the REAL brand voice. The actual offer is "free website,
@@ -61,97 +71,114 @@ const guaranteeLine = "We catch the work you can't get to — and you don't pay 
 const guaranteeSub = 'Free website. Missed calls texted back, past customers re-booked, reviews handled. Pay only when it works.';
 ---
 {seq.length > 0 && (
-  <section
-    id="ac-seq-stage"
-    class="ac-seq-stage"
+  <div
+    id="ac-seq"
+    class="ac-seq"
     data-seq-count={seq.length}
-    aria-label="AlignCompass — from wordmark to a fruitful valley"
+    data-green-poster={greenEndPoster}
+    aria-hidden="true"
   >
-    {/* Sticky, full-viewport container — pinned while the tall stage scrolls. */}
-    <div class="ac-seq-sticky">
-      {/* Stacked videos. NOT autoplay / NOT loop — the scroll script drives
-          currentTime. Each has a Cloudinary first-frame poster so the band is
-          never blank (incl. band 1 if seq-1 is still uploading / 404s). */}
-      <div class="ac-seq-stack" aria-hidden="true">
-        {clips.map((clip) => (
-          <video
-            class="ac-seq-video"
-            data-band={clip.band}
-            data-src={clip.src}
-            poster={clip.poster}
-            preload="auto"
-            muted
-            playsinline
-            disablepictureinpicture
-            disableremoteplayback
-          >
-            <source src={clip.src} type="video/mp4" />
-          </video>
-        ))}
-      </div>
+    {/* Fixed, full-viewport backdrop holding the 4 stacked clips. NOT autoplay /
+        NOT loop — the scroll script drives currentTime. Each has a Cloudinary
+        first-frame poster so the band is never blank (incl. the hero band if
+        seq-1 is still uploading / 404s). */}
+    <div class="ac-seq-stack">
+      {clips.map((clip) => (
+        <video
+          class="ac-seq-video"
+          data-band={clip.band}
+          data-phase={clip.phase}
+          data-src={clip.src}
+          poster={clip.poster}
+          preload="auto"
+          muted
+          playsinline
+          disablepictureinpicture
+          disableremoteplayback
+        >
+          <source src={clip.src} type="video/mp4" />
+        </video>
+      ))}
+    </div>
 
-      {/* Legibility scrim so bone-white overlay type stays AA over any frame. */}
-      <div class="ac-seq-scrim" aria-hidden="true"></div>
+    {/* Phase-tuned legibility scrim. The engine sets its opacity/strength per
+        phase (stronger over the bright green valley and the barren badlands) so
+        bone-white type stays AA over every frame. */}
+    <div id="ac-seq-scrim" class="ac-seq-scrim"></div>
 
-      {/* Band-1 overlay: crisp HTML text (eyebrow + guarantee), fades out as
-          band 1 progresses. Real content, not baked into the video. */}
-      <div id="ac-seq-overlay" class="ac-seq-overlay">
-        <div class="ac-seq-overlay-inner">
-          <p class="ac-label ac-seq-eyebrow">{eyebrow}</p>
-          <p class="ac-seq-guarantee">{guaranteeLine}</p>
-          <p class="ac-seq-guarantee-sub">{guaranteeSub}</p>
-        </div>
-      </div>
+    {/* Reduced-motion / no-JS static fallback: wordmark poster (a calm compass
+        hero). Shown only when .ac-seq-static is set (reduced-motion) — see CSS. */}
+    <div class="ac-seq-static-fallback">
+      <img
+        class="ac-seq-static-img"
+        src={wordmarkPoster}
+        alt=""
+        loading="eager"
+        decoding="async"
+        onerror={greenEndPoster ? `this.onerror=null;this.src='${greenEndPoster}'` : 'this.style.display="none"'}
+      />
+    </div>
+  </div>
+)}
 
-      {/* Scroll cue — fades after the first scroll. */}
-      <div id="ac-seq-cue" class="ac-seq-cue" aria-hidden="true">
-        <span class="ac-seq-cue-text">Scroll</span>
-        <span class="ac-seq-cue-arrow"></span>
-      </div>
-
-      {/* Reduced-motion / no-JS static fallback: wordmark poster fading into the
-          green-valley poster as a calm hero. Shown only when .ac-seq-static is
-          set on the stage (reduced-motion) — see CSS. */}
-      <div class="ac-seq-static-fallback" aria-hidden="true">
-        <img
-          class="ac-seq-static-img ac-seq-static-wordmark"
-          src={wordmarkPoster}
-          alt=""
-          loading="eager"
-          decoding="async"
-          onerror={greenPoster ? `this.onerror=null;this.src='${greenPoster}'` : 'this.style.display="none"'}
-        />
+{seq.length > 0 && (
+  <>
+    {/* Hero-band HTML overlay: crisp HTML text (eyebrow + guarantee), fixed over
+        the backdrop, fading out as the hero scrolls away. Real content, not
+        baked into the video. Lives OUTSIDE the aria-hidden backdrop so its copy
+        stays in the accessibility tree. pointer-events:none so it never blocks
+        the nav / content beneath. */}
+    <div id="ac-seq-overlay" class="ac-seq-overlay">
+      <div class="ac-seq-overlay-inner">
+        <p class="ac-label ac-seq-eyebrow">{eyebrow}</p>
+        <p class="ac-seq-guarantee">{guaranteeLine}</p>
+        <p class="ac-seq-guarantee-sub">{guaranteeSub}</p>
       </div>
     </div>
-  </section>
+    {/* Scroll cue — fades after the first scroll. */}
+    <div id="ac-seq-cue" class="ac-seq-cue" aria-hidden="true">
+      <span class="ac-seq-cue-text">Scroll</span>
+      <span class="ac-seq-cue-arrow"></span>
+    </div>
+  </>
 )}
 
 <script>
-  // ── SCROLL-SCRUB ENGINE ──────────────────────────────────────────────────────
-  // Maps the stage's scroll progress to a frame in the 4-clip storyboard.
+  // ── GLOBAL SCROLL-SCRUB ENGINE ───────────────────────────────────────────────
+  // Maps TOTAL document scroll progress to a frame in the 4-clip storyboard,
+  // with the band boundaries derived from the real scroll offsets of the tagged
+  // sections (data-seq-anchor="hero|stakes|value") so the barren frame aligns
+  // with the stakes section and the green valley with the value section — while
+  // the whole scroll stays animated (spread across the page, not crammed at the
+  // top).
   //
-  //  progress p ∈ [0,1] over the stage's scrollable height (stageHeight - 100vh)
-  //  band k    = floor(p * N), clamped to 0..N-1        (N = clip count, 4)
-  //  local q   = (p*N) - k  ∈ [0,1]   (progress *within* the active band)
-  //  show video[k] (opacity 1, others 0)
-  //  video[k].currentTime = q * video[k].duration   (guarded for NaN, clamped)
+  // Boundaries (document scrollY, in px), built once per layout and on resize:
+  //   B0 = 0                              (top — clip 1 starts: wordmark)
+  //   Bs = top of the STAKES section      (clip 3 barren begins here)
+  //   Bv = top of the VALUE section       (clip 4 green begins here)
+  //   Be = a little past Bv               (green fully bloomed; then HOLD)
+  // Between B0 and Bs we run clip 1 then clip 2 (the compass tilt handoff),
+  // splitting that span so clip 1 fills the hero and clip 2 the hero→stakes gap.
+  // From Be to the end of the document we PARK clip 4 at its last frame.
   //
-  // Only the active video is seeked. A small lerp smooths the seeked currentTime
-  // toward its target so fast scrolls don't strobe. Everything runs in one rAF,
-  // scheduled on scroll; opacity is the only animated property (will-change set).
+  //   currentTime = localProgress × clip.duration   (video kept PAUSED; only
+  //   seeked; no easing toward target → freezes the instant scrolling stops).
+  // Only the active clip is seeked. Opacity is the only animated property
+  // (will-change:opacity). Everything runs in one rAF scheduled on scroll.
   //
-  // Reduced-motion: no scrubbing — a static poster hero is shown, normal content
-  // follows. Mobile (≤767px): iOS Safari currentTime scrubbing is janky, so we
-  // fall back to playing each clip through on band-enter (autoplay+muted via an
-  // IntersectionObserver-like band watch) instead of frame-seeking.
+  // Reduced motion: no scrubbing — a static compass poster backdrop is shown.
+  // Mobile uses the SAME strict scrub (no autoplay-through branch — that reads
+  // as "the video plays itself"; per the cinematic-scroll-hero skill).
   (function () {
-    const stage = document.getElementById('ac-seq-stage');
-    if (!stage) return;
-    const videos = Array.prototype.slice.call(stage.querySelectorAll('.ac-seq-video'));
+    const root = document.getElementById('ac-seq');
+    if (!root) return;
+    const videos = Array.prototype.slice.call(root.querySelectorAll('.ac-seq-video'));
     if (!videos.length) return;
 
+    const scrim = document.getElementById('ac-seq-scrim');
     const overlay = document.getElementById('ac-seq-overlay');
     const cue = document.getElementById('ac-seq-cue');
+    const tint = document.getElementById('ac-tint');
     const N = videos.length;
 
     const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -159,10 +186,10 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
 
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
     const lerp = (a, b, t) => a + (b - a) * t;
+    const smooth = (t) => t * t * (3 - 2 * t);
 
-    // Per-video cached duration (filled on loadedmetadata) + a smoothed seek
-    // target so scrubbing doesn't strobe on fast flicks.
-    const meta = videos.map(() => ({ duration: NaN, smooth: 0 }));
+    // Per-video cached duration (filled on loadedmetadata).
+    const meta = videos.map(() => ({ duration: NaN }));
     videos.forEach((v, i) => {
       const onMeta = () => {
         if (v.duration && isFinite(v.duration)) meta[i].duration = v.duration;
@@ -172,66 +199,126 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
       // If a clip 404s (e.g. seq-1 still uploading), keep its poster — the band
       // is never blank — and just skip seeking it (duration stays NaN).
       v.addEventListener('error', () => { meta[i].duration = NaN; }, true);
-      const src = v.getAttribute('data-src');
-      // Kick the network early so scrubbing has frames buffered.
       try { v.load(); } catch (e) {}
     });
+
+    // ── Band boundaries from real section offsets ───────────────────────────
+    // Returns absolute document-scroll positions for the phase boundaries.
+    // Falls back to even thirds of the document if anchors are missing.
+    function docScrollMax() {
+      return (document.documentElement.scrollHeight - window.innerHeight) || 1;
+    }
+    function topOf(sel) {
+      const el = document.querySelector(sel);
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return r.top + window.scrollY;
+    }
+    let B = { hero: 0, stakes: 0, value: 0, hold: 0, max: 1 };
+    function computeBounds() {
+      const max = docScrollMax();
+      const vh = window.innerHeight;
+      // Real section tops (data-seq-anchor is on the wrapper div in index.astro).
+      let bs = topOf('[data-seq-anchor="stakes"]');
+      let bv = topOf('[data-seq-anchor="value"]');
+      // Defensive fallbacks so the scrub always runs even if anchors move.
+      if (bs == null) bs = max * 0.33;
+      if (bv == null) bv = max * 0.6;
+      // Clamp into sane, ordered ranges.
+      bs = clamp(bs, vh * 0.4, max);
+      bv = clamp(bv, bs + vh * 0.2, max);
+      // Green fully bloomed a little after the value section's top, then HOLD.
+      const hold = clamp(bv + vh * 0.85, bv + 1, max);
+      B = { hero: 0, stakes: bs, value: bv, hold: hold, max: max };
+    }
 
     let activeBand = -1;
     let cueHidden = false;
     let ticking = false;
     let reduced = mqReduce.matches;
-    let small = mqSmall.matches;
 
-    // ── DESKTOP: frame-scrub ────────────────────────────────────────────────
     function showBand(k) {
       if (k === activeBand) return;
       activeBand = k;
-      videos.forEach((v, i) => {
-        v.style.opacity = i === k ? '1' : '0';
-      });
+      videos.forEach((v, i) => { v.style.opacity = i === k ? '1' : '0'; });
     }
 
-    function renderScrub() {
+    // Phase-tuned scrim strength + tint opacity, by band/phase. Brighter frames
+    // (green valley, barren) get a stronger scrim so bone-white type stays AA.
+    function applyPhase(band, parked) {
+      if (!scrim) return;
+      // 0 = compass (lighter, navy base carries it), 1 = barren, 2 = green.
+      let strength;
+      if (band <= 1) strength = 0.34;          // compass phases (navy base)
+      else if (band === 2) strength = 0.6;     // barren badlands
+      else strength = parked ? 0.7 : 0.62;     // green valley (brightest)
+      scrim.style.setProperty('--seq-scrim', String(strength));
+      // Navy base (#ac-tint) is for the metal-on-navy compass phases only; it
+      // fades out as we cross into the landscape phases so the green/barren
+      // bring their own colour.
+      if (tint) {
+        const tintOpacity = band <= 1 ? 1 : (band === 2 ? 0.35 : 0);
+        tint.style.opacity = String(tintOpacity);
+      }
+    }
+
+    function seekActive(band, q) {
+      const d = meta[band].duration;
+      if (!(d && isFinite(d))) return;
+      // The frame is a DIRECT function of scroll position — no easing, no
+      // auto-advance — so playback freezes the instant scrolling stops. The
+      // video is kept paused; we only seek. Clamp off the exact end (some
+      // decoders blank on the final frame).
+      const target = clamp(q * d, 0, d - 0.05);
+      const v = videos[band];
+      try {
+        if (!v.paused) v.pause();
+        if (Math.abs((v.currentTime || 0) - target) > 0.01) v.currentTime = target;
+      } catch (e) {}
+    }
+
+    function render() {
       ticking = false;
-      const rect = stage.getBoundingClientRect();
-      const scrollable = stage.offsetHeight - window.innerHeight;
-      // p: 0 when the stage top hits the viewport top, 1 when its bottom -100vh
-      // reaches the top (i.e. the sticky child is about to unpin).
-      const p = scrollable > 0 ? clamp(-rect.top / scrollable, 0, 1) : 0;
+      const y = window.scrollY || window.pageYOffset || 0;
 
-      // Band + local progress within the band.
-      const scaled = clamp(p * N, 0, N - 1e-6);
-      const k = Math.min(N - 1, Math.floor(scaled));
-      const q = scaled - k;
-
-      showBand(k);
-
-      // Seek ONLY the active video. Guard NaN (metadata not ready / 404) and
-      // clamp to [0, duration - epsilon] so we never hit the exact end (which
-      // can blank some decoders).
-      const d = meta[k].duration;
-      if (d && isFinite(d)) {
-        // The frame is a DIRECT function of scroll position — no easing, no
-        // auto-advance — so playback freezes the instant scrolling stops
-        // (strictly scroll-proportional). The video is kept paused; we only seek.
-        const target = clamp(q * d, 0, d - 0.05);
-        const v = videos[k];
-        try {
-          if (!v.paused) v.pause();          // never let it play on its own
-          if (Math.abs((v.currentTime || 0) - target) > 0.01) v.currentTime = target;
-        } catch (e) {}
+      let band, q, parked = false;
+      if (y < B.stakes) {
+        // Hero → stakes span carries clip 1 (hero) then clip 2 (tilt handoff).
+        // Split the span so clip 1 gets the hero viewport and clip 2 the gap.
+        const span = B.stakes - B.hero || 1;
+        const p = clamp((y - B.hero) / span, 0, 1);
+        // Give clip 1 the first ~55% (the hero is the focal moment), clip 2 the
+        // rest (the compass laying down as the page leaves the hero).
+        if (p < 0.55) { band = 0; q = p / 0.55; }
+        else { band = 1; q = (p - 0.55) / 0.45; }
+      } else if (y < B.value) {
+        // Stakes section → the barren badlands sits behind the problem copy.
+        band = 2;
+        q = clamp((y - B.stakes) / ((B.value - B.stakes) || 1), 0, 1);
+      } else if (y < B.hold) {
+        // Value section → bloom into the green valley.
+        band = 3;
+        q = clamp((y - B.value) / ((B.hold - B.value) || 1), 0, 1);
+      } else {
+        // HOLD: park clip 4 at its last frame through the rest of the page.
+        band = 3;
+        q = 1;
+        parked = true;
       }
 
-      // Band-1 overlay fades out across band 0 (the wordmark band): full at the
-      // start, gone by the time band 0 ends.
+      showBand(band);
+      applyPhase(band, parked);
+      seekActive(band, q);
+
+      // Hero overlay fades out as the hero scrolls away (gone by ~75% of the
+      // hero→stakes span).
       if (overlay) {
-        const band0Local = clamp(p * N, 0, 1); // 0→1 across the first band
-        overlay.style.opacity = String(clamp(1 - band0Local * 1.35, 0, 1));
+        const span = B.stakes - B.hero || 1;
+        const heroP = clamp((y - B.hero) / span, 0, 1);
+        overlay.style.opacity = String(clamp(1 - heroP / 0.55, 0, 1));
       }
 
-      // Scroll cue fades once the user has scrolled into the stage at all.
-      if (!cueHidden && cue && p > 0.02) {
+      if (!cueHidden && cue && y > 8) {
         cueHidden = true;
         cue.style.opacity = '0';
       }
@@ -239,53 +326,52 @@ const guaranteeSub = 'Free website. Missed calls texted back, past customers re-
 
     function onScroll() {
       if (reduced) return;
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(renderScrub);
-      }
+      if (!ticking) { ticking = true; requestAnimationFrame(render); }
     }
 
-    // ── REDUCED MOTION: static poster hero ──────────────────────────────────
+    // ── REDUCED MOTION: static compass poster backdrop ──────────────────────
     function setupStatic() {
-      stage.classList.add('ac-seq-static');
-      // Stop any scrubbing; hide the live videos behind the static poster.
+      root.classList.add('ac-seq-static');
       videos.forEach((v) => { try { v.pause(); } catch (e) {} v.style.opacity = '0'; });
-      if (overlay) overlay.style.opacity = '1'; // keep the guarantee legible
+      if (scrim) scrim.style.setProperty('--seq-scrim', '0.34');
+      if (overlay) overlay.style.opacity = '1';
       if (cue) cue.style.display = 'none';
+      if (tint) tint.style.opacity = '1';
     }
 
     function teardown() {
       window.removeEventListener('scroll', onScroll);
-      stage.classList.remove('ac-seq-static');
+      root.classList.remove('ac-seq-static');
     }
 
     function setup() {
       teardown();
       reduced = mqReduce.matches;
-      small = mqSmall.matches;
       cueHidden = false;
       if (cue) { cue.style.display = ''; cue.style.opacity = ''; }
       if (reduced) { setupStatic(); return; }
-      // Strict frame-scrub on ALL screen sizes — the frame is tied to scroll
-      // position with no autoplay/loop fallback, so the video never advances
-      // on its own (it freezes when scrolling stops).
+      // Strict frame-scrub on ALL screen sizes (desktop AND mobile) — the frame
+      // is tied to scroll position with no autoplay/loop, so the video never
+      // advances on its own (it freezes when scrolling stops).
+      computeBounds();
       window.addEventListener('scroll', onScroll, { passive: true });
-      renderScrub();
+      render();
     }
 
     setup();
 
-    // Re-evaluate mode on resize / breakpoint or motion-preference change.
+    // Recompute boundaries on resize / late content/layout shifts.
     let rzT = null;
     window.addEventListener('resize', () => {
       clearTimeout(rzT);
       rzT = setTimeout(() => {
-        const changed = reduced !== mqReduce.matches || small !== mqSmall.matches;
-        if (changed) setup();
-        else if (!reduced && !small) renderScrub();
+        if (reduced !== mqReduce.matches) { setup(); return; }
+        if (!reduced) { computeBounds(); render(); }
       }, 150);
     }, { passive: true });
+    // Fonts/images can shift section offsets after first paint — recompute once
+    // settled and again on full load.
+    window.addEventListener('load', () => { if (!reduced) { computeBounds(); render(); } });
     if (mqReduce.addEventListener) mqReduce.addEventListener('change', setup);
-    if (mqSmall.addEventListener) mqSmall.addEventListener('change', setup);
   })();
 </script>

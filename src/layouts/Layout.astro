@@ -4,7 +4,12 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { cldUrl, cldVideoUrl } from '../lib/cloudinary.js';
 
-const { content, page, ogImage } = Astro.props;
+// `scrollSeq` (set by the home page) means the GLOBAL scroll-scrub backdrop
+// (ScrollSeq) is mounted on this page — the page ends parked on the green
+// valley, so the closing GTM band folds onto that green frame (no own
+// landscape). On every OTHER page (no backdrop) the GTM band keeps its own
+// self-contained landscape video + topographic fallback so it still reads.
+const { content, page, ogImage, scrollSeq = false } = Astro.props;
 const { meta, nap, design, cloudinary, analytics } = content;
 const ph = analytics?.posthog;
 const phOn = Boolean(ph?.enabled && ph?.apiKey);
@@ -62,13 +67,16 @@ const ogImg = ogImage
 // cinematic hero (src/components/ScrollSeq.astro). The deep-tint (#ac-tint) and
 // GTM landscape band remain.
 
-// ── GTM landscape band (footer) ─────────────────────────────────────────────
-// A full-width cinematic "go-to-market landscape you traverse" band fused above
-// the footer. Driven by content.json design.gtmLandscape (a Cloudinary video
-// public id). If the video fails / is missing, a dark CSS topographic backdrop
-// (.ac-gtm-fallback) shows through so the band always looks intentional.
+// ── GTM closing band ────────────────────────────────────────────────────────
+// On the HOME page (scrollSeq=true) the global scroll-scrub backdrop has parked
+// on the GREEN VALLEY, so this band folds onto that green frame: no own
+// landscape video / topographic fallback (that would be a SECOND, conflicting
+// landscape), just the GTM copy + CTA under a soft scrim — the "navigate the
+// go-to-market landscape" message folded into the green-backed resolution so it
+// carries to the CTA. On every other page it keeps its self-contained landscape
+// video + topographic fallback.
 const gtmLandscapeId = design.gtmLandscape || '';
-const gtmLandscape = gtmLandscapeId
+const gtmLandscape = !scrollSeq && gtmLandscapeId
   ? cldVideoUrl(cloudinary.cloudName, gtmLandscapeId, { width: 1920 })
   : '';
 // Primary CTA reused in the band (the same one used site-wide).
@@ -150,33 +158,40 @@ const gtmCta = content.cta?.primary;
       <slot />
     </main>
 
-    {/* ── GTM LANDSCAPE BAND ────────────────────────────────────────────────
-        Full-width cinematic band fused above the footer: a landscape the
-        visitor appears to traverse, dramatizing "we help you navigate the
-        go-to-market landscape." A muted/looping/playsinline <video> (Cloudinary,
-        design.gtmLandscape) plays under a dark gradient scrim with short GTM
-        copy + the primary CTA. If the video can't load, the .ac-gtm-fallback
-        steel-blue contour backdrop carries the band. The roaming compass'
-        final waypoint lands in this band, as if leading along the path.
-        Decorative media is aria-hidden; the copy is real content. */}
-    <section id="ac-gtm" class="ac-gtm" aria-labelledby="ac-gtm-title">
-      {/* Always-present dark topographic fallback (cool steel-blue contours). */}
-      <div class="ac-gtm-fallback" aria-hidden="true"></div>
-      {gtmLandscape && (
-        <video
-          id="ac-gtm-video"
-          class="ac-gtm-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source src={gtmLandscape} type="video/mp4" />
-        </video>
+    {/* ── GTM CLOSING BAND ──────────────────────────────────────────────────
+        Full-width closing band fused above the footer, dramatizing "we help you
+        navigate the go-to-market landscape." On the HOME page the global
+        scroll-scrub backdrop has bloomed into — and parked on — the GREEN
+        VALLEY, so this band folds onto that green frame (.ac-gtm--folded,
+        transparent, no own landscape). On every other page it keeps its
+        self-contained landscape video + topographic fallback. The copy is real
+        content; the media + scrim are decorative. */}
+    <section
+      id="ac-gtm"
+      class:list={['ac-gtm', scrollSeq && 'ac-gtm--folded']}
+      aria-labelledby="ac-gtm-title"
+    >
+      {!scrollSeq && (
+        <>
+          {/* Always-present dark topographic fallback (cool steel-blue contours). */}
+          <div class="ac-gtm-fallback" aria-hidden="true"></div>
+          {gtmLandscape && (
+            <video
+              id="ac-gtm-video"
+              class="ac-gtm-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-hidden="true"
+            >
+              <source src={gtmLandscape} type="video/mp4" />
+            </video>
+          )}
+        </>
       )}
-      {/* Legibility scrim so the overlaid copy stays AA over the landscape. */}
+      {/* Legibility scrim so the overlaid copy stays AA over whatever's behind. */}
       <div class="ac-gtm-scrim" aria-hidden="true"></div>
       <div class="ac-gtm-inner">
         <p class="ac-label text-ink/70">The go-to-market landscape</p>
@@ -301,9 +316,8 @@ const gtmCta = content.cta?.primary;
         window.addEventListener('resize', () => { if (!reduced) render(); }, { passive: true });
         if (mqReduce.addEventListener) mqReduce.addEventListener('change', setup);
 
-        // GTM landscape video: if it errors (asset not yet uploaded), hide it so
-        // the CSS topographic fallback carries the band — band always looks
-        // intentional.
+        // GTM landscape video (subpages only): if it errors (asset not yet
+        // uploaded), hide it so the CSS topographic fallback carries the band.
         const gtmVideo = document.getElementById('ac-gtm-video');
         if (gtmVideo) {
           gtmVideo.addEventListener('error', function () { gtmVideo.style.display = 'none'; }, true);

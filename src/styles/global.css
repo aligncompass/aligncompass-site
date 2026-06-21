@@ -204,19 +204,23 @@
     );
   }
 
-  /* ── SECTION DEEP-TINT BACKGROUND LAYER ──────────────────────────────────
-     Fixed, full-viewport color wash that sits BEHIND the roaming compass
-     (z-index:-1; compass layer 0, content 10). The rAF scroll loop writes its
-     background-color (via inline style) through the deep-tint sequence. Starts
-     at the first tint so there's no flash. Only the color changes — no layout,
-     no compositing churn beyond a single paint of a fixed layer. */
+  /* ── DEEP-NAVY BASE LAYER (#ac-tint) ─────────────────────────────────────
+     Fixed, full-viewport deep-navy wash at the very back (z-index:-1). It is
+     now the NAVY BASE behind the COMPASS phases of the global scroll-scrub
+     backdrop only — so the metal compass reads on navy. As the scroll crosses
+     into the landscape phases (barren badlands → green valley) the scrub engine
+     FADES this layer out (it sets inline opacity) and lets the landscape clips
+     bring their own colour. It keeps washing through the subtle navy-family
+     tint sequence on scroll so the compass phases don't read as a flat block.
+     Only colour + opacity change — a single fixed-layer paint, no layout. */
   .ac-tint {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
     background-color: var(--ac-bg); /* first deep navy tint (#141d2e) */
-    will-change: background-color;
+    will-change: background-color, opacity;
+    transition: opacity 320ms ease;
   }
 
   /* ── GTM LANDSCAPE BAND ───────────────────────────────────────────────────
@@ -233,6 +237,14 @@
     display: flex;
     align-items: center;
     border-top: 1px solid rgba(111, 135, 156, 0.25);
+  }
+  /* Folded variant: the closing band sits transparent over the parked GREEN
+     VALLEY backdrop (no own landscape video / no topographic fallback / no
+     band border that would imply a separate strip). Only a soft scrim for
+     legibility. */
+  .ac-gtm--folded {
+    background: transparent;
+    border-top: 0;
   }
   /* Dark steel-blue topographic / contour-line fallback backdrop. Built from
      layered repeating conic/linear + radial gradients to suggest contour lines
@@ -266,16 +278,18 @@
     object-fit: cover;
     object-position: center 60%;
   }
-  /* Legibility scrim so the copy stays AA over the landscape: darker at the
-     left/bottom where the text sits, lighter toward the horizon. */
+  /* Legibility scrim so the closing copy stays AA over the bright GREEN valley:
+     darker at the left/bottom where the text column sits, easing toward the
+     horizon on the right. Deeper than the in-page section scrims because the
+     green end frame is the brightest in the storyboard. */
   .ac-gtm-scrim {
     position: absolute;
     inset: 0;
     z-index: 2;
     pointer-events: none;
     background:
-      linear-gradient(90deg, rgba(10, 14, 19, 0.86) 0%, rgba(10, 14, 19, 0.55) 48%, rgba(10, 14, 19, 0.2) 100%),
-      linear-gradient(180deg, rgba(10, 14, 19, 0.5) 0%, transparent 32%, rgba(10, 14, 19, 0.62) 100%);
+      linear-gradient(90deg, rgba(10, 14, 19, 0.9) 0%, rgba(10, 14, 19, 0.62) 46%, rgba(10, 14, 19, 0.32) 100%),
+      linear-gradient(180deg, rgba(10, 14, 19, 0.55) 0%, transparent 30%, rgba(10, 14, 19, 0.7) 100%);
   }
   .ac-gtm-inner {
     position: relative;
@@ -286,30 +300,24 @@
     padding: clamp(56px, 8vh, 96px) 1.5rem;
   }
 
-  /* ── SCROLL-SCRUBBED CINEMATIC HERO (ScrollSeq) ──────────────────────────
-     A tall "stage" (~400vh — ~100vh of scroll per clip) whose child is pinned
-     position:sticky/top:0 at 100vh. The pinned child holds the 4 stacked
-     <video> elements (absolute, object-fit:cover), a legibility scrim, the
-     band-1 HTML overlay (eyebrow + guarantee), a scroll cue, and the static
-     reduced-motion fallback. The rAF scrub script (in ScrollSeq.astro) toggles
-     video opacity (only will-change:opacity is animated) and drives the active
-     video's currentTime from scroll progress. */
-  .ac-seq-stage {
-    position: relative;
-    /* ~100vh of scroll per clip → 4 clips = ~400vh. Falls back to 400vh. */
-    height: 400vh;
-    /* Sits above the fixed #ac-tint layer like all content. */
-    z-index: 10;
-    background-color: var(--ac-bg); /* deep navy base behind the pinned frame */
-  }
-  .ac-seq-sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    width: 100%;
+  /* ── GLOBAL SCROLL-SCRUBBED CINEMATIC BACKDROP (ScrollSeq) ────────────────
+     The 4-clip compass→landscape storyboard is a position:FIXED, full-viewport
+     layer that sits BEHIND every section for the whole scroll. It holds the 4
+     stacked <video> elements (absolute, object-fit:cover) + a phase-tuned
+     legibility scrim + the static reduced-motion fallback. It sits ABOVE the
+     deep-navy base (#ac-tint, z-index:-1) and BELOW all real content
+     (nav/main/footer at z-index:10), so the storyboard reads behind crisp HTML
+     type. The rAF scrub engine (ScrollSeq.astro) toggles video opacity (only
+     will-change:opacity is animated) and drives the active clip's currentTime
+     from TOTAL page-scroll progress; the band boundaries are derived from the
+     real section offsets so each phase lands behind the right section. */
+  .ac-seq {
+    position: fixed;
+    inset: 0;
+    z-index: 0;                 /* above #ac-tint(-1), below content(10) */
+    pointer-events: none;       /* never intercept clicks/scroll */
     overflow: hidden;
     isolation: isolate;
-    background-color: var(--ac-bg);
   }
   .ac-seq-stack {
     position: absolute;
@@ -325,27 +333,41 @@
     object-position: center center;
     opacity: 0;                 /* script raises the active band to 1 */
     will-change: opacity;       /* only opacity is animated — GPU-friendly */
-    transition: opacity 220ms ease;
+    transition: opacity 260ms ease;
     background-color: var(--ac-bg);
   }
   /* First band visible by default (before JS runs / poster phase). */
   .ac-seq-video[data-band='0'] { opacity: 1; }
-  /* Legibility scrim so bone-white overlay type stays AA over any video frame:
-     darker toward the bottom-left where the guarantee sits, lighter up top. */
+  /* Phase-tuned legibility scrim. The engine sets --seq-scrim (0..1) per phase
+     (stronger over the bright green valley + barren badlands) so bone-white
+     #fffdf9 type stays AA on every frame. The gradient distributes that
+     strength: heavier at top (nav) and bottom, with a soft floor everywhere so
+     no band drops below AA. */
   .ac-seq-scrim {
+    --seq-scrim: 0.34;
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
+    transition: opacity 200ms ease;
     background:
-      linear-gradient(180deg, rgba(15,22,36,0.42) 0%, rgba(15,22,36,0.12) 30%, rgba(15,22,36,0.30) 70%, rgba(15,22,36,0.72) 100%),
-      radial-gradient(120% 90% at 28% 78%, rgba(15,22,36,0.62) 0%, transparent 60%);
+      linear-gradient(180deg,
+        rgba(13, 19, 31, calc(var(--seq-scrim) * 1.05)) 0%,
+        rgba(13, 19, 31, calc(var(--seq-scrim) * 0.55)) 22%,
+        rgba(13, 19, 31, calc(var(--seq-scrim) * 0.5)) 60%,
+        rgba(13, 19, 31, calc(var(--seq-scrim) * 1.1)) 100%),
+      radial-gradient(135% 120% at 50% 50%,
+        transparent 30%,
+        rgba(13, 19, 31, calc(var(--seq-scrim) * 0.6)) 100%);
   }
-  /* Band-1 overlay: real HTML text, fades out as band 0 progresses (script). */
+  /* Hero-band overlay: real HTML text (eyebrow + guarantee), FIXED over the
+     backdrop, fades out as the hero scrolls away (script). pointer-events:none
+     so it never blocks the nav / hero CTAs beneath it. Sits below content
+     (z-index 10) at z-index 5 so the hero's own headline/CTAs render on top. */
   .ac-seq-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
-    z-index: 3;
+    z-index: 5;
     display: flex;
     align-items: flex-end;
     pointer-events: none;
@@ -381,10 +403,10 @@
     max-width: 46ch;
     text-shadow: 0 1px 18px rgba(8, 12, 22, 0.6);
   }
-  /* Scroll cue at the top — fades after the first scroll (script sets opacity:0). */
+  /* Scroll cue — FIXED bottom-center, fades after the first scroll. */
   .ac-seq-cue {
-    position: absolute;
-    z-index: 4;
+    position: fixed;
+    z-index: 6;
     left: 50%;
     bottom: clamp(20px, 4vh, 40px);
     transform: translateX(-50%);
@@ -427,8 +449,8 @@
     height: 100%;
     object-fit: cover;
   }
-  .ac-seq-stage.ac-seq-static .ac-seq-static-fallback { display: block; }
-  .ac-seq-stage.ac-seq-static .ac-seq-video { display: none; }
+  .ac-seq.ac-seq-static .ac-seq-static-fallback { display: block; }
+  .ac-seq.ac-seq-static .ac-seq-video { display: none; }
 }
 
 /* Lift all real page content above the roaming compass layer so type stays on
@@ -436,7 +458,8 @@
 @layer base {
   body > nav,
   body > main,
-  body > footer { position: relative; z-index: 10; }
+  body > footer,
+  body > #ac-gtm { position: relative; z-index: 10; }
 }
 
 /* Light, tasteful scroll-reveal — the free premium touch. Honors
