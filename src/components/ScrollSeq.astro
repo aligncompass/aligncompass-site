@@ -1,0 +1,322 @@
+---
+// ── SCROLL-SCRUBBED CINEMATIC HERO ("scrollytelling") ─────────────────────────
+// Apple-product-page style: scrolling the page scrubs a 4-clip Higgsfield video
+// storyboard frame-by-frame. A tall stage wraps a position:sticky, top:0,
+// full-viewport (100vh) container holding the 4 <video> elements stacked
+// (absolute, object-fit:cover). A requestAnimationFrame loop maps the stage's
+// scroll position into TWO phases (the sequencing is deliberately gated so the
+// text and the imagery never move at the same time):
+//
+//   Phase A — INTRO HOLD (the hero itself). The first slice of scroll (height
+//     --ac-seq-hold, default 80vh) is reserved purely for the headline to leave.
+//     The video is PINNED on frame 0 (no scrub) while the overlay text lifts up
+//     and fades out. Nothing else from the site is visible yet. Only once the
+//     text has fully cleared does the animation get to move.
+//   Phase B — SCRUB. The remaining scroll (clips × 100vh) is split into N equal
+//     bands; the active band's video is shown and its currentTime is driven by
+//     the local progress within the band. The text is already gone, so the
+//     imagery has the stage to itself. Scrolling down plays the sequence
+//     forward; scrolling up reverses it; it freezes the instant scrolling stops.
+//
+// Storyboard (end frame of clip N == start frame of clip N+1, so swaps are
+// seamless):
+//   band 0 → seq-1-wordmark : AlignCompass wordmark on navy → letters fade, the
+//                              built-in compass grows + spins to fill frame.
+//                              (may 404 at build time — still uploading — so we
+//                              always show a poster fallback; band 1 is never blank.)
+//   band 1 → seq-2-tilt     : the ornate compass spins + tilts to a flat oblique angle.
+//   band 2 → seq-3-barren   : camera pushes into the compass face; it dissolves
+//                              into a dark, barren badlands landscape.
+//   band 3 → seq-4-green    : the badlands bloom into a lush green valley, sun breaking through.
+//
+// Overlays (band 1) are real, crisp HTML (NOT baked into the video): an eyebrow
+// + a guarantee line in the real brand voice, fading out as band 1 progresses.
+// When the sticky stage ends (on the green valley) the page flows into the
+// existing content sections; the green valley sits behind the first intro.
+import { cldVideoUrl } from '../lib/cloudinary.js';
+
+const { content } = Astro.props;
+const { design, cloudinary } = content;
+const cloud = cloudinary.cloudName;
+
+// The 4-clip storyboard, from content.json design.scrollSeq (single source of truth).
+const seq = Array.isArray(design.scrollSeq) ? design.scrollSeq : [];
+
+// Build, per clip, the streamed mp4 src + a Cloudinary first-frame poster (so_0 →
+// jpg) so each band shows something before/while the video buffers — and band 1
+// shows the wordmark poster even if the seq-1 video 404s (still uploading).
+const clips = seq.map((id, i) => ({
+  id,
+  // h264 mp4 from Cloudinary; modest width keeps the file scrub-friendly.
+  src: cldVideoUrl(cloud, id, { width: 1280, transforms: 'f_mp4,q_auto', ext: 'mp4' }),
+  // First frame of the VIDEO rendered as a still jpg (image/upload on a video
+  // public id with so_0 gives the frame at t=0).
+  poster: `https://res.cloudinary.com/${cloud}/video/upload/so_0,f_jpg,q_auto,w_1280/${id}.jpg`,
+  band: i,
+}));
+
+// Poster for the static (reduced-motion / no-JS) fallback hero: the wordmark
+// first frame; if absent it degrades to the green-valley frame (handled by the
+// <img> onerror below). Both come from Cloudinary first-frame stills.
+const wordmarkPoster = clips[0]?.poster || '';
+const greenPoster = clips[3]?.poster || '';
+
+// ── Overlay copy ──────────────────────────────────────────────────────────────
+// Guarantee line in the REAL brand voice. The actual offer is "free website,
+// pay when it works — you don't pay until it covers itself (~60 days); if it
+// doesn't pay for itself you don't pay." So the guarantee is accurate as: we
+// catch the work you can't get to, and you don't pay until it pays for itself.
+const eyebrow = 'aligncompass';
+const guaranteeLine = "We catch the work you can't get to — and you don't pay until it pays for itself.";
+const guaranteeSub = 'Free website. Missed calls texted back, past customers re-booked, reviews handled. Pay only when it works.';
+---
+{seq.length > 0 && (
+  <section
+    id="ac-seq-stage"
+    class="ac-seq-stage"
+    data-seq-count={seq.length}
+    style={`--ac-seq-clips:${seq.length}`}
+    aria-label="AlignCompass — from wordmark to a fruitful valley"
+  >
+    {/* Zero-impact probe whose height === --ac-seq-hold, so the script can read
+        the intro-hold distance in px regardless of how it's expressed (vh / px /
+        calc). It's absolutely positioned and hidden — it never affects layout. */}
+    <div class="ac-seq-hold-probe" aria-hidden="true"></div>
+    {/* Sticky, full-viewport container — pinned while the tall stage scrolls. */}
+    <div class="ac-seq-sticky">
+      {/* Stacked videos. NOT autoplay / NOT loop — the scroll script drives
+          currentTime. Each has a Cloudinary first-frame poster so the band is
+          never blank (incl. band 1 if seq-1 is still uploading / 404s). */}
+      <div class="ac-seq-stack" aria-hidden="true">
+        {clips.map((clip) => (
+          <video
+            class="ac-seq-video"
+            data-band={clip.band}
+            data-src={clip.src}
+            poster={clip.poster}
+            preload="auto"
+            muted
+            playsinline
+            disablepictureinpicture
+            disableremoteplayback
+          >
+            <source src={clip.src} type="video/mp4" />
+          </video>
+        ))}
+      </div>
+
+      {/* Legibility scrim so bone-white overlay type stays AA over any frame. */}
+      <div class="ac-seq-scrim" aria-hidden="true"></div>
+
+      {/* Intro-hold overlay: crisp HTML text (eyebrow + guarantee). The hero at
+          rest; the script lifts + fades it out across the intro hold, while the
+          video stays frozen on frame 0. Real content, not baked into the video. */}
+      <div id="ac-seq-overlay" class="ac-seq-overlay">
+        <div class="ac-seq-overlay-inner">
+          <p class="ac-label ac-seq-eyebrow">{eyebrow}</p>
+          <p class="ac-seq-guarantee">{guaranteeLine}</p>
+          <p class="ac-seq-guarantee-sub">{guaranteeSub}</p>
+        </div>
+      </div>
+
+      {/* Scroll cue — fades after the first scroll. */}
+      <div id="ac-seq-cue" class="ac-seq-cue" aria-hidden="true">
+        <span class="ac-seq-cue-text">Scroll</span>
+        <span class="ac-seq-cue-arrow"></span>
+      </div>
+
+      {/* Reduced-motion / no-JS static fallback: wordmark poster fading into the
+          green-valley poster as a calm hero. Shown only when .ac-seq-static is
+          set on the stage (reduced-motion) — see CSS. */}
+      <div class="ac-seq-static-fallback" aria-hidden="true">
+        <img
+          class="ac-seq-static-img ac-seq-static-wordmark"
+          src={wordmarkPoster}
+          alt=""
+          loading="eager"
+          decoding="async"
+          onerror={greenPoster ? `this.onerror=null;this.src='${greenPoster}'` : 'this.style.display="none"'}
+        />
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  // ── SCROLL-SCRUB ENGINE ──────────────────────────────────────────────────────
+  // Maps the stage's scroll position to a frame, in two gated phases so the text
+  // and the imagery are NEVER moving at the same time (that "doing too much at
+  // once" look is the thing we're avoiding).
+  //
+  //  scrolled = px the stage top has passed above the viewport top, ∈ [0, total]
+  //  holdPx   = the intro-hold distance (height of .ac-seq-hold-probe = --ac-seq-hold)
+  //
+  //  Phase A — scrolled ≤ holdPx  (the hero / text exit)
+  //    • band 0 shown, video PINNED at currentTime 0 (no scrub — the imagery
+  //      holds perfectly still while the words leave).
+  //    • overlay text: h = scrolled / holdPx ∈ [0,1]; lift up + fade out over h.
+  //
+  //  Phase B — scrolled > holdPx  (the scrub; text already gone)
+  //    • p ∈ [0,1] over the remaining scroll (total - holdPx)
+  //    • band k = floor(p * N), local q = (p*N) - k   (N = clip count)
+  //    • show video[k]; video[k].currentTime = q * duration  (guarded, clamped)
+  //
+  // Only the active video is seeked. The frame is a DIRECT function of scroll —
+  // no easing toward a target, video kept paused — so it freezes the instant
+  // scrolling stops. Everything runs in one rAF, scheduled on scroll; opacity
+  // (and the overlay's transform during the hold) are the only animated props.
+  //
+  // Reduced-motion: no scrubbing — a static poster hero is shown, normal content
+  // follows. Mobile uses the same strict scrub (no autoplay-through branch).
+  (function () {
+    const stage = document.getElementById('ac-seq-stage');
+    if (!stage) return;
+    const videos = Array.prototype.slice.call(stage.querySelectorAll('.ac-seq-video'));
+    if (!videos.length) return;
+
+    const overlay = document.getElementById('ac-seq-overlay');
+    const cue = document.getElementById('ac-seq-cue');
+    const holdProbe = stage.querySelector('.ac-seq-hold-probe');
+    const N = videos.length;
+
+    const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mqSmall = window.matchMedia('(max-width: 767px)');
+
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+    // Per-video cached duration (filled on loadedmetadata).
+    const meta = videos.map(() => ({ duration: NaN }));
+    videos.forEach((v, i) => {
+      const onMeta = () => {
+        if (v.duration && isFinite(v.duration)) meta[i].duration = v.duration;
+      };
+      if (v.readyState >= 1) onMeta();
+      v.addEventListener('loadedmetadata', onMeta);
+      // If a clip 404s (e.g. seq-1 still uploading), keep its poster — the band
+      // is never blank — and just skip seeking it (duration stays NaN).
+      v.addEventListener('error', () => { meta[i].duration = NaN; }, true);
+      const src = v.getAttribute('data-src');
+      // Kick the network early so scrubbing has frames buffered.
+      try { v.load(); } catch (e) {}
+    });
+
+    let activeBand = -1;
+    let cueHidden = false;
+    let ticking = false;
+    let reduced = mqReduce.matches;
+    let small = mqSmall.matches;
+
+    // ── DESKTOP: frame-scrub ────────────────────────────────────────────────
+    function showBand(k) {
+      if (k === activeBand) return;
+      activeBand = k;
+      videos.forEach((v, i) => {
+        v.style.opacity = i === k ? '1' : '0';
+      });
+    }
+
+    // Seek ONLY the given video to a fraction of its duration. Guards NaN
+    // (metadata not ready / 404) and clamps to [0, duration - epsilon] so we
+    // never land on the exact end (which can blank some decoders). Kept paused —
+    // we only seek, never play.
+    function seekBand(k, frac) {
+      const d = meta[k].duration;
+      if (!(d && isFinite(d))) return;
+      const target = clamp(frac * d, 0, d - 0.05);
+      const v = videos[k];
+      try {
+        if (!v.paused) v.pause();            // never let it play on its own
+        if (Math.abs((v.currentTime || 0) - target) > 0.01) v.currentTime = target;
+      } catch (e) {}
+    }
+
+    function renderScrub() {
+      ticking = false;
+      const rect = stage.getBoundingClientRect();
+      const total = stage.offsetHeight - window.innerHeight; // total scrollable px
+      if (total <= 0) return;
+      // How far the stage top has scrolled above the viewport top.
+      const scrolled = clamp(-rect.top, 0, total);
+      // Intro-hold distance, measured off the probe (height === --ac-seq-hold).
+      const holdPx = holdProbe ? Math.min(holdProbe.offsetHeight, total) : 0;
+
+      // ── Phase A: INTRO HOLD — text leaves, imagery frozen on frame 0 ────────
+      if (scrolled <= holdPx) {
+        showBand(0);
+        seekBand(0, 0);                       // pin the first frame — no scrub yet
+        if (overlay) {
+          const h = holdPx > 0 ? scrolled / holdPx : 1; // 0→1 across the hold
+          // Lift the words up and fade them out; fully gone by ~85% of the hold
+          // so the imagery has a beat of clear stage before it starts moving.
+          overlay.style.opacity = String(clamp(1 - h * 1.18, 0, 1));
+          overlay.style.transform = 'translateY(' + (-h * 9).toFixed(2) + 'vh)';
+        }
+        if (!cueHidden && cue && scrolled > 4) { cueHidden = true; cue.style.opacity = '0'; }
+        return;
+      }
+      // Past the hold: the text is gone, keep it gone.
+      if (overlay) overlay.style.opacity = '0';
+
+      // ── Phase B: SCRUB the N clips across the remaining scroll ──────────────
+      const scrubScrollable = total - holdPx;
+      const p = scrubScrollable > 0 ? clamp((scrolled - holdPx) / scrubScrollable, 0, 1) : 0;
+      const scaled = clamp(p * N, 0, N - 1e-6);
+      const k = Math.min(N - 1, Math.floor(scaled));
+      const q = scaled - k;
+
+      showBand(k);
+      seekBand(k, q);                         // DIRECT function of scroll — freezes when idle
+    }
+
+    function onScroll() {
+      if (reduced) return;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(renderScrub);
+      }
+    }
+
+    // ── REDUCED MOTION: static poster hero ──────────────────────────────────
+    function setupStatic() {
+      stage.classList.add('ac-seq-static');
+      // Stop any scrubbing; hide the live videos behind the static poster.
+      videos.forEach((v) => { try { v.pause(); } catch (e) {} v.style.opacity = '0'; });
+      if (overlay) overlay.style.opacity = '1'; // keep the guarantee legible
+      if (cue) cue.style.display = 'none';
+    }
+
+    function teardown() {
+      window.removeEventListener('scroll', onScroll);
+      stage.classList.remove('ac-seq-static');
+    }
+
+    function setup() {
+      teardown();
+      reduced = mqReduce.matches;
+      small = mqSmall.matches;
+      cueHidden = false;
+      if (cue) { cue.style.display = ''; cue.style.opacity = ''; }
+      if (reduced) { setupStatic(); return; }
+      // Strict frame-scrub on ALL screen sizes — the frame is tied to scroll
+      // position with no autoplay/loop fallback, so the video never advances
+      // on its own (it freezes when scrolling stops).
+      window.addEventListener('scroll', onScroll, { passive: true });
+      renderScrub();
+    }
+
+    setup();
+
+    // Re-evaluate mode on resize / breakpoint or motion-preference change.
+    let rzT = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(rzT);
+      rzT = setTimeout(() => {
+        const changed = reduced !== mqReduce.matches || small !== mqSmall.matches;
+        if (changed) setup();
+        else if (!reduced && !small) renderScrub();
+      }, 150);
+    }, { passive: true });
+    if (mqReduce.addEventListener) mqReduce.addEventListener('change', setup);
+    if (mqSmall.addEventListener) mqSmall.addEventListener('change', setup);
+  })();
+</script>

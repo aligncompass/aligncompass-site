@@ -47,3 +47,229 @@
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CINEMATIC SCROLL-HERO
+   Ported verbatim from the playbook skill
+   (skills/cinematic-scroll-hero/assets/scroll-seq.css) — the gated two-phase
+   engine from ALI-78 / PR #56. Pairs with src/components/ScrollSeq.astro.
+
+   Site adaptation: this brand canvas is Cyprus-green + Sand, but the storyboard
+   frames are authored on deep navy. So we re-scope --ac-bg / --ac-text to the
+   navy storyboard base FOR THE STAGE ONLY (below) — the rest of the site keeps
+   its Sand brand untouched. `:root .ac-seq-stage` (specificity 0,2,0) reliably
+   beats the Sand `:root` design tokens regardless of stylesheet order.
+   ════════════════════════════════════════════════════════════════════════════ */
+:root .ac-seq-stage {
+  --ac-bg: #141d2e;     /* deep-navy storyboard canvas (stage-local) */
+  --ac-text: #fffdf9;   /* bone-white type over the frames (stage-local) */
+}
+
+/* This site has no global .ac-label class (the engine's overlay eyebrow uses
+   `ac-label ac-seq-eyebrow`); give the eyebrow the small-caps label treatment
+   the engine assumes so it reads as a label, not body text. */
+.ac-seq-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ac-seq-stage {
+  --ac-seq-clips: 4;        /* clip count — overridden inline from seq.length */
+  --ac-seq-hold: 80vh;      /* intro-hold: scroll reserved for the headline to LEAVE
+                               before any scrubbing starts (text & imagery never
+                               move together). Taller = slower, more deliberate exit. */
+  position: relative;
+  /* intro hold + ~100vh of scroll per clip. */
+  height: calc(var(--ac-seq-hold) + var(--ac-seq-clips) * 100vh);
+  z-index: 10;              /* sits above any fixed background/tint layer */
+  background-color: var(--ac-bg);
+}
+
+/* Probe whose height === --ac-seq-hold so the script can read the intro-hold
+   distance in px (vh/px/calc agnostic). Hidden + absolute → zero layout impact. */
+.ac-seq-hold-probe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: var(--ac-seq-hold);
+  visibility: hidden;
+  pointer-events: none;
+}
+.ac-seq-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--ac-bg);
+}
+.ac-seq-stack { position: absolute; inset: 0; z-index: 0; }
+.ac-seq-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;                 /* script raises the active band to 1 */
+  will-change: opacity;       /* only opacity is animated — GPU-friendly */
+  transition: opacity 220ms ease;
+  background-color: var(--ac-bg);
+}
+/* First band visible by default (before JS runs / poster phase). */
+.ac-seq-video[data-band='0'] { opacity: 1; }
+
+/* Legibility scrim so bone-white overlay type stays AA over any video frame. */
+.ac-seq-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(15,22,36,0.42) 0%, rgba(15,22,36,0.12) 30%, rgba(15,22,36,0.30) 70%, rgba(15,22,36,0.72) 100%),
+    radial-gradient(120% 90% at 28% 78%, rgba(15,22,36,0.62) 0%, transparent 60%);
+}
+
+/* Overlay: real HTML text. During the intro hold the script lifts it up
+   (translateY) and fades it out — the imagery stays frozen until it's gone. */
+.ac-seq-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.ac-seq-overlay-inner {
+  width: 100%;
+  max-width: var(--ac-max, 80rem);
+  margin: 0 auto;
+  padding: 0 1.5rem clamp(72px, 12vh, 140px);
+}
+.ac-seq-eyebrow { color: var(--ac-text); opacity: 0.78; margin-bottom: 1rem; }
+.ac-seq-guarantee {
+  font-family: var(--ac-font-heading);
+  color: var(--ac-text);                  /* bone-white, AA over the scrim */
+  font-size: clamp(2rem, 5.2vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  max-width: 18ch;
+  text-shadow: 0 2px 30px rgba(8, 12, 22, 0.7); /* extra AA insurance */
+}
+.ac-seq-guarantee-sub {
+  margin-top: 1.25rem;
+  color: var(--ac-text);
+  opacity: 0.86;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  max-width: 46ch;
+  text-shadow: 0 1px 18px rgba(8, 12, 22, 0.6);
+}
+
+/* Scroll cue — fades after the first scroll (script sets opacity:0). */
+.ac-seq-cue {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(20px, 4vh, 40px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+  opacity: 0.8;
+}
+.ac-seq-cue-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ac-text);
+  opacity: 0.8;
+}
+.ac-seq-cue-arrow {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(180deg, rgba(255,253,249,0.0), rgba(255,253,249,0.85));
+  animation: ac-seq-cue-bob 1.8s ease-in-out infinite;
+}
+@keyframes ac-seq-cue-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+
+/* Static reduced-motion fallback poster (hidden unless .ac-seq-static set). */
+.ac-seq-static-fallback { position: absolute; inset: 0; z-index: 2; display: none; }
+.ac-seq-static-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ac-seq-stage.ac-seq-static .ac-seq-static-fallback { display: block; }
+.ac-seq-stage.ac-seq-static .ac-seq-video { display: none; }
+
+/* Inside @media (prefers-reduced-motion: reduce): the JS adds .ac-seq-static
+   so the poster shows; also kill the transitions/cue animation. */
+@media (prefers-reduced-motion: reduce) {
+  .ac-seq-video { transition: none !important; }
+  .ac-seq-cue-arrow { animation: none !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   POST-SEQUENCE REVEAL GALLERY  (integration.md §7 — "don't dead-end on the
+   green valley"). A dark, cinematic hand-off band right after the stage unpins:
+   the storyboard's big finish flows into a strip of real images that
+   stagger-fade up on scroll (reusing the site's .reveal IntersectionObserver),
+   then the page settles into the Sand brand content below. One motion at a time
+   — the images settle before the copy/CTAs; reduced-motion shows them at rest.
+   ════════════════════════════════════════════════════════════════════════════ */
+.ac-gallery {
+  position: relative;
+  background-color: #141d2e;   /* same navy as the stage — bookends the cinematic moment */
+  color: #fffdf9;
+  isolation: isolate;
+  overflow: hidden;
+}
+/* Soft top vignette so the lush green-valley frame eases into the navy band
+   instead of a hard cut at the seam. */
+.ac-gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(80px, 14vh, 180px);
+  background: linear-gradient(180deg, rgba(8, 12, 22, 0.55) 0%, rgba(8, 12, 22, 0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.ac-gallery > * { position: relative; z-index: 2; }
+.ac-gallery-eyebrow {
+  color: #fffdf9;
+  opacity: 0.7;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ac-gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Stagger: each tile inherits .reveal; we offset the transition per tile via an
+   inline --ac-stagger so the strip cascades in rather than popping at once.
+   Reduced motion zeroes the delay (and .reveal forces visible) below. */
+.ac-gallery-item { transition-delay: var(--ac-stagger, 0ms); }
+.ac-gallery-heading {
+  font-family: var(--ac-font-heading);
+  color: #fffdf9;
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.ac-gallery-sub { color: #fffdf9; opacity: 0.82; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-gallery-item { transition-delay: 0ms !important; }
+}

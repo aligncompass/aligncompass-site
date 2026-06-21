@@ -1,11 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionRenderer from '../components/SectionRenderer.astro';
+import ScrollSeq from '../components/ScrollSeq.astro';
+import RevealGallery from '../components/RevealGallery.astro';
 import content from '../data/content.json';
 
 const page = content.pages.find((p) => p.slug === 'index') ?? content.pages[0];
 const ogImage = page.sections.find((s) => s.image)?.image?.publicId ?? null;
+
+// The cinematic ScrollSeq stage IS the homepage hero now (ALI-78: "the hero
+// section should be the beginning of the animation"), so the plain text hero
+// section is not rendered on the homepage — its headline + CTAs are carried by
+// the reveal gallery that hands off out of the green-valley payoff. The hero
+// entry stays in content.json (other pages still use it, and it supplies the
+// OG image above).
+const sections = page.sections.filter((s) => s.type !== 'hero');
 ---
 <Layout content={content} page={page} ogImage={ogImage}>
-  {page.sections.map((section) => <SectionRenderer section={section} content={content} />)}
+  <ScrollSeq content={content} />
+  <RevealGallery content={content} />
+  {sections.map((section) => <SectionRenderer section={section} content={content} />)}
 </Layout>

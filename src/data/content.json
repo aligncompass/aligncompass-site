@@ -54,6 +54,43 @@
       "revealEnabled": true,
       "durationMs": 480,
       "easing": "cubic-bezier(0.22, 1, 0.36, 1)"
+    },
+    "scrollSeq": [
+      "aligncompass-site/seq-1-wordmark",
+      "aligncompass-site/seq-2-tilt",
+      "aligncompass-site/seq-3-barren",
+      "aligncompass-site/seq-4-green"
+    ],
+    "gallery": {
+      "eyebrow": "From the missed call to the booked job",
+      "heading": "Do the work you love. We'll catch everything you can't get to.",
+      "sub": "Missed calls texted back, past customers re-booked, reviews handled — landing as real booked jobs in the system you already use.",
+      "images": [
+        {
+          "publicId": "aligncompass-site/hero-owner-on-job",
+          "alt": "Home-service owner working a job while a new booking notification lights up the phone in their hand"
+        },
+        {
+          "publicId": "aligncompass-site/services-calendar-filling",
+          "alt": "A service business calendar filling up with booked jobs over the week"
+        },
+        {
+          "publicId": "aligncompass-site/guide-analyst-attribution",
+          "alt": "Phone screen showing a booked job traced back to a recovered missed call"
+        },
+        {
+          "publicId": "aligncompass-site/contact-book-call",
+          "alt": "Phone calendar open to book a free 15-minute call"
+        },
+        {
+          "publicId": "aligncompass-site/audit-revenue-math",
+          "alt": "Simple worksheet showing calls received, calls missed, and dollars lost per week"
+        },
+        {
+          "publicId": "aligncompass-site/about-operator",
+          "alt": "A focused operator reviewing real booked-job numbers on a laptop"
+        }
+      ]
     }
   },
   "cta": {
