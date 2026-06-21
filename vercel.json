@@ -32,7 +32,12 @@
     },
     {
       "source": "/national-comfort-cooling",
-      "destination": "/national-comfort-cooling/",
+      "destination": "https://nccooling.com/",
+      "permanent": true
+    },
+    {
+      "source": "/national-comfort-cooling/:path*",
+      "destination": "https://nccooling.com/:path*",
       "permanent": true
     }
   ],
@@ -84,14 +89,6 @@
     {
       "source": "/autonomia/:path*",
       "destination": "https://autonomia-pi.vercel.app/autonomia/:path*"
-    },
-    {
-      "source": "/national-comfort-cooling/",
-      "destination": "https://national-comfort-cooling.vercel.app/national-comfort-cooling/"
-    },
-    {
-      "source": "/national-comfort-cooling/:path*",
-      "destination": "https://national-comfort-cooling.vercel.app/national-comfort-cooling/:path*"
     }
   ]
 }
