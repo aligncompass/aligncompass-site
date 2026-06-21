@@ -1,0 +1,77 @@
+---
+// ── POST-SEQUENCE SCROLL-REVEAL GALLERY ───────────────────────────────────────
+// The hand-off OUT of the cinematic scroll-hero. integration.md §7: don't
+// dead-end on the green-valley payoff — the big finish should flow into
+// something with energy. This is a dark band right after the stage unpins: a
+// strip of real images that stagger-fade up on scroll (reusing the site's
+// .reveal IntersectionObserver in Layout.astro), then the page settles into the
+// Sand brand content below. Lead with imagery, not a wall of copy; one motion
+// at a time (images settle, then the headline + CTAs reveal as you reach them).
+//
+// Source of truth is content.json → design.gallery (images + copy) and the
+// shared content.cta. Renders nothing if no gallery is configured.
+import CloudinaryImage from './CloudinaryImage.astro';
+
+const { content } = Astro.props;
+const { cloudinary, cta, design } = content;
+const gallery = design?.gallery;
+const images = Array.isArray(gallery?.images) ? gallery.images : [];
+---
+{gallery && images.length > 0 && (
+  <section class="ac-gallery" aria-label="The work that flows from the system">
+    <div class="mx-auto max-w-ac px-6 py-20 sm:py-28">
+      {gallery.eyebrow && (
+        <p class="reveal ac-gallery-eyebrow mb-8">{gallery.eyebrow}</p>
+      )}
+
+      {/* Imagery leads — a staggered strip. Each tile is a .reveal element with
+          a per-tile delay so the strip cascades in instead of popping at once. */}
+      <div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
+        {images.map((img, i) => (
+          <div
+            class="reveal ac-gallery-item overflow-hidden rounded-ac shadow-ac ring-1 ring-white/10"
+            style={`--ac-stagger:${i * 90}ms`}
+          >
+            <div class="aspect-[4/3]">
+              <CloudinaryImage
+                cloudName={cloudinary.cloudName}
+                publicId={img.publicId}
+                alt={img.alt}
+                loading="lazy"
+                sizes="(min-width: 768px) 22rem, 50vw"
+                class="ac-gallery-img"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Copy + CTAs settle in after the imagery. Carries the page's single
+          <h1> (the plain hero section it replaces is no longer rendered). */}
+      {(gallery.heading || gallery.sub || cta?.primary || cta?.transitional) && (
+        <div class="reveal mx-auto mt-14 max-w-3xl text-center">
+          {gallery.heading && <h1 class="ac-gallery-heading">{gallery.heading}</h1>}
+          {gallery.sub && (
+            <p class="ac-gallery-sub mx-auto mt-4 max-w-2xl text-base sm:text-lg">{gallery.sub}</p>
+          )}
+          {(cta?.primary || cta?.transitional) && (
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+              {cta?.primary && (
+                <a
+                  href={cta.primary.href}
+                  class="inline-flex items-center rounded-ac bg-accent px-6 py-3 font-medium text-accent-contrast shadow-ac transition-transform hover:-translate-y-0.5"
+                >{cta.primary.label}</a>
+              )}
+              {cta?.transitional && (
+                <a
+                  href={cta.transitional.href}
+                  class="inline-flex items-center font-medium text-[#fffdf9] underline-offset-4 hover:underline"
+                >{cta.transitional.label} →</a>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
+)}
