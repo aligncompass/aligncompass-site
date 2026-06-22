@@ -39,6 +39,11 @@
       "source": "/national-comfort-cooling/:path*",
       "destination": "https://nccooling.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/styling-betty",
+      "destination": "/styling-betty/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -89,6 +94,14 @@
     {
       "source": "/autonomia/:path*",
       "destination": "https://autonomia-pi.vercel.app/autonomia/:path*"
+    },
+    {
+      "source": "/styling-betty/",
+      "destination": "https://styling-betty.vercel.app/styling-betty/"
+    },
+    {
+      "source": "/styling-betty/:path*",
+      "destination": "https://styling-betty.vercel.app/styling-betty/:path*"
     }
   ]
 }
