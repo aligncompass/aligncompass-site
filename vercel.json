@@ -44,6 +44,11 @@
       "source": "/styling-betty",
       "destination": "/styling-betty/",
       "permanent": true
+    },
+    {
+      "source": "/locationlenders",
+      "destination": "/locationlenders/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -102,6 +107,14 @@
     {
       "source": "/styling-betty/:path*",
       "destination": "https://styling-betty.vercel.app/styling-betty/:path*"
+    },
+    {
+      "source": "/locationlenders/",
+      "destination": "https://locationlenders.vercel.app/locationlenders/"
+    },
+    {
+      "source": "/locationlenders/:path*",
+      "destination": "https://locationlenders.vercel.app/locationlenders/:path*"
     }
   ]
 }
